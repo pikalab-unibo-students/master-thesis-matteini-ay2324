@@ -5,12 +5,14 @@
 \usepackage{notes}
 \usepackage{shortcuts}
 \usepackage{acronym}
+\usepackage[inline]{enumitem}
+
 
 \school{\unibo}
 \programme{Corso di Laurea Magistrale in Ingegneria e Scienze Informatiche}
-% \title{Addressing Fairness in AI Systems:\newline a Pragmatic (Meta-)Methodology and its Reification into a Software System}
-\title{Addressing Fairness in AI Systems: Design and Development of a Pragmatic (Meta-)Methodology}
-% \title{Addressing Fairness in AI Systems: a Pragmatic (Meta-)Methodology from an Engineering Perspective}
+% \title{Addressing Fairness in \ac{AI} Systems:\newline a Pragmatic (Meta-)Methodology and its Reification into a Software System}
+\title{Addressing Fairness in \acs{AI} Systems: Design and Development of a Pragmatic (Meta-)Methodology}
+% \title{Addressing Fairness in \ac{AI} Systems: a Pragmatic (Meta-)Methodology from an Engineering Perspective}
 \author{Mattia Matteini}
 \date{\today}
 \subject{Intelligent Systems Engineering}
@@ -18,17 +20,40 @@
 \cosupervisor{Prof.\ Roberta Calegari}
 \morecosupervisor{Prof.\ Andrea Omicini}
 
-\session{III}
-\academicyear{2023-2024}
+\session{IV}
+\academicyear{2023--2024}
 
 % Definition of acronyms
-\acrodef{IoT}{Internet of Thing}
-\acrodef{vm}[VM]{Virtual Machine}
+\acrodef{AI}{Artificial Intelligence}
 
+% temporary fix for acronyms (https://github.com/oetiker/acronym/issues/62)
+\makeatletter
+\AtBeginDocument
+ {
+   \def\ltx@label#1{\cref@label{#1}}%add braces
+   \def\label@in@display@noarg#1{\cref@old@label@in@display{#1}}%remove braces  
+ } %
+\makeatother
+
+% \acrodef{IoT}{Internet of Thing}
+% \acrodef{vm}[VM]{Virtual Machine}
+
+% You can use acronyms that your defined previously,
+% such as \ac{IoT}.
+% %
+% If you use acronyms twice,
+% they will be written in full only once
+% (indeed, you can mention the \ac{IoT} now without it being fully explained).
+% %
+% In some cases, you may need a plural form of the acronym.
+% %
+% For instance, that you are discussing \acp{vm},
+% you may need both \ac{vm} and \acp{vm}.
 
 \mainlinespacing{1.241} % line spacing in mainmatter, comment to default (1)
 
 \begin{document}
+
 \frontmatter\frontispiece
 
 \begin{abstract}	
@@ -49,75 +74,280 @@ Optional. Max a few lines.
 \mainmatter
 
 %----------------------------------------------------------------------------------------
-\chapter{Introduction}
-\label{chap:introduction}
+\chapter{Introduction}\label{chap:introduction}
 %----------------------------------------------------------------------------------------
 
-Write your intro here.
-\sidenote{Add sidenotes in this way. They are named after the author of the thesis}
+\paragraph{What is Fairness?}
 
-You can use acronyms that your defined previously,
-such as \ac{IoT}.
 %
-If you use acronyms twice,
-they will be written in full only once
-(indeed, you can mention the \ac{IoT} now without it being fully explained).
+% 1. explaining what is normal fairness, from an ethical and social perspective
 %
-In some cases, you may need a plural form of the acronym.
+Fairness, from an ethical and social perspective, is the principle of treating individuals and groups equitably, ensuring that no one is unjustly advantaged or disadvantaged due to biases, discrimination, or arbitrary distinctions.
 %
-For instance,
-that you are discussing \acp{vm},
-you may need both \ac{vm} and \acp{vm}.
+It is deeply rooted in moral philosophy, legal systems, and societal norms, aiming to promote justice, equality, and inclusion.
+%
+A just society requires reducing social inequalities, and ensuring that opportunities and resources are distributed in a way that acknowledges both individual merit and systemic disadvantages.
+%
+The concept of fairness evolves based on cultural, historical, and contextual factors, reflecting a society’s commitment to ethical treatment and social cohesion.
+
+
+\paragraph{Fairness in \acs{AI}.}
+\acresetall{AI}
+\sidenote{troppo lungo? forse meglio spezzare in più paragrafi}
+% 2. explaining what is fairness in AI, from a technical perspective
+From a technical point of view, fairness in \ac{AI} refers to the development and deployment of \ac{AI} systems that minimize biases and prevent discriminatory outcomes.
+%
+It involves designing systems that ensure equitable treatment across different demographic groups, particularly those historically marginalized or disadvantaged.
+%
+% Fairness in AI can be assessed using various mathematical definitions, such as demographic parity, equalized odds, and fairness through unawareness, depending on the context and application.
+%
+The main challenges in this field are building \texttt{fair-by-design} systems, namely such systems in which the fairness problem is addressed since the very beginning of the process, and detecting biases in already existing systems, mitigating them if possible.
+%
+% The challenge in AI fairness lies in defining and balancing these technical fairness measures while maintaining model accuracy and practical utility.
+
+Before the advent of fairness, \ac{AI} systems were developed with the primary goal of optimizing performance metrics, such as accuracy and efficiency. Nowadays, that fairness is becoming a crucial aspect to consider, accuracy is no more the only metric to optimize, it is necessary to find a balance between accuracy and fairness. Besides that, fairness can also be in contrast with the performance of the model, making difficult to find a good trade-off between these two aspects.
+
+% 3. explaining why fairness in AI is important
+Fairness is becoming crucial because \ac{AI} systems increasingly influence decision-making processes in various sectors of society, including hiring, lending and healthcare.
+%
+If \ac{AI} models are biased, they can perpetuate and even amplify existing societal inequalities, leading to unjust outcomes and tremendous effects on individuals and communities.
+%
+Ensuring fairness in \ac{AI} enhances trust, transparency, and accountability, making \ac{AI} systems more ethical, reliable, and beneficial for society.
+
+% 3.1 speaking about some history of AI and the fact is getting more and more important and utilized in many fields
+\ac{AI} has undergone significant advancements over the past few decades, causing an enormous increase in its adoption across various domains, until becoming pervasive in the daily life of people.
+%
+This also caused a growing of biases in \ac{AI} systems, as discriminations are intrinsically part of the human history, and consequently of the data that \ac{AI} systems are trained on.
+
+
+% 3.2 speaking about the fact that AI is used in many critical fields, and the fact that fairness is important in these fields
+
+\ac{AI} is now widely used in critical domains such as healthcare, finance, education, and criminal justice, where biased decisions can have life-altering consequences.
+%
+For instance, in healthcare, biased algorithms may lead to misdiagnosis or unequal treatment recommendations for different demographic groups;
+%
+in finance, \ac{AI}-driven credit scoring models can reinforce discriminatory lending practices, limiting access to financial resources;
+%
+in the criminal justice system, biased predictive policing and risk assessment tools can disproportionately target marginalized communities.
+%
+Given these risks, ensuring fairness in \ac{AI} is essential to preventing discrimination, maintaining ethical standards, and safeguarding individuals.
+
+
+\paragraph{On Multidisciplinarity.}
+
+% 4. AI fairness is a multidisciplinary concept.
+
+Achieving fairness in \ac{AI} requires a multidisciplinary approach that integrates insights from computer science, ethics, law and social sciences.
+%
+Technical methods alone cannot fully address fairness, as fairness is deeply tied to societal values, human rights, and legal frameworks.
+%
+Socio-legal experts help define fairness principles, ensure compliance with anti-discrimination laws and analyze the societal impact.
+%
+The intersection of these fields highlights that \ac{AI} fairness is not merely a technical challenge but a complex, multidimensional issue requiring collective effort and interdisciplinary research and collaboration.
+
+% 4.1 explaining the link with the socio-legal perspective and contraints, citing AI Act
+
+An impactful example regarding the work of legal experts in the field of \acl{AI} is the \textit{AI Act}. \sidenote{add some citation}
+%
+The AI Act, proposed by the European Union, is a comprehensive regulatory framework designed to ensure that AI systems are safe, transparent, and aligned with fundamental rights.
+%
+It categorizes AI applications into different risk levels—unacceptable risk, high risk, limited risk, and minimal risk—imposing stricter requirements on higher-risk systems, such as those used in hiring, law enforcement, and healthcare.
+%
+These requirements include transparency, human oversight, and bias mitigation. However, translating these legal constraints into practical technical steps is not trivial. 
+
+Concepts like fairness, accountability, and explainability are difficult to quantify, and AI models often operate as black boxes, making compliance complex.
+%
+While the AI Act sets an important precedent for AI governance, its effective implementation requires further collaboration between policymakers, legal experts, and computer scientist to bridge the gap between regulation and technical feasibility.
+
+
+\paragraph{Measuring Fairness.}
+% 5. How to assess and measure fairness?
+
+At one point, in order to assess the fairness of an \ac{AI} system, is important to have a way to ``measure'' how much the system is fair and in what terms.
+%
+Remarking what said before, fairness is very context-dependent, and there is not a single way to measure it. 
+
+% 5.1 define fairness metrics
+
+The need to cover multiple aspects of fairness has led to the introduction of various \textit{fairness metrics}---statistical formulas that quantify fairness in different ways, each capturing a slightly different aspect of fairness.
+%
+These fairness metrics, are a set of indexes that can be used to detect biases in \ac{AI} systems, and they can be used indeed to evaluate the fairness of a model.
+%
+
+% 5.2 list the main fariness matrics providing a brief description and formal definition
+
+In the following, are listed some of the most common fairness metrics used in the literature (\cite{DBLP:conf/bias/IrfanML23}):
+
+\begin{itemize}
+    \item \textit{Statistical Parity Difference} (SPD) measures the difference between the probability of the privileged and unprivileged classes receiving a favorable outcome. This measure should be equal to 0 to be fair.
+    
+    Formally it is defined as:
+    \[
+        SPD = P(\hat{Y} = 1 | A = a) - P(\hat{Y} = 1 | A = b)
+    \]
+    where $A$ is the sensitive attribute, $\hat{Y}$ is the predicted outcome, and $a$ and $b$ are the privileged and unprivileged groups, respectively.
+    
+    \item \textit{Disparate Impact} (DI) compares the proportion of individuals that receive a favorable outcome for two groups, a privileged group and an unprivileged group. This measure should be equal to 1 to be fair.
+    
+    Formally it is defined as:
+    \[
+        DI = P(\hat{Y} = 1 | A = a) / P(\hat{Y} = 1 | A = b)
+    \]
+    where $A$ is the sensitive attribute, $\hat{Y}$ is the predicted outcome, and $a$ and $b$ are the privileged and unprivileged groups, respectively.
+    \sidenote{add more metrics?}
+    
+\end{itemize}
+
 
 \paragraph{Structure of the Thesis}
 
 \note{At the end, describe the structure of the paper}
 
 %----------------------------------------------------------------------------------------
-\chapter{Background}
-\label{chap:background}
+\chapter{Background}\label{chap:background}
 %----------------------------------------------------------------------------------------
 
-\section{AI Lifecycle}
+\note{manca una sezione Lack of engineering methodology?}
+
+
+\section{\ac{AI} Lifecycle}
+
+% 1. AI lifecycle changes a lot if we consider fairness, speak about lifecycle in general, and speak about the changes that fairness introduces
+
+Since the very beginning of the \ac{AI} era, the standard lifecycle consists of the following ``traditional'' steps:
+\begin{enumerate*}[label= (\roman*)]
+    \item data collection and processing,
+    \item model training,
+    \item system evaluation.
+\end{enumerate*}
+%
+Obviously, this workflow in the latest years have increased in complexity and now, with the newer innovations and powerful models and architectures, it may appear even almost minimalistic, but it still represents the core of all \ac{AI} systems.
+
+However, when fairness is taken into account, each step needs to be revisited in order to obtain an equitable, impartial, and fair \ac{AI} system.
+
+% 2 fairness can be achieved only if socio-legal perspective is taken into account, talk about the importance of the socio-legal perspective
+
+To achieve this goal, the technical perspective is not enough. 
+Fairness is a multidisciplinary concept that involves social, legal, and ethical aspects.
+%
+Therefore, the \ac{AI} lifecycle needs to be constrained by socio-legal requirements that engineers must consider during the development process.
+%
+This includes understanding the societal impact of \ac{AI} systems, ensuring compliance with legal standards, and adhering to ethical guidelines.
+
+There are also many differences between the socio-legal and technical perspectives. Regarding the \ac{AI} lifecycle, engineers tend to focus on technical aspects and few development phases, in fact the major part of the literature speaks only about \textit{pre-processing}, \textit{in-processing} and \textit{post-processing} (\Cref{fig:ai-lifecycle} \cite{DBLP:conf/ijcai/CalegariCMO23}).
+\sidenote{la citazione va bene anche a fianco dell'immagine?}
+%
+\begin{figure}
+    \centering
+    \includegraphics[width=.6\linewidth]{figures/ai-lifecycle.png}
+    \caption{Fair \ac{AI} lifecycle}
+    \label{fig:ai-lifecycle}
+\end{figure}
+%
+Respectively, \textit{pre-processing} involves data collection and preparation, \textit{in-processing} refers to the model training phase, and \textit{post-processing} deals with the fair evaluation of the \ac{AI} system.
+
+Often engineers adopt reductionist approaches addressing a field that is not their own, discarding the big picture of social, economic, and institutional constraints.
+%
+On the other hand, socio-legal experts consider a broader range of activities and phases. They focus on ``building blocks'' for fair \ac{AI} such as risk assessment, stakeholder identification, regulatory analysis, and fundamental human rights impact assessment. In particular, with respect to fundamental rights impact assessments, these will be legally required for some \ac{AI} systems, yet no standard for implementing them has emerged so far.
+
+
+
 
 \section{Practical Issues}
 
-I suggest referencing stuff as follows: \cref{fig:random-image} or \Cref{fig:random-image}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=.8\linewidth]{figures/random-image.pdf}
-    \caption{Some random image}
-    \label{fig:random-image}
-\end{figure}
+\subsection{What is (un)fair?}
 
 
-You may also put some code snippet (which is NOT float by default), eg: \cref{lst:random-code}.
+% Fairness notions vary by context and stakeholders, requiring different activities for fulfillment.
+% They can be measured using statistical formulas (fairness metrics), but this leads to many metrics, each measuring slightly different aspects of fairness.
 
-\lstinputlisting[float,language=Java,label={lst:random-code}]{listings/HelloWorld.java}
+% 1. the notion of fairness is subjective 
+
+Fairness in \ac{AI} (and beyond) is inherently subjective, shaped by cultural values, ethical theories, and individual perspectives.
+%
+What one group considers fair may not align with other people’s understanding, leading to debates about determining what is fair and what is not.
+%
+This subjectivity and variation in viewpoints complicates efforts to develop standardized fairness metrics, as no single approach can universally capture the diverse and often conflicting notions of fairness present across different social, legal, and institutional contexts.
+
+% 2. the notion of fairness is also context-dependent 
+
+Beyond its subjectivity, fairness is also highly context-dependent. The same algorithm might be considered fair in one application but biased in another, depending on the societal, legal, and institutional constraints surrounding it.
+%
+For instance, fairness considerations in hiring algorithms differ from those in criminal justice risk assessments, necessitating tailored approaches rather than generic solutions.
+%
+Moving forward, privileged and unprivileged groups change depending on the application domain, as well as the fairness criteria that are taken into account.
+
+\subsection{Bridging Perspectives}
+% 3. bridging socio-legal perspective and technical perspective is difficult 
+
+Bridging the socio-legal and technical perspectives on fairness is a significant challenge. 
+%
+Guidelines and descriptive methodologies exist to address fairness compliance from a social-legal perspective, but their approach offer broad guidelines without defining practical fairness measurements, leaving interpretation to technical experts (\cite{hicssfairness2025}).
+%
+The lack of alignment between these viewpoints makes it difficult to translate abstract fairness principles into concrete computational methods.
+%
+This also leads to a proliferation of metrics, each measuring slightly different aspects of fairness, reflecting the diverse priorities and domain perspectives.
+
+% 4 socio-legal and technical perspectives speak different languages, 
+
+A fundamental obstacle to this integration is the differing language used by socio-legal experts and technical people. It is difficult to reach an agreement if even a concept or term can assume different meanings depending on the perspective.
+% Legal and ethical frameworks rely on qualitative reasoning and precedent, whereas technical disciplines typically speaks about quantitative metrics
+This linguistic division creates a difficult barrier to interdisciplinary collaboration, leading to misunderstandings even when working towards shared goals.
+
+
+% 5 socio-legal and technical perspectives have different backgrounds
+
+These perspectives are shaped also by distinct academic and methodological backgrounds.
+%
+Legal and ethical frameworks tend to be verbose and highly context-specific, relying on various interpretations and case-by-case analyses. In contrast, technical disciplines prioritize concrete steps and pragmatic aspects.
+
+
+
+% % ----------------
+
+
+% You may also put some code snippet (which is NOT float by default), eg: \cref{lst:random-code}.
+
+% \lstinputlisting[float,language=Java,label={lst:random-code}]{listings/HelloWorld.java}
 
 
 %----------------------------------------------------------------------------------------
-\chapter{The Meta-Methodology}
-\label{chap:background}
+\chapter{The Meta-Methodology}\label{chap:meta-methodology}
 %----------------------------------------------------------------------------------------
+
+% 1. provide a formal description of the decision-based graph
+
+
 \section{The Roles(?)}
+
+\subsection{Stakeholders Awareness}
 
 \section{The Q/A Mechanism}
 
+\section{Decision Support System}
+
+\section{Assisting \ac{AI} System Building}
+
+
 
 %----------------------------------------------------------------------------------------
-\chapter{Design}
-\label{chap:design}
+\chapter{Design}\label{chap:design}
 %----------------------------------------------------------------------------------------
 
 \section{Architecture}
 
 
+
+
+
+
 %----------------------------------------------------------------------------------------
-\chapter{Implementation}
-\label{chap:implementation}
+\chapter{Implementation}\label{chap:implementation}
 %----------------------------------------------------------------------------------------
+
+
+
+
 
 %----------------------------------------------------------------------------------------
 \chapter{Conclusions}
