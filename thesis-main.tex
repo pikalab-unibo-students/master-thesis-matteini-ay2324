@@ -209,7 +209,7 @@ In the following, are listed some of the most common fairness metrics used in th
 \note{manca una sezione Lack of engineering methodology?}
 
 
-\section{\ac{AI} Lifecycle}
+\section{\acs{AI} Lifecycle}
 
 % 1. AI lifecycle changes a lot if we consider fairness, speak about lifecycle in general, and speak about the changes that fairness introduces
 
@@ -256,10 +256,6 @@ On the other hand, socio-legal experts consider a broader range of activities an
 
 \subsection{What is (un)fair?}
 
-
-% Fairness notions vary by context and stakeholders, requiring different activities for fulfillment.
-% They can be measured using statistical formulas (fairness metrics), but this leads to many metrics, each measuring slightly different aspects of fairness.
-
 % 1. the notion of fairness is subjective 
 
 Fairness in \ac{AI} (and beyond) is inherently subjective, shaped by cultural values, ethical theories, and individual perspectives.
@@ -281,25 +277,36 @@ Moving forward, privileged and unprivileged groups change depending on the appli
 
 Bridging the socio-legal and technical perspectives on fairness is a significant challenge. 
 %
-Guidelines and descriptive methodologies exist to address fairness compliance from a social-legal perspective, but their approach offer broad guidelines without defining practical fairness measurements, leaving interpretation to technical experts (\cite{hicssfairness2025}).
+Guidelines and descriptive methodologies exist to address fairness compliance from a social-legal perspective, but their approach offer broad guidelines without defining practical steps, leaving interpretation to technical experts (\cite{hicssfairness2025}).
 %
 The lack of alignment between these viewpoints makes it difficult to translate abstract fairness principles into concrete computational methods.
 %
 This also leads to a proliferation of metrics, each measuring slightly different aspects of fairness, reflecting the diverse priorities and domain perspectives.
 
-% 4 socio-legal and technical perspectives speak different languages, 
+% 4. socio-legal and technical perspectives speak different languages, 
 
-A fundamental obstacle to this integration is the differing language used by socio-legal experts and technical people. It is difficult to reach an agreement if even a concept or term can assume different meanings depending on the perspective.
+A fundamental obstacle to this integration is the differing language used by socio-legal experts and technical people.
+%
+It is difficult to reach an agreement if even a concept or term can assume different meanings depending on the perspective.
 % Legal and ethical frameworks rely on qualitative reasoning and precedent, whereas technical disciplines typically speaks about quantitative metrics
 This linguistic division creates a difficult barrier to interdisciplinary collaboration, leading to misunderstandings even when working towards shared goals.
 
 
-% 5 socio-legal and technical perspectives have different backgrounds
+% 5. socio-legal and technical perspectives have different backgrounds
 
 These perspectives are shaped also by distinct academic and methodological backgrounds.
 %
-Legal and ethical frameworks tend to be verbose and highly context-specific, relying on various interpretations and case-by-case analyses. In contrast, technical disciplines prioritize concrete steps and pragmatic aspects.
+Legal and ethical frameworks tend to be verbose and highly context-specific, relying on various interpretations and case-by-case analyses.
+%
+In contrast, technical disciplines prioritize concrete steps and pragmatic aspects.
 
+% 6. lack of methodology that takes into account both perspectives
+
+In literature, there is a lack of methodologies regarding the building of fair \ac{AI} systems. The lack is not just related to the technical perspective, but also to the socio-legal one.
+%
+This is enhanced by the fact that design and develop a single methodology fitting all kinds of \ac{AI} systems is not feasible, as the system requirements and constraints change depending on the context and the application domain.
+%
+Of course, the creation of such methodology is damaged by the multidisciplinary complexity of the problem, and should involve expertises across all the relevant fields.
 
 
 % % ----------------
@@ -314,10 +321,108 @@ Legal and ethical frameworks tend to be verbose and highly context-specific, rel
 \chapter{The Meta-Methodology}\label{chap:meta-methodology}
 %----------------------------------------------------------------------------------------
 
-% 1. provide a formal description of the decision-based graph
+% 0. explaining what is a methodology and why we need it to build fair AI systems
+
+A \textbf{methodology} is a structured framework that outlines the principles, processes, techniques and best practices used to conduct research or develop systems in a systematic and reproducible manner.
+%
+In this context, a well-defined methodology would be essential for ensuring fairness, as it would provide a rigorous approach to
+\begin{enumerate*}[label=(\roman*)]
+    \item translating socio-legal requirements into technical steps,
+    \item identifying and mitigating biases, and
+    \item building \texttt{fair-by-design} systems.
+\end{enumerate*}
+\sidenote{need to introduce the concept of \texttt{fair-by-design} systems in Background chapter}
+
+Having a rigorous methodology would impact the development of fair \ac{AI} systems, it means that it would represent a clear way to follow, encapsulating the already existing unclear guidelines provided by the socio-legal frameworks.
+
+% x why META-methodology
+Unfortunately, factors such as multidisciplinarity, complexity, and context-dependency make it difficult to design a single methodology that fits all contexts and applications.
+%
+Therefore, this contribution proposes a \textbf{meta-methodology} that provides a flexible and adaptable framework for design and develop multiple methodologies instead of a single one.
+%
+The idea of the meta-methodology comes from the sessions of brainstorming and discussions between experts of different fields, where troubles are emerged in reaching an agreement and proceeding with clear technical steps relying on the legal requirements.
+
+% The meta-methodology consists of the following key components:
+
+\section{Desiderata}
+In the following, are listed the desiderata that the meta-methodology should satisfy.
+% 1. List the meta-methodology desiderata/requirements
 
 
-\section{The Roles(?)}
+\begin{enumerate}[label=\textbf{R\arabic*}, ref=R\arabic*]
+    % 1.1 the methodology should consider the cultural context and the domain AI system under design
+    \item\label{req:R1} \textbf{Context and Domain Awareness}: The methodology should consider the cultural context and the domain of \ac{AI} system under design.
+    
+    AI systems have been applied in several (and critical) use cases. For each of them, the constraints and requirements change, so through the methodology, it should be possible to understand the system domain and be context-aware.
+
+    % 1.2 the methodology should adapt to any change in the cultural context as it evolves
+    \item\label{req:R2} \textbf{Adaptability}: The methodology should adapt to any change in the cultural context as it evolves.
+    
+    Some context could be volatile in terms of societal norms and cultural changes, so the methodology should be able to adjust and align to new constraints.
+    
+    % 1.3 the methodology should assist experts in translating the social-legal requirements into practice
+    \item\label{req:R3} \textbf{Requirements Translation}: The methodology should assist experts in translating the socio-legal requirements into practice.
+    
+    A big challenge in this field, is to understand how legal constraints can be applied, and how technical steps can be identified to satisfy the requirements. That's why the methodology should provide a mechanism assisting this phase.
+    
+    % 1.4 the methodology should account for both pre-existing AI systems, datasets, and algorithms, and new AI systems
+    \item\label{req:R4} \textbf{Legacy and Novel Systems}: The methodology should account for both pre-existing and new \ac{AI} systems.
+    
+    It is reasonable that the methodology should be able to be applied to new software systems, but it would be a big lack if it could not be applied to already existing systems, remembering that there are a lot of deployed systems that, probably, are not fair.
+
+    % 1.5 the methodology should not just provide a theoretical guideline, but also assist the AI system creation
+    \item\label{req:R5} \textbf{Building the AI System}: The methodology should not just provide a theoretical guideline, but also assist the AI system creation. 
+    
+    This means that it is necessary a software reification of the methodology permitting to be applied practically, obtaining eventually, a fair AI system.
+\end{enumerate}
+
+
+% 2. Concepts
+\section{Concepts}
+
+\paragraph{The Roles.}
+
+% 2.1. integration of multiple perspectives and representing legal contraints through a Q/A
+....
+
+
+\paragraph{Questionnaire.}
+
+
+% 2.1.1 questions designed ad-hoc from a team of multidisciplinary experts
+
+% 2.2 Order of questions
+\paragraph{Order of Questions.}
+
+% 2.2.1 the order of the questions is important, as the answer to a question can influence the following ones
+
+% 2.3 Decision support mechanism (emphasis also on stakeholder awareness)
+\paragraph{Decision Support.}
+
+
+% ???? (Maybe roles?)
+
+% 3. The Q/A mechanism
+
+% 3. why a DAG for the Q/A
+
+% 3.0. provide a formal description of the decision-based graph
+
+% 3.1 the DAG is a way to represent the decision-making process
+
+% 3.2 the DAG is a way undertand the application context and to represent the constraints
+
+% 3.3 the DAG can evolve and change over time (note versioning system) (reinforce the META-)
+
+% 3.4 in this way we can provide also technical steps
+
+% 3.5 remarking order of questions 
+
+
+% 4. Automation
+
+% 5. pros and cons of the methodology
+
 
 \subsection{Stakeholders Awareness}
 
@@ -325,7 +430,7 @@ Legal and ethical frameworks tend to be verbose and highly context-specific, rel
 
 \section{Decision Support System}
 
-\section{Assisting \ac{AI} System Building}
+\section{Assisting \acs{AI} System Building}
 
 
 
