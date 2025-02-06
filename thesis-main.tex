@@ -25,7 +25,8 @@
 
 % Definition of acronyms
 \acrodef{AI}{Artificial Intelligence}
-
+\acrodef{BU}{Business User}
+\acrodef{TU}{Technical User}
 % temporary fix for acronyms (https://github.com/oetiker/acronym/issues/62)
 \makeatletter
 \AtBeginDocument
@@ -77,8 +78,19 @@ Optional. Max a few lines.
 \chapter{Introduction}\label{chap:introduction}
 %----------------------------------------------------------------------------------------
 
-\paragraph{What is Fairness?}
 
+\paragraph{Structure of the Thesis}
+
+\note{At the end, describe the structure of the paper}
+
+
+
+
+%----------------------------------------------------------------------------------------
+\chapter{Background}\label{chap:background}
+%----------------------------------------------------------------------------------------
+
+\section{What is Fairness?}
 %
 % 1. explaining what is normal fairness, from an ethical and social perspective
 %
@@ -180,31 +192,19 @@ In the following, are listed some of the most common fairness metrics used in th
 \begin{itemize}
     \item \textit{Statistical Parity Difference} (SPD) measures the difference between the probability of the privileged and unprivileged classes receiving a favorable outcome. This measure should be equal to 0 to be fair.
     
-    Formally it is defined as:
-    \[
-        SPD = P(\hat{Y} = 1 | A = a) - P(\hat{Y} = 1 | A = b)
-    \]
+    Formally it is defined as $SPD = P(\hat{Y} = 1 | A = a) - P(\hat{Y} = 1 | A = b)$
+    %
     where $A$ is the sensitive attribute, $\hat{Y}$ is the predicted outcome, and $a$ and $b$ are the privileged and unprivileged groups, respectively.
     
     \item \textit{Disparate Impact} (DI) compares the proportion of individuals that receive a favorable outcome for two groups, a privileged group and an unprivileged group. This measure should be equal to 1 to be fair.
     
-    Formally it is defined as:
-    \[
-        DI = P(\hat{Y} = 1 | A = a) / P(\hat{Y} = 1 | A = b)
-    \]
+    Formally it is defined as $DI = P(\hat{Y} = 1 | A = a) / P(\hat{Y} = 1 | A = b)$
+    %
     where $A$ is the sensitive attribute, $\hat{Y}$ is the predicted outcome, and $a$ and $b$ are the privileged and unprivileged groups, respectively.
     \sidenote{add more metrics?}
     
 \end{itemize}
 
-
-\paragraph{Structure of the Thesis}
-
-\note{At the end, describe the structure of the paper}
-
-%----------------------------------------------------------------------------------------
-\chapter{Background}\label{chap:background}
-%----------------------------------------------------------------------------------------
 
 \note{manca una sezione Lack of engineering methodology?}
 
@@ -233,13 +233,12 @@ Therefore, the \ac{AI} lifecycle needs to be constrained by socio-legal requirem
 %
 This includes understanding the societal impact of \ac{AI} systems, ensuring compliance with legal standards, and adhering to ethical guidelines.
 
-There are also many differences between the socio-legal and technical perspectives. Regarding the \ac{AI} lifecycle, engineers tend to focus on technical aspects and few development phases, in fact the major part of the literature speaks only about \textit{pre-processing}, \textit{in-processing} and \textit{post-processing} (\Cref{fig:ai-lifecycle} \cite{DBLP:conf/ijcai/CalegariCMO23}).
-\sidenote{la citazione va bene anche a fianco dell'immagine?}
+There are also many differences between the socio-legal and technical perspectives. Regarding the \ac{AI} lifecycle, engineers tend to focus on technical aspects and few development phases, in fact the major part of the literature speaks only about \textit{pre-processing}, \textit{in-processing} and \textit{post-processing} (\Cref{fig:ai-lifecycle}).
 %
 \begin{figure}
     \centering
     \includegraphics[width=.6\linewidth]{figures/ai-lifecycle.png}
-    \caption{Fair \ac{AI} lifecycle}
+    \caption{Fair \acs{AI} lifecycle from \cite{DBLP:conf/ijcai/CalegariCMO23}}
     \label{fig:ai-lifecycle}
 \end{figure}
 %
@@ -381,20 +380,87 @@ In the following, are listed the desiderata that the meta-methodology should sat
 \section{Concepts}
 
 \paragraph{The Roles.}
+In the proposed methodology process, there are two main roles involved:
+\begin{enumerate}
+    \item \textbf{\ac{BU}}, also called \textbf{stakeholder}, who is the person commissioning the \ac{AI} system.
+    \item \textbf{\ac{TU}}, who is the person with technical background, assisting the \ac{BU} in the development of the \ac{AI} system.
+\end{enumerate}
 
-% 2.1. integration of multiple perspectives and representing legal contraints through a Q/A
-....
+With respect to \ac{BU}, it is assumed that he or she may have limited or no technical knowledge.
+%
+This is a common scenario in the real world, where often stakeholders are people with a specific domain expertise, but not necessarily with technical skills.
+%
+One of the goal of the methodology, is to provide a way to assist the \ac{BU} in the development of the \ac{AI} system, without requiring necessarily deep technical knowledge.
+%
+Potentially, stakeholder could even build a fair \ac{AI} system without the need of a \ac{TU}.
+
+On the other hand, the \acl{TU}, despite is the person with technical background, he or she is not the responsible for the entire system development.
+%
+Firstly, \ac{TU} must be able to assist \ac{BU} during the process to clarify any technicalities that may arise, and secondly, he or she must have some knowledge about basics of fairness.
+
+Finally, \ac{TU} may contribute to the system development through the implementation of scripts/computational processes involved in the building of the system and integrated in the methodology.
+%
+In fact, the software reification of the methodology will be a tool providing APIs for technical people, in order to permit them to attach their scripts.
+
 
 
 \paragraph{Questionnaire.}
+% 2.1. integration of multiple perspectives and representing legal contraints through a Q/A
+Through discussions among experts from the involved fields, the need emerged for a practical understanding of the domain and the cultural context of the system under design, in a manner that is comprehensive to people of any background.
+%
+The proposed approach relies on a straightforward questionnaire, which directly engages the \acl{BU} with questions regarding the system's domain.
 
+% 2.1.1 also to represent practical steps
+The questionnaire serves as a structured flow of questions and answers designed to gather essential contextual information. Depending on that, it provides practical steps to guide the development of a fair \ac{AI} system.
+%
+Questionnaire is not just used to collect information, it also acts as a tool to assist the \ac{BU} in making well-informed decisions. At the same time, questions represent also technical steps to be taken, addressing the socio-legal constraints in a comprehensible way.
+%
+This approach is central to the methodology, owing to its simplicity and versatility in capturing constraints and supporting multiple use cases.
 
-% 2.1.1 questions designed ad-hoc from a team of multidisciplinary experts
+% 2.1.2 questions designed ad-hoc from a team of multidisciplinary experts
+The pool of questions and answers should be designed ad-hoc from a team of multidisciplinary experts. 
+%
+This is a crucial, and non-trivial, step in the methodology, as the questions should be able to capture the constraints and requirements from legal frameworks, but also to provide technicalities to be addressed in the proper way and at right time in the process.
+
+Examples of questions that could be asked are:
+\begin{itemize}
+    \item ``In what area will the \ac{AI} system be applied?'' (Healthcare, Finance, Hiring, etc.)
+    \item ``Do you have some AI system already in place, or are you developing an AI system?''
+    \item ``Is the dataset sufficiently representative of the population where the system will be used?''
+\end{itemize}
+%
+But also more technical questions like:
+\begin{itemize}
+    \item ``What are the fairness metrics that should be considered?'' (Statistical Parity Difference, Disparate Impact, etc.)
+    \item ``Which are the proxies for the sensitive features?''
+    \item ``Which data mitigation algorithm do you want to use?'' (Disparate Impact Remover, Learned Fair Representations, etc.)
+\end{itemize}
+
 
 % 2.2 Order of questions
 \paragraph{Order of Questions.}
+In the previous paragraph it was mentioned that the flow of questions contains generic and technical questions.
+%
+The questionnaire should follow a structured approach, beginning with general questions before gradually introducing more technical aspects.
+%
+Initially, broad and non-technical questions are asked to establish a clear understanding of the system’s domain, purpose, and the cultural or business context in which it operates.
+%
+As the questionnaire progresses, the questions become more specific and technical.
+%
+At one point it becomes mandatory to introduce technical aspects because in the end the questionnaire has to converge to the effective building of the fair \ac{AI} system.
 
 % 2.2.1 the order of the questions is important, as the answer to a question can influence the following ones
+There is another important concept related to the order of questions: the answer to a question can influence the following ones.
+%
+This feature is to enable the methodology to adapt to the context and asking later more tailored questions based on the previous answers.
+%
+Moreover, it is also useful to enrich the part of system development, as it should be possible to follow multiple paths to make an AI system fair.
+%
+For instance, the \acl{BU} could decide to preprocess the dataset twice, or choose to perform just in-processing mitigation.
+
+These mechanisms lead to a more flexible and adaptable questionnaire, capable of addressing a wide range of contexts and applications, enabling also branching and joining paths in the flow.
+
+
 
 % 2.3 Decision support mechanism (emphasis also on stakeholder awareness)
 \paragraph{Decision Support.}
@@ -421,7 +487,7 @@ In the following, are listed the desiderata that the meta-methodology should sat
 
 % 4. Automation
 
-% 5. pros and cons of the methodology
+% 5. Strengths and Limitations (pros and cons of the methodology)
 
 
 \subsection{Stakeholders Awareness}
