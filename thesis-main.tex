@@ -27,6 +27,8 @@
 \acrodef{AI}{Artificial Intelligence}
 \acrodef{BU}{Business User}
 \acrodef{TU}{Technical User}
+\acrodef{Q/A}{Question--Answering}
+
 % temporary fix for acronyms (https://github.com/oetiker/acronym/issues/62)
 \makeatletter
 \AtBeginDocument
@@ -104,7 +106,7 @@ The concept of fairness evolves based on cultural, historical, and contextual fa
 
 
 \paragraph{Fairness in \acs{AI}.}
-\acresetall{AI}
+
 % 2. explaining what is fairness in AI, from a technical perspective
 From a technical point of view, fairness in \ac{AI} refers to the development and deployment of \ac{AI} systems that minimize biases and prevent discriminatory outcomes.
 %
@@ -464,39 +466,99 @@ These mechanisms lead to a more flexible and adaptable questionnaire, capable of
 
 % 2.3 Decision support mechanism (emphasis also on stakeholder awareness)
 \paragraph{Decision Support.}
+% 2.3.1 the Q/A mechanism is also a decision support mechanism
+The methodology includes---alongside the \ac{Q/A}---a Decision Support Mechanism, aiming to simplify the process of making decisions regarding fairness-related or complex questions.
+%
+% 2.3.2 the Q/A mechanism is a way to make the BU aware of the fairness problem
+Fairness problem should be taken into account not just by experts in the field, but also by stakeholders, as the relevance of the problem has grown significantly in the last years.
+%
+% 2.3.3 the Q/A mechanism does not force the BU to make decisions, but it assists him/her in making well-informed decisions
+Therefore, an important goal of the methodology is to make the \ac{BU} aware of the fairness problem, and to assist him/her in making well-informed decisions.
+%
+In this way, the \ac{BU} can gain a deeper understanding of the topic, and can proceed with the development of the system more responsibly.
+%
+Importantly, the mechanism does not impose decisions but rather suggests the \ac{BU} the answer he or she probably should give.
 
+% 2.3.4 the software also providev additional information and resources to the BU and not just questions
+In addition to posing relevant questions and steps, the software provides supplementary information and resources, like charts and tables, helping the \ac{BU} to get a deeper understanding of what he is doing and to assess the fairness of the system more effectively.
+\sidenote{in alcuni punti come qui gia parlo di software, prematuro?}
 
-% ???? (Maybe roles?)
 
 % 3. The Q/A mechanism
+\section{The \acs{Q/A} Mechanism}
 
-% 3. why a DAG for the Q/A
+The \acf{Q/A} mechanism represents the core of this methodology, it has been the starting point to bridge the gap between socio-legal and technical perspectives.
+%
+It provides a structured way to ``translate'' the legal constraints into technical steps, contextualizing them in the application domain.
+%
+Behind the scenes, the \ac{Q/A} mechanism is a \textbf{directed graph} that represents the decision-making process.
 
 % 3.0. provide a formal description of the decision-based graph
-
-% 3.1 the DAG is a way to represent the decision-making process
-
-% 3.2 the DAG is a way undertand the application context and to represent the constraints
-
-% 3.3 the DAG can evolve and change over time (note versioning system) (reinforce the META-)
-
-% 3.4 in this way we can provide also technical steps
-
-% 3.5 remarking order of questions 
+Formally, the graph is defined as $G = (V, E)$, where $V$ is the set of nodes and $E \subseteq V \times V$ is the set of directed edges.
+%
+The node set $V$ consists of two distinct types: question nodes and answer nodes, such that each question node must have at least one outgoing edge leading to an answer node, and each answer node must have at least one outgoing edge towards a question node.
 
 
-% 4. Automation
+% 3.0 why a graph for the Q/A
+\paragraph{Why a Decision-Based Graph?}
+% 3.1 the graph is a way to represent the decision-making process
+This structure ensures that the graph alternates between questions and answers, forming a coherent flow of a typical \ac{Q/A} session.
+%
+Moreover, this type of graph is particularly suitable for representing decision-making processes, as it allows for a structured flow of questions and answers, guiding the user through a series of steps.
+%
+The graph may contain cycles, allowing the repetition of some questions (and steps), giving even more flexibility to the process.
 
-% 5. Strengths and Limitations (pros and cons of the methodology)
+% 3.2 the graph is a way undertand the application context and to represent the constraints, remarking order of questions 
+With the branching feature, it is possible to follow multiple paths, depending on the answers given by the \acf{BU} (and so depending on the context).
+%
+Remarking the order of questions, the decision-based graph effectively encodes a deterministic yet non-linear flow of questions and answers, where each answer directly influences the next question to be asked.
+
+% 3.3 the graph can evolve and change over time (note versioning system) (reinforce the META-)
+The graph is a data structure that can evolve and change easily over time, as the methodology actually is a \textbf{meta-}methodology, it is possible to create multiple versions of the graph.
+%
+For instance, it is possible to design different pools of questions and answers, and indeed different graphs, each one tailored to a specific context or application domain.
+%
+Furthermore, this flexibility enables also the possibility to adapt to any change in the cultural context taken into account, leading to a possible ``methodology versioning''.
+
+% 4.4 types of graphs (general and project-related)
+\paragraph{General Graph vs Project-Related Graph.}
+So far, it has been described the general blueprint of the \ac{Q/A}: how to represent questions and answers, how the graph is structured, how the questionnaire and all its features look like.
+%
+However, from the \acl{BU} (and \acl{TU}) perspective, the sequence of questions seems a linear path.
+%
+It is intentioned that, the person involved in the process, has the feeling of just compiling a questionnaire, where all the complexity is hidden behind the scenes.
+%
+In \cref{fig:qa-graph-path} is shown a graphical representation of the \ac{Q/A} mechanism, where the flow of questions from users' perspective is defined by a path in the graph.
+
+The end user can navigate freely through the questionnaire, answering questions and returning to previous ones in case of need.
+%
+Of course in this way it is possible to change the path, and so the flow of future questions.
 
 
-\subsection{Stakeholders Awareness}
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/qa-graph-path.pdf}
+    \caption{
+        A graphical representation of the \ac{Q/A} mechanism, viewed as a graph by experts and as a sequential path by business and technical users (from \cite{hicssfairness2025}).
+    }
+    \label{fig:qa-graph-path}
+\end{figure}
 
-\section{The Q/A Mechanism}
 
-\section{Decision Support System}
 
-\section{Assisting \acs{AI} System Building}
+
+% 5. Automation
+\section{Automation}
+
+
+% 5.x in this way we can provide also technical steps
+
+
+
+% TODO: Strengths and Limitations (pros and cons of the methodology)
+% here or at the end?
+
+
 
 
 
