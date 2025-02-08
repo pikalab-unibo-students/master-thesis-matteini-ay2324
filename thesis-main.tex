@@ -396,7 +396,7 @@ One of the goal of the methodology, is to provide a way to assist the \ac{BU} in
 %
 Potentially, stakeholder could even build a fair \ac{AI} system without the need of a \ac{TU}.
 
-On the other hand, the \acl{TU}, despite is the person with technical background, he or she is not the responsible for the entire system development.
+On the other hand, the \acl{TU}, despite is the person with technical background, is not the responsible for the entire system development.
 %
 Firstly, \ac{TU} must be able to assist \ac{BU} during the process to clarify any technicalities that may arise, and secondly, he or she must have some knowledge about basics of fairness.
 
@@ -405,10 +405,9 @@ Finally, \ac{TU} may contribute to the system development through the implementa
 In fact, the software reification of the methodology will be a tool providing APIs for technical people, in order to permit them to attach their scripts.
 
 
-
 \paragraph{Questionnaire.}
 % 2.1. integration of multiple perspectives and representing legal contraints through a Q/A
-Through discussions among experts from the involved fields, the need emerged for a practical understanding of the domain and the cultural context of the system under design, in a manner that is comprehensive to people of any background.
+Discussions among experts from involved fields highlighted the need for a practical understanding of the domain and the cultural context of the system being designed, ensuring that it is accessible and comprehensible to people of any background.
 %
 The proposed approach relies on a straightforward questionnaire, which directly engages the \acl{BU} with questions regarding the system's domain.
 
@@ -418,6 +417,15 @@ The questionnaire serves as a structured flow of questions and answers designed 
 Questionnaire is not just used to collect information, it also acts as a tool to assist the \ac{BU} in making well-informed decisions. At the same time, questions represent also technical steps to be taken, addressing the socio-legal constraints in a comprehensible way.
 %
 This approach is central to the methodology, owing to its simplicity and versatility in capturing constraints and supporting multiple use cases.
+%
+The overall concept is shown in \cref{fig:concept}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.90\linewidth]{figures/concept.pdf}
+    \caption{Concept of the proposed approach to fairness engineering from \cite{hicssfairness2025}.}
+    \label{fig:concept}
+\end{figure}
 
 % 2.1.2 questions designed ad-hoc from a team of multidisciplinary experts
 The pool of questions and answers should be designed ad-hoc from a team of multidisciplinary experts. 
@@ -493,7 +501,7 @@ It provides a structured way to ``translate'' the legal constraints into technic
 %
 Behind the scenes, the \ac{Q/A} mechanism is a \textbf{directed graph} that represents the decision-making process.
 
-% 3.0. provide a formal description of the decision-based graph
+% providing a formal description of the decision-based graph
 Formally, the graph is defined as $G = (V, E)$, where $V$ is the set of nodes and $E \subseteq V \times V$ is the set of directed edges.
 %
 The node set $V$ consists of two distinct types: question nodes and answer nodes, such that each question node must have at least one outgoing edge leading to an answer node, and each answer node must have at least one outgoing edge towards a question node.
@@ -520,7 +528,7 @@ For instance, it is possible to design different pools of questions and answers,
 %
 Furthermore, this flexibility enables also the possibility to adapt to any change in the cultural context taken into account, leading to a possible ``methodology versioning''.
 
-% 4.4 types of graphs (general and project-related)
+% 3.4 types of graphs (general and project-related)
 \paragraph{General Graph vs Project-Related Graph.}
 So far, it has been described the general blueprint of the \ac{Q/A}: how to represent questions and answers, how the graph is structured, how the questionnaire and all its features look like.
 %
@@ -529,11 +537,6 @@ However, from the \acl{BU} (and \acl{TU}) perspective, the sequence of questions
 It is intentioned that, the person involved in the process, has the feeling of just compiling a questionnaire, where all the complexity is hidden behind the scenes.
 %
 In \cref{fig:qa-graph-path} is shown a graphical representation of the \ac{Q/A} mechanism, where the flow of questions from users' perspective is defined by a path in the graph.
-
-The end user can navigate freely through the questionnaire, answering questions and returning to previous ones in case of need.
-%
-Of course in this way it is possible to change the path, and so the flow of future questions.
-
 
 \begin{figure}
     \centering
@@ -544,16 +547,45 @@ Of course in this way it is possible to change the path, and so the flow of futu
     \label{fig:qa-graph-path}
 \end{figure}
 
+The end user can navigate freely through the questionnaire, answering questions and returning to previous ones in case of need.
+%
+Of course in this way it is possible to change the path, and so the flow of future questions.
 
 
 
-% 5. Automation
+% 4. Automation
 \section{Automation}
 
+At this stage, it is yet vague how the methodology proposed can inject fairness measures and practical steps into the development process.
+%
+Here is the point where \acf{TU} contributes to the process, by implementing scripts and computational operations that are eventually integrated into the final system.
+%
+Said that, \acp{TU} play an important role because, regardless of the complexity and variety of the needed scripts, such scripts can change case by case.
+%
+Moreover, \ac{TU} is still useful as source of technical knowledge and assistance for the \acf{BU}.
 
-% 5.x in this way we can provide also technical steps
+However, while many activities performed by technical users are specific to their respective organizations, certain tasks are generalizable enough to be automated directly by the implemented methodology.
+%
+Relevant examples of this, are the computation of fairness metrics and the identification of biases in datasets.
+%
+These, in fact, are enough consolidated to be automated and integrated into the methodology.
+%
+Rather than requiring individual technical users to develop their own solutions from scratch, the system itself can integrate these capabilities as built-in system-level functions, ensuring consistency, efficiency, and reliability across different projects.
 
+The reification of the meta-methodology should be purposefully designed to facilitate this progression toward greater automation. 
+%
+When certain actions--—such as evaluating responses or detecting biases--—are widely applicable rather than organization-specific, they can be implemented as reusable system-level solutions.
+%
+This eliminates redundancy, reducing the need for technical users to repeatedly address the same challenges independently.
 
+These scripts to be injected to the methodology, can be provided by methodology implementation itself, developed by technical users within organizations, or contributed by third-party developers.
+%
+This flexible approach ensures that automation capabilities can expand over time, adapting to emerging best practices.
+%
+In the early stages of system adoption, technical users may handle certain tasks manually, but as the methodology matures, these tasks can gradually be automated.
+
+% 4.x in this way we can provide also technical steps
+Technically, these scripts can be attached easily to the  software implementation of such methodology, and they can be triggered whenever some kind of events occur, like the answer to a question, or termination of another computation.
 
 % TODO: Strengths and Limitations (pros and cons of the methodology)
 % here or at the end?
@@ -594,7 +626,7 @@ Of course in this way it is possible to change the path, and so the flow of futu
 
 \backmatter
 
-\nocite{*} % Remove this as soon as you have the first citation
+% \nocite{*} % Remove this as soon as you have the first citation
 
 \bibliographystyle{alpha}
 \bibliography{bibliography}
