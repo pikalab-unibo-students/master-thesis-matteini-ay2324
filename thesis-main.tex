@@ -118,7 +118,11 @@ The main challenges in this field are building \texttt{fair-by-design} systems, 
 %
 % The challenge in AI fairness lies in defining and balancing these technical fairness measures while maintaining model accuracy and practical utility.
 
-Before the advent of fairness, \ac{AI} systems were developed with the primary goal of optimizing performance metrics, such as accuracy and efficiency. Nowadays, that fairness is becoming a crucial aspect to consider, accuracy is no more the only metric to optimize, it is necessary to find a balance between accuracy and fairness. Besides that, fairness can also be in contrast with the performance of the model, making difficult to find a good trade-off between these two aspects.
+Before the advent of fairness, \ac{AI} systems were developed with the primary goal of optimizing performance metrics, such as accuracy and efficiency.
+%
+Nowadays, that fairness is becoming a crucial aspect to consider, accuracy is no more the only metric to optimize, it is necessary to find a balance between accuracy and fairness.
+%
+Besides that, fairness can also be in contrast with the performance of the model, making difficult to find a good trade-off between these two aspects.
 
 % 3. explaining why fairness in AI is important
 Fairness is becoming crucial because \ac{AI} systems increasingly influence decision-making processes in various sectors of society, including hiring, lending and healthcare.
@@ -166,7 +170,9 @@ The AI Act, proposed by the European Union, is a comprehensive regulatory framew
 %
 It categorizes AI applications into different risk levels—unacceptable risk, high risk, limited risk, and minimal risk—imposing stricter requirements on higher-risk systems, such as those used in hiring, law enforcement, and healthcare.
 %
-These requirements include transparency, human oversight, and bias mitigation. However, translating these legal constraints into practical technical steps is not trivial. 
+These requirements include transparency, human oversight, and bias mitigation.
+%
+However, translating these legal constraints into practical technical steps is not trivial.
 
 Concepts like fairness, accountability, and explainability are difficult to quantify, and AI models often operate as black boxes, making compliance complex.
 %
@@ -228,14 +234,17 @@ However, when fairness is taken into account, each step needs to be revisited in
 
 % 2 fairness can be achieved only if socio-legal perspective is taken into account, talk about the importance of the socio-legal perspective
 
-To achieve this goal, the technical perspective is not enough. 
+To achieve this goal, the technical perspective is not enough.
+%
 Fairness is a multidisciplinary concept that involves social, legal, and ethical aspects.
 %
 Therefore, the \ac{AI} lifecycle needs to be constrained by socio-legal requirements that engineers must consider during the development process.
 %
 This includes understanding the societal impact of \ac{AI} systems, ensuring compliance with legal standards, and adhering to ethical guidelines.
 
-There are also many differences between the socio-legal and technical perspectives. Regarding the \ac{AI} lifecycle, engineers tend to focus on technical aspects and few development phases, in fact the major part of the literature speaks only about \textit{pre-processing}, \textit{in-processing} and \textit{post-processing} (\Cref{fig:ai-lifecycle}).
+There are also many differences between the socio-legal and technical perspectives.
+%
+Regarding the \ac{AI} lifecycle, engineers tend to focus on technical aspects and few development phases, in fact the major part of the literature speaks only about \textit{pre-processing}, \textit{in-processing} and \textit{post-processing} (\Cref{fig:ai-lifecycle}).
 %
 \begin{figure}
     \centering
@@ -248,7 +257,11 @@ Respectively, \textit{pre-processing} involves data collection and preparation, 
 
 Often engineers adopt reductionist approaches addressing a field that is not their own, discarding the big picture of social, economic, and institutional constraints.
 %
-On the other hand, socio-legal experts consider a broader range of activities and phases. They focus on ``building blocks'' for fair \ac{AI} such as risk assessment, stakeholder identification, regulatory analysis, and fundamental human rights impact assessment. In particular, with respect to fundamental rights impact assessments, these will be legally required for some \ac{AI} systems, yet no standard for implementing them has emerged so far.
+On the other hand, socio-legal experts consider a broader range of activities and phases.
+%
+They focus on ``building blocks'' for fair \ac{AI} such as risk assessment, stakeholder identification, regulatory analysis, and fundamental human rights impact assessment.
+%
+In particular, with respect to fundamental rights impact assessments, these will be legally required for some \ac{AI} systems, yet no standard for implementing them has emerged so far.
 
 
 
@@ -303,7 +316,9 @@ In contrast, technical disciplines prioritize concrete steps and pragmatic aspec
 
 % 6. lack of methodology that takes into account both perspectives
 
-In literature, there is a lack of methodologies regarding the building of fair \ac{AI} systems. The lack is not just related to the technical perspective, but also to the socio-legal one.
+In literature, there is a lack of methodologies regarding the building of fair \ac{AI} systems.
+%
+The lack is not just related to the technical perspective, but also to the socio-legal one.
 %
 This is enhanced by the fact that design and develop a single methodology fitting all kinds of \ac{AI} systems is not feasible, as the system requirements and constraints change depending on the context and the application domain.
 %
@@ -501,14 +516,33 @@ It provides a structured way to ``translate'' the legal constraints into technic
 %
 Behind the scenes, the \ac{Q/A} mechanism is a \textbf{directed graph} that represents the decision-making process.
 
-% providing a formal description of the decision-based graph
-Formally, the graph is defined as $G = (V, E)$, where $V$ is the set of nodes and $E \subseteq V \times V$ is the set of directed edges.
+% providing a formal description of the graph
+\paragraph{About the Graph.}
+Formally, the graph is defined as $G = (V, E)$, where $V$ is the set of nodes and $E$ is the set of directed edges.
 %
-The node set $V$ consists of two distinct types: question nodes and answer nodes, such that each question node must have at least one outgoing edge leading to an answer node, and each answer node must have at least one outgoing edge towards a question node.
+\textbf{Nodes} consist of two distinct types: \textit{question nodes} and \textit{answer nodes}.
+%
+Each question node contains a natural language sentence expressing an inquiry, plus an identifier (unique within the whole graph) such as \texttt{Q1}, \texttt{Q2}, etc.
+%
+They can also contain other arbitrary information, like the type of question (single or multiple choice), a brief description, and so on.
+%
+Answer nodes, similarly, contain a natural language sentence expressing a possible answer to a question, an identifier (unique within the whole graph) such as \texttt{Q1-A1}, \texttt{Q1-A2}, etc., and other arbitrary and useful information.
+
+\textbf{Edges} are of two sorts too: either \textit{question-to-answer} edges, denoted by $Q \to A$, or \textit{answer-to-question} edges, denoted by $A \to Q$.
+%
+Edges of the first type ($Q \to A$) indicate that question $Q$ has as a possible answer $A$, whereas edges of the second type ($A \to Q$) represent that next question to be asked is $Q$ if the selected answer to the previous question was $A$.
+
+These statements assume that there cannot exist links between two question nodes or two answer nodes.
+%
+It is also assumed that each question must have \textit{at least one} outgoing edge leading to an answer node, and each answer node must have \textit{exactly one} outgoing edge towards a question node.
+
+Proceeding with the graph details, the \textbf{root} node is the first question to be asked to each \ac{BU}, while \textbf{leaves} represent the answers to the last question, which are, technically speaking, answer nodes with \textit{no outgoing} edges.
+
+Finally, it is assumed that the graph is \textit{connected}: each questionnaire is guaranteed to have a beginning and an end, meaning that there is \textit{at least one} path from the root to each leaf.
 
 
 % 3.0 why a graph for the Q/A
-\paragraph{Why a Decision-Based Graph?}
+\paragraph{Why a Graph?}
 % 3.1 the graph is a way to represent the decision-making process
 This structure ensures that the graph alternates between questions and answers, forming a coherent flow of a typical \ac{Q/A} session.
 %
