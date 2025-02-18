@@ -5,6 +5,7 @@
 \usepackage{notes}
 \usepackage{shortcuts}
 \usepackage{acronym}
+\usepackage{subfig}
 \usepackage[inline]{enumitem}
 
 
@@ -28,6 +29,8 @@
 \acrodef{BU}{Business User}
 \acrodef{TU}{Technical User}
 \acrodef{Q/A}{Question--Answering}
+\acrodef{DDD}{Domain Driven Design}
+\acrodef{API}{Application Programming Interface}
 
 % temporary fix for acronyms (https://github.com/oetiker/acronym/issues/62)
 \makeatletter
@@ -77,7 +80,8 @@ Optional. Max a few lines.
 \mainmatter
 
 %----------------------------------------------------------------------------------------
-\chapter{Introduction}\label{chap:introduction}
+\chapter{Introduction}%
+\label{chap:introduction}
 %----------------------------------------------------------------------------------------
 
 
@@ -89,7 +93,8 @@ Optional. Max a few lines.
 
 
 %----------------------------------------------------------------------------------------
-\chapter{Background}\label{chap:background}
+\chapter{Background}%
+\label{chap:background}
 %----------------------------------------------------------------------------------------
 
 \section{What is Fairness?}
@@ -118,7 +123,7 @@ The main challenges in this field are building \texttt{fair-by-design} systems, 
 %
 % The challenge in AI fairness lies in defining and balancing these technical fairness measures while maintaining model accuracy and practical utility.
 
-Before the advent of fairness, \ac{AI} systems were developed with the primary goal of optimizing performance metrics, such as accuracy and efficiency.
+Before the advent of fairness, \ac{AI} systems were developed with the primary goal of optimizing performance metrics, such as accuracy.
 %
 Nowadays, that fairness is becoming a crucial aspect to consider, accuracy is no more the only metric to optimize, it is necessary to find a balance between accuracy and fairness.
 %
@@ -195,7 +200,7 @@ These fairness metrics, are a set of indexes that can be used to detect biases i
 
 % 5.2 list the main fariness matrics providing a brief description and formal definition
 
-In the following, are listed some of the most common fairness metrics used in the literature (\cite{DBLP:conf/bias/IrfanML23}):
+In the following, are listed some of the most common fairness metrics used in the literature~\cite{DBLP:conf/bias/IrfanML23}:
 
 \begin{itemize}
     \item \textit{Statistical Parity Difference} (SPD) measures the difference between the probability of the privileged and unprivileged classes receiving a favorable outcome. This measure should be equal to 0 to be fair.
@@ -249,7 +254,7 @@ Regarding the \ac{AI} lifecycle, engineers tend to focus on technical aspects an
 \begin{figure}
     \centering
     \includegraphics[width=.6\linewidth]{figures/ai-lifecycle.png}
-    \caption{Fair \acs{AI} lifecycle from \cite{DBLP:conf/ijcai/CalegariCMO23}}
+    \caption{Fair \acs{AI} lifecycle from~\cite{DBLP:conf/ijcai/CalegariCMO23}}
     \label{fig:ai-lifecycle}
 \end{figure}
 %
@@ -291,7 +296,7 @@ Moving forward, privileged and unprivileged groups change depending on the appli
 
 Bridging the socio-legal and technical perspectives on fairness is a significant challenge. 
 %
-Guidelines and descriptive methodologies exist to address fairness compliance from a social-legal perspective, but their approach offer broad guidelines without defining practical steps, leaving interpretation to technical experts (\cite{hicssfairness2025}).
+Guidelines and descriptive methodologies exist to address fairness compliance from a social-legal perspective, but their approach offer broad guidelines without defining practical steps, leaving interpretation to technical experts~\cite{hicssfairness2025}.
 %
 The lack of alignment between these viewpoints makes it difficult to translate abstract fairness principles into concrete computational methods.
 %
@@ -334,7 +339,8 @@ Of course, the creation of such methodology is damaged by the multidisciplinary 
 
 
 %----------------------------------------------------------------------------------------
-\chapter{The Meta-Methodology}\label{chap:meta-methodology}
+\chapter{The Meta-Methodology}%
+\label{chap:meta-methodology}
 %----------------------------------------------------------------------------------------
 
 % 0. explaining what is a methodology and why we need it to build fair AI systems
@@ -417,7 +423,7 @@ Firstly, \ac{TU} must be able to assist \ac{BU} during the process to clarify an
 
 Finally, \ac{TU} may contribute to the system development through the implementation of scripts/computational processes involved in the building of the system and integrated in the methodology.
 %
-In fact, the software reification of the methodology will be a tool providing APIs for technical people, in order to permit them to attach their scripts.
+In fact, the software reification of the methodology will be a tool providing \acp{API} for technical people, in order to permit them to attach their scripts.
 
 
 \paragraph{Questionnaire.}
@@ -438,7 +444,7 @@ The overall concept is shown in \cref{fig:concept}.
 \begin{figure}
     \centering
     \includegraphics[width=0.90\linewidth]{figures/concept.pdf}
-    \caption{Concept of the proposed approach to fairness engineering from \cite{hicssfairness2025}.}
+    \caption{Concept of the proposed approach to fairness engineering from~\cite{hicssfairness2025}.}
     \label{fig:concept}
 \end{figure}
 
@@ -553,7 +559,7 @@ The graph may contain cycles, allowing the repetition of some questions (and ste
 % 3.2 the graph is a way undertand the application context and to represent the constraints, remarking order of questions 
 With the branching feature, it is possible to follow multiple paths, depending on the answers given by the \acf{BU} (and so depending on the context).
 %
-Remarking the order of questions, the decision-based graph effectively encodes a deterministic yet non-linear flow of questions and answers, where each answer directly influences the next question to be asked.
+Remarking the order of questions, the graph effectively encodes a deterministic yet non-linear flow of questions and answers, where each answer directly influences the next question to be asked.
 
 % 3.3 the graph can evolve and change over time (note versioning system) (reinforce the META-)
 The graph is a data structure that can evolve and change easily over time, as the methodology actually is a \textbf{meta-}methodology, it is possible to create multiple versions of the graph.
@@ -576,7 +582,7 @@ In \cref{fig:qa-graph-path} is shown a graphical representation of the \ac{Q/A} 
     \centering
     \includegraphics[width=\linewidth]{figures/qa-graph-path.pdf}
     \caption{
-        A graphical representation of the \ac{Q/A} mechanism, viewed as a graph by experts and as a sequential path by business and technical users (from \cite{hicssfairness2025}).
+        A graphical representation of the \ac{Q/A} mechanism, viewed as a graph by experts and as a sequential path by business and technical users (from~\cite{hicssfairness2025}).
     }
     \label{fig:qa-graph-path}
 \end{figure}
@@ -629,26 +635,310 @@ Technically, these scripts can be attached easily to the  software implementatio
 
 
 %----------------------------------------------------------------------------------------
-\chapter{Design}\label{chap:design}
+\chapter{Design}%
+\label{chap:design}
 %----------------------------------------------------------------------------------------
+
+In line with the previous chapter, the objective here is to design a software artifact that reifies the proposed meta-methodology, in order to make it usable by stakeholders to develop fair \ac{AI} systems.
+%
+Software design must be flexible and adaptable, as the methodology is intended to be subject to changes and improvements over time.
+
+The final product is designed to be used by \acfp{BU} through an intuitive web interface.
+%
+Hence, frontend will interact with the underlying backend which handles the \ac{Q/A} mechanism and automates technical steps.
 
 \section{Architecture}
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/diagrams/architecture.png}
+    \caption{
+        The overall software architecture of the proposed software system.
+    }
+    \label{fig:architecture}
+\end{figure}
 
+The software adopts an \textbf{event-driven} architecture (\cref{fig:architecture}), as events are used to handle part of the communications between the components.
+%
+This design choice is motivated by the need to trigger automation scripts at specific points, for instance, when a question is answered or when a computation is completed.
+
+The entire system is composed of the following components:
+\begin{enumerate}
+    \item \textbf{Backend}: the core of the system, managing the \ac{Q/A} mechanism and the automation of technical steps.
+    \item \textbf{Database}: a database to store the questions, answers, and other relevant information.
+    \item \textbf{Automation Scripts}: a set of pluggable scripts that automate technical steps, such as computing fairness metrics and mitigating biases.
+    \item \textbf{Event Broker}: component responsible for event handling in the whole system.
+    \item \textbf{Frontend}: the web application that allows \acp{BU} to interact with the system.
+\end{enumerate}
+
+\paragraph{Clean Architecture.}
+
+Backend component is the core of the system, it is a web service encapsulating the business logic managing the \ac{Q/A} mechanism.
+%
+It has been designed using Clean Architecture~\cite{martin2017clean}, in order to separate the business logic from technical details, making the system flexible and technology-agnostic.
+%
+This means that high-level business logics do not depend on low-level implementation details.
+%
+And besides, it improves the separation of concerns, separating clearly core concepts, business rules, and technical details.
+
+Therefore, backend is divided into the following layers:
+
+\begin{enumerate}
+    \item \textbf{Domain}: the layer containing the core domain entities.
+    \item \textbf{Application}: the application-specific business logic.
+    \item \textbf{Presentation}: the interface between domain entities and the external technologies.
+    \item \textbf{Infrastructure}: the outermost layer, containing the implementation details technology-specific.
+\end{enumerate}
+
+% 
+The dependency flow is unidirectional, from the outermost layer (Infrastructure) to the innermost one (Domain).
+%
+So, for instance, Application layer and Presentation layer can depend on Domain layer, but not vice versa.
+%
+
+\section{Detailed Design}
+
+% introduce DDD 
+This section outlines the detailed design of the software system.
+%
+The design choices considered follow the principles of \textbf{\acf{DDD}}~\cite{millett2015ddd}, a software design philosophy that emphasizes the importance of domain model in the development process.
+%
+The main goal of \ac{DDD} is to align the software system with the domain model, ensuring that the software reflects the real-world domain as closely as possible.
+%
+Although the focus of this contribution is not on the software design phase in itself, the adoption of \ac{DDD} is motivated by the volatile nature of the methodology, which is expected to evolve through contributions and improvements from multiple people.
+
+\subsection{Structure}
+% introduce domain entities
+
+\paragraph{Projects.}
+In order to introduce the main \ac{Q/A} entities, it is necessary to define the concept of \texttt{Project}, which is the association with the \ac{AI} system that the \ac{BU} wants to build.
+%
+In fact, each \texttt{ProjectQuestion} is related to (and also identified by) a specific \texttt{Project}.
+%
+This is not just a way to distinguish multiple AI systems creations, but also to encode and store project-specific information in a ``store'' called \texttt{ProjectContext} (or only \texttt{Context}).
+%
+This store is essential because each \ac{AI} system has its own dataset, features, algorithm, and so on.
+%
+Since these data can be of any nature, and are strongly volatile, the idea is to set up a key-value store, without any kind of constraints, where arbitrary (encoded) information can be stored.
+%
+For instance, at some point it will be useful to store a key-value pair where the key is the name of the dataset, and the value is the encoded dataset itself.
+%
+These data then will be available and useful to automation scripts and backend business logic.
+
+
+\paragraph{\ac{Q/A} mechanism.}
+
+\ac{Q/A} mechanism can be intuitively mapped to two main \textbf{domain entities}: \texttt{Question} and \texttt{Answer}.
+%
+However, it is necessary to distinguish between questions and answers that are part of the general graph and those that are project-related.
+%
+Therefore, in the domain model are present the related entities as shown in \cref{fig:entities}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/diagrams/entities.png}
+    \caption{
+        UML class diagram of main \ac{Q/A} entities.
+    }
+    \label{fig:entities}
+\end{figure}
+
+\texttt{GraphQuestion} represents an extension of the general \texttt{Question} entity, containing a set of answer ids that are meant to ``enable'' such question in the graph.
+%
+In other words, a \texttt{GraphQuestion} is a question that is part of the general graph, and the set of answer ids is needed to encode the \textit{answer-to-question} edge ($A \to Q$).
+%
+With regard to admissible answers, for the \texttt{GraphQuestion} is sufficient to rely on the general \texttt{Answer} entity because it doesn't need to have more information.
+
+On the other hand, \texttt{ProjectQuestion}s are part of the project-related graph, and each of them is related to (and also identified by) a specific \texttt{Project}.
+%
+The main difference between \texttt{GraphQuestion} and \texttt{ProjectQuestion} is that the latter has the possibility to ``select'' a certain answer (in the case of single choice questions) or multiple answers (in the case of multiple choice questions).
+%
+Indeed, in this case, answers must have a state representing whether they are selected or not.
+%
+\texttt{ProjectAnswer} entity, in fact, is intended to fulfill this need, as it contains a boolean field, and a \texttt{SelectionStrategy} handling the logics behind the selection.
+
+\vspace{1cm}
+\noindent
+For each \textbf{domain entity}, other \ac{DDD} building blocks are defined:
+
+\begin{itemize}
+    \item \textbf{Factories}: to facilitate the creation of new instances.
+    \item \textbf{Repositories}: to manage the persistence of the entities.
+    \item \textbf{Services}: to handle the business logic related to the entities.
+\end{itemize}
+
+From the structural view point, factories and repositories reside in the Domain layer, as they are intended to simplify the management of domain entities.
+%
+Services instead, are part of the Application layer, since they compose the entire business logic of the system.
+%
+However, the persistence of the entities strongly depends on technological details, so, while contracts are defined in the Domain layer, the actual implementations are pushed away to the Infrastructure layer (as shown in \cref{fig:packages}).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/diagrams/packages.png}
+    \caption{
+        Representation of packages structure.
+    }
+    \label{fig:packages}
+\end{figure}
+
+The same applies to the \texttt{EventsService}, which is a particular service handling the event production and consumption.
+%
+The reason is that an event-driven architecture can be achieved using different technological solutions, and business logic should remain technology-independent.
+%
+Furthermore, due to this layer organization, it is possible to easily interchange the underlying technologies without affecting business logic and core domain entities (for instance using a relational database instead of a NoSQL one).
+
+
+\subsection{Behavior}
+
+The system behavior is mainly concentrated in \textbf{Backend} and \textbf{Automation Scripts} components.
+
+\subsubsection{Backend}
+
+Backend component is a web service that exposes a REST \ac{API}, enabling clients to interact with questions graph and questionnaires.
+%
+Its primary functionalities include modifying the question graph structure (adding, removing, modifying questions) and managing project-related questionnaires compilations.
+%
+It is also possible to create new projects, and, for each of them, starting a new questionnaire session.
+%
+Summarizing, backend is a simple listening web server, that manages requests and trigger events when relevant actions occur.
+
+However, an important aspect to notice in this component behavior, is the \texttt{Context} update of various projects.
+%
+\texttt{Context} updates are essential to the correct business logic functioning, because the major part of fairness-related computations strongly depends on the specific data stored in the \texttt{Context}.
+%
+For example, all data mitigation algorithms require the actual dataset, or the computation of fairness metrics needs the dataset and the selected output and sensitive features.
+%
+Such computations, can be executed by both backend and automation scripts, for this reason \texttt{Context} updates represent a key point in the system behavior.
+
+\subsubsection{Automation Scripts}
+
+Automation Scripts are responsible for responding to specific domain events, performing necessary (fairness-related) computations, and updating system state.
+%
+These scripts act as event-driven processes that listen for predefined triggers, such as selecting an answer to a question, creation of a new dataset, or completion of a fairness metric computation.
+%
+Once the processing is completed, they send relevant updates back to the backend via \ac{API} requests, ensuring that the system remains up-to-date and operates seamlessly without requiring manual intervention.
+
+\subsection{Interaction}
+The starting point of interactions is \ac{BU} that interacts with the system through the Frontend component.
+%
+Frontend is in charge of presenting questions to the \ac{BU}, collecting answers, and sending them to the backend service.
+%
+The backend, in turn, processes the requests and updates the questionnaire state accordingly.
+%
+At this point, backend service triggers an event for each relevant action undertaken, which is caught by all Automation Scripts previously subscribed to the Broker.
+%
+Each script performs its computation, and eventually sends back the results to the backend, which updates the system state and notifies the frontend to display the results (if there are any) to the \ac{BU}.
+%
+It is also possible that, during computations, are triggered other events for other relevant actions, like the processing of a new dataset.
+
+The entire interaction flow is shown in \cref{fig:sequence}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.70\linewidth]{figures/diagrams/sequence.png}
+    \caption{
+        Generic sequence diagram showing the interactions between main components.
+    }
+    \label{fig:sequence}
+\end{figure}
+
+
+
+\subsection{\acs{API}}
+
+\subsubsection{Rest}
+
+Backend service exposes an \ac{API} used to interact with the three main entities: \textbf{projects}, \textbf{questions} graph, and \textbf{questionnaires}.
+%
+Resources are organized following the REST principles, and each resource is identified by a unique URI.
+%
+Since questionnaires are project-related, such resource is under the project hierarchy.
+%
+In \cref{fig:rest-api} are shown the main endpoints of the \ac{API}.
+
+
+\begin{figure}
+    \centering
+    \subfloat[\ac{API} for \texttt{Question} operations]{%
+        \includegraphics[width=0.45\textwidth]{figures/api/api-questions.png}
+    }
+    \hfill
+    \subfloat[\ac{API} for \texttt{Project} operations]{%
+        \includegraphics[width=0.45\textwidth]{figures/api/api-projects.png}
+    }
+    \hfill
+    \subfloat[\ac{API} for \texttt{Questionnaire} operations]{%
+        \includegraphics[width=0.45\textwidth]{figures/api/api-questionnaires.png}
+    }
+    
+    \caption{Backend REST \ac{API} endpoints.}
+    \label{fig:rest-api}
+\end{figure}
+
+
+\subsubsection{Events}
+
+The other method available to interact with the system, which powers also internal communications, is the event-driven one.
+%
+This represents an \ac{API} slightly different from the classic REST one. 
+%
+Here, \ac{API} endpoints are channels on which operations of type \texttt{send} and \texttt{receive} are performed.
+%
+This type of \ac{API} enables asynchronous communication between system components, in this case, the backend and automation scripts.
+%
+That's fundamental because computations are intended to be non-blocking in order to allow \ac{BU} to proceed in the questionnaire compilation.
+
+\begin{figure}
+    \centering
+    \subfloat[Publish operation for a channel]{%
+        \includegraphics[width=0.48\textwidth]{figures/api/async-api-send.png}
+    }
+    \hfill
+    \subfloat[Receive operation for a channel]{%
+        \includegraphics[width=0.48\textwidth]{figures/api/async-api-receive.png}
+    }
+    
+    \caption{Async \ac{API} channels example.}%
+    \label{fig:async-api}
+\end{figure}
+
+A documentation example of such \ac{API} is shown in \cref{fig:async-api} using Async \ac{API} specification (\href{https://www.asyncapi.com}{https://www.asyncapi.com}). The main concepts in this are:
+
+\begin{itemize}
+    \item \textbf{Channels}: Specific topics where events are published. Each topic corresponds to a particular type of event.
+    \item \textbf{Operations}: Primarily \texttt{send} (\texttt{publish}), to publish events on the channel, and \texttt{receive} (performing if \texttt{subscribed} to channel), to receive messages when events are published.
+    \item \textbf{Messages}: Schemas of the objects published on channels.
+\end{itemize}
+
+
+This API is highly flexible, in fact, when an automation script is created, it can be attached to a new channel created ad hoc for the script specific purpose.
+%
+For instance, a new script can be plugged in simply  creating a new channel and subscribing at it.
 
 
 
 
 %----------------------------------------------------------------------------------------
-\chapter{Implementation}\label{chap:implementation}
+\chapter{Implementation}%
+\label{chap:implementation}
 %----------------------------------------------------------------------------------------
 
+\section{Broker}
 
+\section{Deployment}
+
+\section{GUI}
 
 
 
 %----------------------------------------------------------------------------------------
-\chapter{Conclusions}
+\chapter{Validation}%
+\label{chap:validation}
+%----------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+\chapter{Conclusions}%
 \label{chap:conclusions}
 %----------------------------------------------------------------------------------------
 

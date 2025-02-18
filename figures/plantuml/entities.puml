@@ -1,0 +1,72 @@
+@startuml entities
+
+interface Project {
+    + id: EntityId
+    + name: string
+    + context: Map<string, string>
+}
+
+interface EntityId {
+    + code: string
+    + questionCode: Optional<string>
+    + projectCode: Optional<string>
+}
+
+interface Question {
+    + id: EntityId
+    + text: string
+    + description: Optional<string>
+    + type: QuestionType
+    + answers: Set<Answer>
+    + createdAt: datetime
+}
+
+interface GraphQuestion {
+    + enabledBy: Set<EntityId>
+}
+
+interface ProjectQuestion {
+    + answers: Set<ProjectAnswer>
+    + selectionStrategy: SelectionStrategy
+    + selectAnswer(answerId: EntityId): ProjectQuestion
+    + deselectAnswer(answerId: EntityId): ProjectQuestion
+    + deselectAllAnswers(): ProjectQuestion
+}
+
+interface SelectionStrategy {
+    + selectAnswer(answerId: EntityId, answers: Set<ProjectAnswer>): Set<ProjectAnswer>
+    + deselectAnswer(answerId: EntityId, answers: Set<ProjectAnswer>): Set<ProjectAnswer>
+}
+
+class MultipleSelectionStrategy
+
+class SingleSelectionStrategy 
+
+interface Answer {
+    + id: EntityId
+    + text: string
+    + description: Optional<string>
+}
+
+interface ProjectAnswer {
+    + selected: bool
+    + select(): ProjectAnswer
+    + deselect(): ProjectAnswer
+}
+
+Project *-- EntityId
+
+Question *- EntityId
+Question <|-- GraphQuestion
+Question <|-- ProjectQuestion
+Question *-- Answer
+
+SelectionStrategy <|.. MultipleSelectionStrategy
+SelectionStrategy <|.. SingleSelectionStrategy
+
+ProjectQuestion o-- SelectionStrategy
+ProjectQuestion *-- ProjectAnswer
+Answer <|-- ProjectAnswer
+Answer *-up- EntityId
+
+@enduml

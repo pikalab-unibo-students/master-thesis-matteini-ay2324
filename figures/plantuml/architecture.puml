@@ -1,0 +1,36 @@
+@startuml architecture
+
+left to right direction
+
+actor "Business User" as BU
+actor "Technical User" as TU
+
+rectangle {
+    portin entrypoint
+
+    cloud " Event\nBroker" as Broker
+    component Backend
+    database "Database" as DB
+    component Frontend
+    process "Automation Script" as P1
+    process "Automation Script" as P2
+
+    interface API
+
+    Backend -up- API
+    DB <-left- Backend : Stores
+    Frontend --( API : Requests
+    Broker -- Backend
+    Broker -up- P1
+    Broker -up- P2
+
+    TU --> P1 : Creates
+    TU --> P2 : Creates
+
+}
+
+BU --> entrypoint
+entrypoint --> Frontend
+
+
+@enduml

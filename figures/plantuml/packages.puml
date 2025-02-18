@@ -1,0 +1,44 @@
+@startuml packages
+
+package Domain {
+
+  package Core {
+    interface Entity {}
+
+    interface EntityId {}
+  }
+  package Factories {
+    interface EntityFactory
+  }
+
+  package Repositories {
+    interface EntityRepository
+  }
+}
+
+package Application {
+  interface EntityService
+  interface EventsService
+  package Automation {}
+}
+
+package Presentation {}
+
+package Infrastructure {
+  package Storage {
+    class EntityRepositoryImpl
+  }
+  package ws {}
+  package Events {
+    class EventsServiceImpl
+  }
+}
+
+EntityId -left-* Entity
+EntityFactory -down-> Entity : creates
+EntityRepository -down-> Entity : stores
+EntityService -right-> Domain : uses
+Presentation -up-> Domain : uses
+EntityRepositoryImpl --|> EntityRepository
+EventsServiceImpl --|> EventsService
+@enduml

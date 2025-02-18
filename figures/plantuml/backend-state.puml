@@ -1,0 +1,20 @@
+@startuml
+start
+  :Start Server;
+  
+  while (Received Request?) is (Yes)
+    :Process Request;
+    if (Static Content?) then (Yes)
+      :Serve File;
+    else (No)
+      :Process Request;
+      :Generate Response;
+    endif
+    :Send Response;
+    :Log Request;
+  endwhile (No)
+  
+  :Shutdown Signal Received;
+  :Cleanup Resources;
+stop
+@enduml

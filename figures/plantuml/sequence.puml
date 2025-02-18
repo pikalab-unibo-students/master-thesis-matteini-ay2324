@@ -1,0 +1,41 @@
+@startuml sequence
+
+hide footbox
+
+actor "Business User" as BU
+participant Frontend
+participant Backend
+participant "Event Broker" as Broker
+participant "Automation Script" as Script
+actor "Technical User" as TU
+
+create Script
+TU -> Script: Create
+
+Backend ->> Broker: Subscribe
+Script ->> Broker: Subscribe
+
+note right: Multiple scripts\ncan be created
+
+
+loop until questionnaire is completed
+
+BU -> Frontend: Interact
+Frontend -> Backend: Request Question
+Frontend <-- Backend: Show Question
+Frontend ->> Backend: Respond to Question
+Backend -> Backend: Update\nQuestionnaire
+
+loop for each relevant event
+    Backend ->> Broker: Publish Event
+    Broker ->> Script: Event Reaction
+    Script -> Script: Execute
+    Backend <<- Script: Update State
+end
+
+Frontend <<- Backend: Updates with\nresults, data...
+
+
+end
+
+@enduml

@@ -1,0 +1,33 @@
+@startuml components and connectors
+
+left to right direction
+
+component Backend <<component>> {
+  component "HTTP Server" as Server <<component>>
+  component "Business Logic" as BusinessLogic <<component>>
+  process "Automation Script" as Script
+  portout " " as DbPort
+  portout " " as  EventPort
+  portout " " as  ApiPort
+
+}
+
+' process "Automation Script" as ExternalScript
+
+
+component "Database" as Database <<component>>
+component "Event Broker" as EventBroker <<component>>
+interface "Rest API" as Api
+
+BusinessLogic -left- Script : "Runs"
+Server -0)- BusinessLogic
+
+Server -0)- ApiPort
+BusinessLogic -0)- EventPort
+BusinessLogic -0)- DbPort
+
+ApiPort --( Api
+EventPort -0)- EventBroker
+DbPort -0)- Database
+
+@enduml
