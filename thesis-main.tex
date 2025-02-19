@@ -516,9 +516,9 @@ In addition to posing relevant questions and steps, the software provides supple
 % 3. The Q/A mechanism
 \section{The \acs{Q/A} Mechanism}
 
-The \acf{Q/A} mechanism represents the core of this methodology, it has been the starting point to bridge the gap between socio-legal and technical perspectives.
+The \acf{Q/A} mechanism represents the core of this methodology.
 %
-It provides a structured way to ``translate'' the legal constraints into technical steps, contextualizing them in the application domain.
+It has been the starting point to bridge the gap between socio-legal and technical perspectives and provides a structured way to ``translate'' the legal constraints into technical steps, contextualizing them in the application domain.
 %
 Behind the scenes, the \ac{Q/A} mechanism is a \textbf{directed graph} that represents the decision-making process.
 
@@ -853,7 +853,7 @@ Backend service exposes an \ac{API} used to interact with the three main entitie
 %
 Resources are organized following the REST principles, and each resource is identified by a unique URI.
 %
-Since questionnaires are project-related, such resource is under the project hierarchy.
+Since questionnaires are project-related, such resource is under the \texttt{Project} hierarchy.
 %
 In \cref{fig:rest-api} are shown the main endpoints of the \ac{API}.
 
@@ -861,15 +861,15 @@ In \cref{fig:rest-api} are shown the main endpoints of the \ac{API}.
 \begin{figure}
     \centering
     \subfloat[\ac{API} for \texttt{Question} operations]{%
-        \includegraphics[width=0.45\textwidth]{figures/api/api-questions.png}
+        \includegraphics[width=0.32\textwidth]{figures/api/api-questions.png}
     }
     \hfill
     \subfloat[\ac{API} for \texttt{Project} operations]{%
-        \includegraphics[width=0.45\textwidth]{figures/api/api-projects.png}
+        \includegraphics[width=0.32\textwidth]{figures/api/api-projects.png}
     }
     \hfill
     \subfloat[\ac{API} for \texttt{Questionnaire} operations]{%
-        \includegraphics[width=0.45\textwidth]{figures/api/api-questionnaires.png}
+        \includegraphics[width=0.32\textwidth]{figures/api/api-questionnaires.png}
     }
     
     \caption{Backend REST \ac{API} endpoints.}
@@ -924,11 +924,151 @@ For instance, a new script can be plugged in simply  creating a new channel and 
 \label{chap:implementation}
 %----------------------------------------------------------------------------------------
 
-\section{Broker}
+This chapter delves into the technical details of the software implementation which reifies the proposed meta-methodology.
+%
+It provides an overview of the deployed architecture, and, basing on the design choices made in the previous chapter, it explains how the various components are actually implemented.
+% 
+The chapter also covers the deployment phase of the software system, how to set up the configuration environment, and in the end how to run it.
+%
+Finally, the chapter concludes covering some use cases to demonstrate the system in action, providing also \acf{BU} perspective through the web interface.
+
 
 \section{Deployment}
 
+
+
+\paragraph{Backend.}
+
+% 1. explaining why backend web service in python (reduce abstraction gap)
+
+Backend component is implemented as a web service in Python. The choice aims to reduce the abstraction gap because python comes with consolidated frameworks that facilitate development of \ac{AI} systems.
+%
+Python represents also a good choice thanks to its readability and simplicity, which make it easier to be maintained and extended by developers who were not originally involved in the project.
+%
+\href{https://flask-restful.readthedocs.io/en/latest/}{Flask-restful} framework has been used to ease the development of the web service, as it allows the creation of a RESTful \ac{API} with few lines of code (\cref{lst:api-code}).
+
+
+\lstinputlisting[float,language=Python,label={lst:api-code},caption={Example resource creation with Flask-restful.}]{listings/api.py}
+
+
+\paragraph{Event Broker.}
+
+% 2. explaining why kafka (event-driven architecture)
+\href{https://kafka.apache.org/}{Apache Kafka} is used as the event broker to implement the event-driven architecture.
+%
+Kafka is a distributed streaming platform that provides high throughput, scalability, and fault tolerance.
+%
+The python client of Kafka has been used to interact with the broker, allowing the backend and automation scripts to publish and subscribe to events.
+%
+This is achieved by an ad hoc service implemented in the infrastructure layer (\cref{lst:kafka-python}).
+
+\lstinputlisting[float,language=Python,label={lst:kafka-python},caption={Example resource creation with Flask-restful.}]{listings/kafka.py}
+
+
+\paragraph{Database.}
+
+% 3. talking about the graph database (neo4j) and why it fits well with the graph structure of the Q/A mechanism
+For the database, the choice fell on graph database, as it fits well with the graph structure of the \ac{Q/A} mechanism, and the technical implementation chosen is \href{https://neo4j.com/}{Neo4j}.
+%
+It allows for efficient traversal and querying of the graph, making it easier to manage operations on questions and answers.
+
+% 3.1 how are mapped entities to the database?
+Entities are mapped to the database as nodes and relationships.
+%
+In particular, \textbf{question graph} is mapped as the following: questions and answers are represented as nodes, while the edges between them are represented as relationships.
+%
+More precisely, let's consider $Q_G$ is the node representation of question $Q$ and $A_G$ is the node representation of answer $A$ (both in general graph).
+%
+Edges in Neo4j are associated with a label, so edges of type $Q \to A$ are stored as $Q_G \xrightarrow{\text{HAS\_ANSWER}} A_G$, while edges of type $A \to Q$ are actually stored as $A_G \xrightarrow{\text{ENABLED\_BY}} Q_G$.
+
+
+% 3.2 talking about the context (storing key-values in the project node)
+With respect to the \texttt{Project}, let's consider $P$ as the node representation of project.
+%
+Key-value pairs of its \texttt{Context} are stored in $P$.
+%
+This is straightforward because each node in Neo4j can store arbitrary key-value pairs, making it easy and flexible to save context data.
+%
+In order to save space, context data that are common to all projects are stored in a separate node named \texttt{PublicContext}, which is referred if a key is not found in the specific project node on which the context data is requested.
+
+Eventually, each \textbf{questionnaire} (if exists) is linked to a specific project $P$ through a relationship $P \xrightarrow{\text{QUESTIONNAIRE}} Q_P$, where $Q_P$ is the root of the questionnaire graph (the first question asked), and it is created upon the root of the general graph.
+%
+Next questions in the questionnaire path are linked to the previous ones through relationships of kind $Q'_P \xrightarrow{\text{NEXT}} Q''_P$.
+
+To keep track of the answers given by the \ac{BU}, each answer is linked to the corresponding question through a relationship $Q_P \xrightarrow{\text{HES\_SELECTED}} A_P$, where $A_P$ is the node representation of the answer given by the \ac{BU}.
+
+\paragraph{Automation Scripts.}
+
+% 4 they just need to adhere to the async api (event-driven architecture)
+Automation scripts are processes created ad hoc to perform specific computations.
+%
+They just need to adhere to the Async API specification to be seamless integrated into the system.
+%
+% By following the Async API, scripts can subscribe to relevant events, perform the necessary computations, and send updates back to the backend, ensuring a smooth and efficient workflow.
+
+% 4.1 about automation script, actually they can be implemented in any language, (python is still the best choice since computations are about ML models and fairness metrics)
+These scripts can actually be implemented in any language, but the ones implemented so far are created in Python.
+%
+One motivation is that in this way scripts can share the backend code benefiting from reusability.
+Python is also recommended due to its extensive support for machine learning libraries and frameworks.
+
+
+
+\paragraph{Frontend.}
+
+% 5 about frontend, it is a Single Page Application interacting with the backend, implemented using React/Next.js (component base to exploit reusability)
+The frontend is implemented as a Single Page Application (SPA) using \href{https://react.dev/}{React} and \href{https://nextjs.org/}{Next.js}.
+%
+This choice leverages the component-based architecture of React, which promotes reusability and maintainability of the code.
+%
+Next.js enhances the development experience by providing server-side rendering and static site generation.
+%
+The component-based architecture fits well because the questionnaire can evolve, and the frontend must be arranged to be changed accordingly.
+%
+A web-based technology has been chosen for several reasons:
+\begin{enumerate*}[label=(\roman*)]
+    \item cross-platform compatibility,
+    \item ease deployment and maintenance,
+    \item accessibility,
+    \item powerful features offered by modern frameworks.
+\end{enumerate*}
+
+
+
+% TODO: needs to be referenced
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/diagrams/deployment.png}
+    \caption{
+        Deployment diagram of the system.
+    }
+    \label{fig:deployment}
+\end{figure}
+
+\section{Configuration}
+
+\section{Testing}
+
+\section{Use Cases}
+
+\subsection{GUI}
+
+
+
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/diagrams/deployment.png}
+    \caption{
+        Deployment diagram.
+    }
+    \label{fig:deployment}
+\end{figure}
+
 \section{GUI}
+
+\section{Broker}
 
 
 
@@ -936,6 +1076,7 @@ For instance, a new script can be plugged in simply  creating a new channel and 
 \chapter{Validation}%
 \label{chap:validation}
 %----------------------------------------------------------------------------------------
+
 
 %----------------------------------------------------------------------------------------
 \chapter{Conclusions}%

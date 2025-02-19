@@ -1,0 +1,105 @@
+@startuml deployment
+
+left to right direction
+
+
+node Frontend <<container>> {
+    artifact "React Web Server" <<artifact>>
+}
+
+node Client <<device>> {
+    node "Web Interface" as Browser <<browser>>
+}
+
+node "Graph Database" as DB <<container>> {
+    database "Neo4j"
+}
+
+node "Web Server" as Backend <<container>> {
+    artifact "Python Flask App" <<artifact>>
+}
+
+node "Kafka" as Broker <<container>>
+
+node "Automation Script" as P1 <<container>> {
+    artifact "Python Script" as Script1 <<artifact>>
+}
+
+node "Automation Script" as P2 <<container>> {
+    artifact "Python Script" as Script2 <<artifact>>
+}
+
+interface "Rest API" as API
+
+Frontend --> Client : Serves
+Backend - API
+DB <-- Backend : Cypher Query
+Client --( API : Requests
+Broker <--> Backend
+Broker <-up-> P1
+Broker <-up-> P2
+
+
+@enduml
+
+
+' @startuml
+' ' Define the node for the Neo4j database
+' node "Neo4j Database" as neo4j <<r3r3>> {
+'     package "Graph Engine"
+'     [Cypher Query Engine]
+'     [Storage Engine]
+' }
+
+' ' Define an application that connects to Neo4j
+' node "Application Server" as app {
+'     [Backend Service]
+' }
+
+' ' Define a client interacting with the application
+' node "Client" as client {
+'     [Web App / API Consumer]
+' }
+
+' ' Define relationships
+' client --> app : HTTP Request
+' app --> neo4j : Cypher Query / Bolt Protocol
+' neo4j --> app : Query Response
+
+' @enduml
+
+
+@startuml
+node "Docker Host" {
+    
+        
+        node "Database" as DB <<container>> {
+            database "Neo4j"
+        }
+        
+        node "Python Web Server" as backend <<container>> {
+            [Flask/Django App]
+        }
+        
+        node "Frontend Server" as frontend <<container>> {
+            [Static Website]
+        }
+        
+        node "Kafka Broker" as kafka <<container>> {
+            [Kafka]
+        }
+        
+        node "Automation Script" as automation <<container>> {
+            [Automation Process]
+        }
+    
+}
+
+' Relationships
+backend --> neo4j : Queries/Updates
+frontend --> backend : API Requests
+automation --> kafka : Produces Events
+backend --> kafka : Consumes/Produces Events
+kafka --> automation : Consumes Events
+
+@enduml
