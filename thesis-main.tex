@@ -6,6 +6,7 @@
 \usepackage{shortcuts}
 \usepackage{acronym}
 \usepackage{subfig}
+% \usepackage{minted}
 \usepackage[inline]{enumitem}
 
 
@@ -372,14 +373,9 @@ In the following, are listed the desiderata that the meta-methodology should sat
     \item\label{req:R3} \textbf{Adaptability}: The methodology should adapt to any change in the cultural context as it evolves.
     
     Some context could be volatile in terms of societal norms and cultural changes, so the methodology should be able to adjust and align to new constraints.
-    
-    % 1.4 the methodology should account for both pre-existing AI systems, datasets, and algorithms, and new AI systems
-    \item\label{req:R4} \textbf{Legacy and Novel Systems}: The methodology should account for both pre-existing and new \ac{AI} systems.
-    
-    It is reasonable that the methodology should be able to be applied to new software systems, but it would be a big lack if it could not be applied to already existing systems, remembering that there are a lot of deployed systems that, probably, are not fair.
 
-    % 1.5 the methodology should not just provide a theoretical guideline, but also assist the AI system creation
-    \item\label{req:R5} \textbf{Building the AI System}: The methodology should not just provide a theoretical guideline, but also assist the AI system creation. 
+    % 1.4 the methodology should not just provide a theoretical guideline, but also assist the AI system creation
+    \item\label{req:R4} \textbf{Building the AI System}: The methodology should not just provide a theoretical guideline, but also assist the AI system creation. 
     
     This means that it is necessary a software reification of the methodology permitting to be applied practically, obtaining eventually, a fair AI system.
 \end{enumerate}
@@ -887,7 +883,7 @@ That's fundamental because computations are intended to be non-blocking in order
     \label{fig:async-api}
 \end{figure}
 
-A documentation example of such \ac{API} is shown in \cref{fig:async-api} using Async \ac{API} specification (\href{https://www.asyncapi.com}{https://www.asyncapi.com}). The main concepts in this are:
+A documentation example of such \ac{API} is shown in \cref{fig:async-api} using Async \ac{API} specification\footnote{\href{https://www.asyncapi.com}{https://www.asyncapi.com}}. The main concepts in this are:
 
 \begin{itemize}
     \item \textbf{Channels}: Specific topics where events are published. Each topic corresponds to a particular type of event.
@@ -928,7 +924,7 @@ Backend component is implemented as a web service in Python. The choice aims to 
 %
 Python represents also a good choice thanks to its readability and simplicity, which make it easier to be maintained and extended by developers who were not originally involved in the project.
 %
-\href{https://flask-restful.readthedocs.io/en/latest/}{Flask-restful} framework has been used to ease the development of the web service, as it allows the creation of a RESTful \ac{API} with few lines of code (\cref{lst:api-code}).
+Flask-restful\footnote{\href{https://flask-restful.readthedocs.io/en/latest/}{https://flask-restful.readthedocs.io/en/latest/}} framework has been used to ease the development of the web service, as it allows the creation of a RESTful \ac{API} with few lines of code (\cref{lst:api-code}).
 
 
 \lstinputlisting[float,language=Python,label={lst:api-code},caption={Example resource creation with Flask-restful.}]{listings/api.py}
@@ -937,7 +933,7 @@ Python represents also a good choice thanks to its readability and simplicity, w
 \paragraph{Event Broker.}
 
 % 2. explaining why kafka (event-driven architecture)
-\href{https://kafka.apache.org/}{Apache Kafka} is used as the event broker to implement the event-driven architecture.
+Apache Kafka\footnote{\href{https://kafka.apache.org/}{https://kafka.apache.org/}} is used as the event broker to implement the event-driven architecture.
 %
 Kafka is a distributed streaming platform that provides high throughput, scalability, and fault tolerance.
 %
@@ -945,13 +941,19 @@ The python client of Kafka has been used to interact with the broker, allowing t
 %
 This is achieved by an ad hoc service implemented in the infrastructure layer (\cref{lst:kafka-python}).
 
-\lstinputlisting[float,language=Python,label={lst:kafka-python},caption={Example resource creation with Flask-restful.}]{listings/kafka.py}
+\lstinputlisting[float,language=Python,label={lst:kafka-python},caption={Events Service implementation using Kafka in Infrastructure layer.}]{listings/kafka.py}
+
+% \begin{listing}
+%     \inputminted{Python}{listings/kafka.py}
+%     \caption{Events Service implementation using Kafka in Infrastructure layer.}
+%     \label{lst:kafka-python}
+% \end{listing}
 
 
 \paragraph{Database.}
 
 % 3. talking about the graph database (neo4j) and why it fits well with the graph structure of the Q/A mechanism
-For the database, the choice fell on graph database, as it fits well with the graph structure of the \ac{Q/A} mechanism, and the technical implementation chosen is \href{https://neo4j.com/}{Neo4j}.
+For the database, the choice fell on graph database, as it fits well with the graph structure of the \ac{Q/A} mechanism, and the technical implementation chosen is Neo4j\footnote{\href{https://neo4j.com/}{https://neo4j.com/}}.
 %
 It allows for efficient traversal and querying of the graph, making it easier to manage operations on questions and answers.
 
@@ -1000,7 +1002,7 @@ Python is also recommended due to its extensive support for machine learning lib
 \paragraph{Frontend.}
 
 % 5 about frontend, it is a Single Page Application interacting with the backend, implemented using React/Next.js (component base to exploit reusability)
-Frontend is implemented as a Single Page Application (SPA) using \href{https://react.dev/}{React} and \href{https://nextjs.org/}{Next.js}.
+Frontend is implemented as a Single Page Application (SPA) using React\footnote{\href{https://react.dev/}{https://react.dev/}} and Next.js\footnote{\href{https://nextjs.org/}{https://nextjs.org/}}.
 %
 This choice leverages the component-based architecture of React, which promotes reusability and maintainability of the code.
 %
@@ -1065,14 +1067,7 @@ A web-based technology has been chosen for several reasons:
     %
     This also enables a ``versioning'' mechanism, which effectively addresses a possible volatile context.
     
-    \item \textbf{\ref{req:R4}---Legacy and Novel Systems} $\rightarrow$ \textbf{Adaptability}:
-    %
-    achieving adaptability(\ref{req:R3}), the methodology can support different situations: it is possible to design a path for creating a new system, as well as a path for an existing one.
-    %
-    % TODO: to reason about
-
-    
-    \item \textbf{\ref{req:R5}---Building the AI System} $\rightarrow$ \textbf{Software Reification}:
+    \item \textbf{\ref{req:R4}---Building the AI System} $\rightarrow$ \textbf{Software Reification}:
     %
     this contribution, rather than providing just an abstract specification of the methodology, provides also a guideline-provisioning software system usable directly by stakeholders.
     %
@@ -1120,7 +1115,7 @@ At the moment, the only way to adapt to new versions, is to start a new project 
 
 
 % limitations on AI system building
-A possible limitation respect to~\ref{req:R5}, is regarding the variety of \ac{AI} systems that can be built.
+A possible limitation respect to~\ref{req:R4}, is regarding the variety of \ac{AI} systems that can be built.
 %
 Indeed, software allows uploading datasets of any dimensions, and this could lead to possible issues in terms of computational resources.
 %
@@ -1143,6 +1138,13 @@ If computations take too long, \ac{BU} could proceed with missing or outdated in
 \chapter{Conclusions}%
 \label{chap:conclusions}
 %----------------------------------------------------------------------------------------
+
+\paragraph{Future Works.}
+
+% 1. the methodology should account for both pre-existing AI systems, datasets, and algorithms, and new AI systems
+\textbf{Legacy and Novel Systems}: The methodology should account for both pre-existing and new \ac{AI} systems.
+
+It is reasonable that the methodology should be able to be applied to new software systems, but it would be a big lack if it could not be applied to already existing systems, remembering that there are a lot of deployed systems that, probably, are not fair.
 
 
 
