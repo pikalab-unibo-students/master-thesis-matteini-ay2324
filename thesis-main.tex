@@ -682,10 +682,8 @@ The dependency flow is unidirectional, from the outermost layer (Infrastructure)
 So, for instance, Application layer and Presentation layer can depend on Domain layer, but not vice versa.
 %
 
-\section{Detailed Design}
-
+\section{Structure}
 % introduce DDD 
-This section outlines the detailed design of the software system.
 %
 The design choices considered follow the principles of \textbf{\acf{DDD}}~\cite{millett2015ddd}, a software design philosophy that emphasizes the importance of domain model in the development process.
 %
@@ -693,7 +691,6 @@ The main goal of \ac{DDD} is to align the software system with the domain model,
 %
 Although the focus of this contribution is not on the software design phase in itself, the adoption of \ac{DDD} is motivated by the volatile nature of the methodology, which is expected to evolve through contributions and improvements from multiple people.
 
-\subsection{Structure}
 % introduce domain entities
 
 \paragraph{Projects.}
@@ -775,11 +772,12 @@ The reason is that an event-driven architecture can be achieved using different 
 Furthermore, due to this layer organization, it is possible to easily interchange the underlying technologies without affecting business logic and core domain entities (for instance using a relational database instead of a NoSQL one).
 
 
-\subsection{Behavior}
+\section{Behavior}
+\sidenote{to hide backend and automation scripts in tableofcontents?}
 
 The system behavior is mainly concentrated in \textbf{Backend} and \textbf{Automation Scripts} components.
 
-\subsubsection{Backend}
+\subsection{Backend}
 
 Backend component is a web service that exposes a REST \ac{API}, enabling clients to interact with questions graph and questionnaires.
 %
@@ -797,7 +795,7 @@ For example, all data mitigation algorithms require the actual dataset, or the c
 %
 Such computations, can be executed by both backend and automation scripts, for this reason \texttt{Context} updates represent a key point in the system behavior.
 
-\subsubsection{Automation Scripts}
+\subsection{Automation Scripts}
 
 Automation Scripts are responsible for responding to specific domain events, performing necessary (fairness-related) computations, and updating system state.
 %
@@ -805,7 +803,7 @@ These scripts act as event-driven processes that listen for predefined triggers,
 %
 Once the processing is completed, they send relevant updates back to the backend via \ac{API} requests, ensuring that the system remains up-to-date and operates seamlessly without requiring manual intervention.
 
-\subsection{Interaction}
+\section{Interaction}
 The starting point of interactions is \ac{BU} that interacts with the system through the Frontend component.
 %
 Frontend is in charge of presenting questions to the \ac{BU}, collecting answers, and sending them to the backend service.
@@ -831,9 +829,9 @@ The entire interaction flow is shown in \cref{fig:sequence}.
 
 
 
-\subsection{\acs{API}}
+\section{\acs{API}}
 
-\subsubsection{Rest}
+\subsection{Rest}
 
 Backend service exposes an \ac{API} used to interact with the three main entities: \textbf{projects}, \textbf{questions} graph, and \textbf{questionnaires}.
 %
@@ -863,7 +861,7 @@ In \cref{fig:rest-api} are shown the main endpoints of the \ac{API}.
 \end{figure}
 
 
-\subsubsection{Events}
+\subsection{Events}
 
 The other method available to interact with the system, which powers also internal communications, is the event-driven one.
 %
@@ -919,8 +917,7 @@ The chapter also covers the deployment phase of the software system, how to set 
 Finally, the chapter concludes covering some use cases to demonstrate the system in action, providing also \acf{BU} perspective through the web interface.
 
 
-\section{Deployment}
-
+\section{Components}
 
 
 \paragraph{Backend.}
@@ -1031,18 +1028,7 @@ A web-based technology has been chosen for several reasons:
     \label{fig:deployment}
 \end{figure}
 
-\section{Configuration}
-
 \section{Testing}
-
-
-
-
-\section{Use Cases}
-
-\subsection{GUI}
-
-\section{GUI}
 
 
 
@@ -1149,6 +1135,8 @@ Actually, computations performed by backend service and automation scripts are d
 %
 If computations take too long, \ac{BU} could proceed with missing or outdated information, leading to possible misuses of the system.
 
+
+\section{Usage Example}
 
 
 %----------------------------------------------------------------------------------------
