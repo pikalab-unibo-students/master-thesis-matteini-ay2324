@@ -41,21 +41,6 @@
  } %
 \makeatother
 
-% \acrodef{IoT}{Internet of Thing}
-% \acrodef{vm}[VM]{Virtual Machine}
-
-% You can use acronyms that your defined previously,
-% such as \ac{IoT}.
-% %
-% If you use acronyms twice,
-% they will be written in full only once
-% (indeed, you can mention the \ac{IoT} now without it being fully explained).
-% %
-% In some cases, you may need a plural form of the acronym.
-% %
-% For instance, that you are discussing \acp{vm},
-% you may need both \ac{vm} and \acp{vm}.
-
 \mainlinespacing{1.241} % line spacing in mainmatter, comment to default (1)
 
 \begin{document}
@@ -169,7 +154,7 @@ The intersection of these fields highlights that \ac{AI} fairness is not merely 
 
 % 4.1 explaining the link with the socio-legal perspective and contraints, citing AI Act
 
-An impactful example regarding the work of legal experts in the field of \acl{AI} is the \textit{AI Act}. \sidenote{add some citation}
+An impactful example regarding the work of legal experts in the field of \acl{AI} is the \textit{AI Act}~\cite{madiega2021artificial}.
 %
 The AI Act, proposed by the European Union, is a comprehensive regulatory framework designed to ensure that AI systems are safe, transparent, and aligned with fundamental rights.
 %
@@ -372,20 +357,21 @@ In the following, are listed the desiderata that the meta-methodology should sat
 
 
 \begin{enumerate}[label=\textbf{R\arabic*}, ref=R\arabic*]
-    % 1.1 the methodology should consider the cultural context and the domain AI system under design
-    \item\label{req:R1} \textbf{Context and Domain Awareness}: The methodology should consider the cultural context and the domain of \ac{AI} system under design.
+    
+    % 1.1 the methodology should assist experts in translating the social-legal requirements into practice
+    \item\label{req:R1} \textbf{Requirements Translation}: The methodology should assist experts in translating the socio-legal requirements into practice.
+
+    A big challenge in this field, is to understand how legal constraints can be applied, and how technical steps can be identified to satisfy the requirements. That's why the methodology should provide a mechanism assisting this phase.
+    
+    % 1.2 the methodology should consider the cultural context and the domain AI system under design
+    \item\label{req:R2} \textbf{Context and Domain Awareness}: The methodology should consider the cultural context and the domain of \ac{AI} system under design.
     
     AI systems have been applied in several (and critical) use cases. For each of them, the constraints and requirements change, so through the methodology, it should be possible to understand the system domain and be context-aware.
 
-    % 1.2 the methodology should adapt to any change in the cultural context as it evolves
-    \item\label{req:R2} \textbf{Adaptability}: The methodology should adapt to any change in the cultural context as it evolves.
+    % 1.3 the methodology should adapt to any change in the cultural context as it evolves
+    \item\label{req:R3} \textbf{Adaptability}: The methodology should adapt to any change in the cultural context as it evolves.
     
     Some context could be volatile in terms of societal norms and cultural changes, so the methodology should be able to adjust and align to new constraints.
-    
-    % 1.3 the methodology should assist experts in translating the social-legal requirements into practice
-    \item\label{req:R3} \textbf{Requirements Translation}: The methodology should assist experts in translating the socio-legal requirements into practice.
-    
-    A big challenge in this field, is to understand how legal constraints can be applied, and how technical steps can be identified to satisfy the requirements. That's why the methodology should provide a mechanism assisting this phase.
     
     % 1.4 the methodology should account for both pre-existing AI systems, datasets, and algorithms, and new AI systems
     \item\label{req:R4} \textbf{Legacy and Novel Systems}: The methodology should account for both pre-existing and new \ac{AI} systems.
@@ -1017,7 +1003,7 @@ Python is also recommended due to its extensive support for machine learning lib
 \paragraph{Frontend.}
 
 % 5 about frontend, it is a Single Page Application interacting with the backend, implemented using React/Next.js (component base to exploit reusability)
-The frontend is implemented as a Single Page Application (SPA) using \href{https://react.dev/}{React} and \href{https://nextjs.org/}{Next.js}.
+Frontend is implemented as a Single Page Application (SPA) using \href{https://react.dev/}{React} and \href{https://nextjs.org/}{Next.js}.
 %
 This choice leverages the component-based architecture of React, which promotes reusability and maintainability of the code.
 %
@@ -1049,26 +1035,14 @@ A web-based technology has been chosen for several reasons:
 
 \section{Testing}
 
+
+
+
 \section{Use Cases}
 
 \subsection{GUI}
 
-
-
-
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{figures/diagrams/deployment.png}
-    \caption{
-        Deployment diagram.
-    }
-    \label{fig:deployment}
-\end{figure}
-
 \section{GUI}
-
-\section{Broker}
 
 
 
@@ -1076,6 +1050,105 @@ A web-based technology has been chosen for several reasons:
 \chapter{Validation}%
 \label{chap:validation}
 %----------------------------------------------------------------------------------------
+
+\section{Meta-Methodology Requirements}
+
+\begin{itemize}[label={}]
+
+    \item \textbf{\ref{req:R1}---Requirements Translation} $\rightarrow$ \textbf{\ac{Q/A} Mechanism}:
+    %
+    the methodology involves socio-legal requirements translation into a simple and structured set of questions. 
+    %
+    A set of question designed for non-techcnical and non-legal people are more comprehensive than a set of legal constraints.
+    %
+    Through this mechanism, it is also possible to practically constrain the development process depending on the paths designed in the question graph.
+
+    \item \textbf{\ref{req:R2}---Context and Domain Awareness} $\rightarrow$ \textbf{Questions Design}:
+    %
+    through a well-designed set of questions, it is possible to incrementally collect information about the application domain and the cultural context in which the system operates.
+    %
+    Depending on the answers given by the \ac{BU}, the system can adapt the flow of questions branching at the right points, providing tailored questions based on the context.
+    
+    For instance, answers at the question ``In which area of application will the system be used?'' will influence the following questions, leading to a questionnaire customization based on the application domain.
+
+    \item \textbf{\ref{req:R3}---Adaptability} $\rightarrow$ \textbf{Questions Graph}:
+    %
+    adaptability is intrinsically achieved by using a graph structure to represent the \ac{Q/A} mechanism.
+    %
+    In fact, it is possible to change the graph structure easily, adding, removing, or modifying questions and answers, creating new paths, and so on.
+    %
+    This also enables a ``versioning'' mechanism, which effectively addresses a possible volatile context.
+    
+    \item \textbf{\ref{req:R4}---Legacy and Novel Systems} $\rightarrow$ \textbf{Adaptability}:
+    %
+    achieving adaptability(\ref{req:R3}), the methodology can support different situations: it is possible to design a path for creating a new system, as well as a path for an existing one.
+    %
+    % TODO: to reason about
+
+    
+    \item \textbf{\ref{req:R5}---Building the AI System} $\rightarrow$ \textbf{Software Reification}:
+    %
+    this contribution, rather than providing just an abstract specification of the methodology, provides also a guideline-provisioning software system usable directly by stakeholders.
+    %
+    In the workflow, \ac{BU} interacting with the system, can compile the questionnaire but at the same time, behind the scenes, backend processes operate to automate technical steps such as training and mitigation.
+    %
+    In the end, the system will provide an \ac{AI} system that has been subject to fairness considerations since the beginning of the development process.
+\end{itemize}
+
+
+
+\section{Software Implementation}
+% 2. Validation of the software implementation
+
+
+\section{Limitations}
+
+% Requirement 1 limitation -> the methodology is not providing a methodological way to translate requirements into questions, this phase still needs a collaborative design
+With respect to the satisfaction of~\ref{req:R1}, it is defined \textit{what} translated socio-legal requirements should be, but not exactly \textit{how} to translate them.
+%
+This still represents a complex collaborative challenge by a multidisciplinary team of experts, and it is not automatically addressed by the methodology.
+%
+However, the methodology simplifies the process by providing itself some constraints.
+%
+In other words, it forces the subjects involved in the requirements engineering to think about laws and legal constraints in a pragmatic way, in order to translate them into a set of questions that can be answered by a person with no expertise.
+
+
+% Requirement 3 limitation on "versioning" 
+\sidenote{qua spiego bene il versioning, forse va messo da un altra parte?}
+Flexibility of question graph, which satisfies \ref{req:R3}, enables a \textit{versioning} mechanism because changing the graph structure means creating a ``new version'' of the methodology.
+%
+New version means a graph with different paths of questions and answers, which obviously, addresses diverse needs.
+%
+Hence, the methodology can adapt to evolvable cultural contexts, creating new graphs for each needed change in the application domain.
+
+Conversely, questionnaires already started or completed, are affected by a version change.
+%
+The reason is due to the strong dependency between questionnaire (project-related graph) and general question graph.
+%
+In fact, each update to the questionnaire relies on the general graph, and so, general graph changes will lead to inconsistencies in the questionnaire.
+%
+So, in case of a version change, it is necessary to keep the oldest version to not break the support for the already started questionnaires.
+%
+At the moment, the only way to adapt to new versions, is to start a new project (and relative questionnaire) from scratch.
+
+
+
+% limitations on AI system building
+A possible limitation respect to~\ref{req:R5}, is regarding the variety of \ac{AI} systems that can be built.
+%
+Indeed, software allows uploading datasets of any dimensions, and this could lead to possible issues in terms of computational resources.
+%
+Theoretically, the methodology does not impose any constraint on the size of dataset or the complexity of the model, but in practice (using the software provided), it is necessary to consider the computational power available to the system.
+
+% long training
+Another important aspect is the time needed to perform fairness computations and model training, which can be a bottleneck in the system.
+%
+This problem not only influences the backend system, but also affects the user experience, as the \ac{BU} has to wait for the system to proceed correctly the questionnaire.
+%
+Actually, computations performed by backend service and automation scripts are designed to be asynchronous to improves the user experience, but with the assumption that eventually, in a reasonable time, computations will terminate and user will be able to proceed with updated information.
+%
+If computations take too long, \ac{BU} could proceed with missing or outdated information, leading to possible misuses of the system.
+
 
 
 %----------------------------------------------------------------------------------------
