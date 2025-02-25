@@ -945,7 +945,7 @@ Apache Kafka\footnote{\href{https://kafka.apache.org/}{https://kafka.apache.org/
 %
 Kafka is a distributed streaming platform that provides high throughput, scalability, and fault tolerance.
 %
-The python client of Kafka has been used to interact with the broker, allowing the backend and automation scripts to publish and subscribe to events.
+The python client of Kafka has been used to interact with the broker, allowing backend and automation scripts to publish and subscribe to events.
 %
 This is achieved by an ad hoc service implemented in the infrastructure layer (\cref{lst:kafka-python}).
 
@@ -961,7 +961,7 @@ This is achieved by an ad hoc service implemented in the infrastructure layer (\
 \paragraph{Database.}
 
 % 3. talking about the graph database (neo4j) and why it fits well with the graph structure of the Q/A mechanism
-For the database, the choice fell on graph database, as it fits well with the graph structure of the \ac{Q/A} mechanism, and the technical implementation chosen is Neo4j\footnote{\href{https://neo4j.com/}{https://neo4j.com/}}.
+For the persistency, the choice fell on a graph database, as it fits well with the graph structure of the \ac{Q/A} mechanism. The technical implementation chosen is Neo4j\footnote{\href{https://neo4j.com/}{https://neo4j.com/}}.
 %
 It allows for efficient traversal and querying of the graph, making it easier to manage operations on questions and answers.
 
@@ -978,7 +978,7 @@ It allows for efficient traversal and querying of the graph, making it easier to
 % 3.1 how are mapped entities to the database?
 Entities are mapped to the database as nodes and relationships (see \cref{fig:graph-db}).
 %
-In particular, \textbf{questions graph} is mapped as the following: questions and answers are represented as nodes, while the edges between them are represented as relationships.
+In particular, \textbf{questions graph} is mapped as the following: questions and answers are represented as nodes, while relationships between them are represented as edges.
 %
 More precisely, let's consider $Q_G$ is the node representation of question $Q$ and $A_G$ is the node representation of answer $A$ (both in general graph).
 %
@@ -1328,13 +1328,49 @@ If computations take too long, \ac{BU} could proceed with missing or outdated in
 \label{chap:conclusions}
 %----------------------------------------------------------------------------------------
 
-\paragraph{Future Works.}
+%recap of what this thesis proposes
+This contribution presented a (meta-)methodology for building fair \ac{AI} systems.
+%
+The methodology does not offer a direct solution to all kind of \ac{AI} systems, but it provides a pragmatic way to define a custom development process for each specific system.
+%
+The methodology is based on a \ac{Q/A} mechanism, which helps to:
+\begin{enumerate*}[label=(\roman*)]
+    \item translate socio-legal requirements into a comprehensive set of questions,
+    \item incrementally collect information about the application domain and the cultural context,
+    \item adapt the development process to the specific needs of the system,
+    \item build the fair \ac{AI} system in the end.
+\end{enumerate*}
+%
+The methodology is designed to be flexible and adaptable, allowing itself to evolve and be refined over time, enabling the development of fair \ac{AI} systems in different contexts.
+%
+In addition, changes in the application domain can be easily addressed by creating new ``versions'' of the methodology, in other words, revisiting the questions graph structure modifying existing paths or creating new ones.
 
-% 1. the methodology should account for both pre-existing AI systems, datasets, and algorithms, and new AI systems
-\textbf{Legacy and Novel Systems}: The methodology should account for both pre-existing and new \ac{AI} systems.
+Finally, the methodology is reified into a software system, which provides a practical way to exploit the methodology in the development process.
+%
+In particular, the software system is intended to be used by stakeholders, to guide them through the development process.
+%
+In this way, \acl{BU} can interact with the system answering questions while, at the same time, the system automates technical steps such as training and mitigation.
+%
 
-It is reasonable that the methodology should be able to be applied to new software systems, but it would be a big lack if it could not be applied to already existing systems, remembering that there are a lot of deployed systems that, probably, are not fair.
 
+
+
+\section{Future Works}
+
+
+\begin{itemize}
+    \item \textbf{Coverage of more use cases}: the methodology should account for both pre-existing and new \ac{AI} systems.
+    %
+    It is reasonable that the methodology should be able to be applied to new software systems, but it would be a big lack if it could not be applied to already existing systems, remembering that there are a lot of deployed systems that, probably, are not fair.
+
+    \item \textbf{Research on the socio-legal requirements translation}: questions design has been conducted in a pragmatic way, but a more structured approach could be beneficial.
+    %
+    A more structured approach could be based on a set of rules or guidelines to follow when translating requirements into questions.
+
+    \item \textbf{Improve and add automation scripts}: at the moment, automation scripts perform consolidated computations such as fairness metrics and mitigation.
+    %
+    In future works, it will be necessary to add new scripts to cover more technical steps and to improve the user experience.
+\end{itemize}
 
 
 %----------------------------------------------------------------------------------------
