@@ -1,0 +1,25 @@
+@startuml questionnaire
+
+hide footbox
+
+participant Frontend
+participant Backend
+participant "Event Broker" as Broker
+participant "Automation Script" as Script
+
+participant Script
+
+
+Frontend -> Backend: Request Question
+Frontend <-- Backend: Show Question
+Frontend ->> Backend: Respond to Question
+Backend -> Backend: Update\nQuestionnaire
+
+Backend ->> Broker: "questions.answered" event
+Broker ->> Script: Event Reaction
+Script -> Script: Arbitrary\nComputation
+Backend <<- Script: Update State
+
+Frontend <<- Backend: Updates with\nresults, data...
+
+@enduml

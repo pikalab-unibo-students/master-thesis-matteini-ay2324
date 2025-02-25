@@ -6,6 +6,8 @@
 \usepackage{shortcuts}
 \usepackage{acronym}
 \usepackage{subfig}
+\usepackage{booktabs}
+
 % \usepackage{minted}
 \usepackage[inline]{enumitem}
 
@@ -32,6 +34,12 @@
 \acrodef{Q/A}{Question--Answering}
 \acrodef{DDD}{Domain Driven Design}
 \acrodef{API}{Application Programming Interface}
+\acrodef{TDD}{Test Driven Development}
+\acrodef{CI}{Continuous Integration}
+\acrodef{CD}{Continuous Delivery}
+
+
+\newcommand{\aequitas}{\textsc{Aequitas}}
 
 % temporary fix for acronyms (https://github.com/oetiker/acronym/issues/62)
 \makeatletter
@@ -70,6 +78,7 @@ Optional. Max a few lines.
 \label{chap:introduction}
 %----------------------------------------------------------------------------------------
 
+\note{cita Aequitas project}
 
 \paragraph{Structure of the Thesis}
 
@@ -773,11 +782,12 @@ Furthermore, due to this layer organization, it is possible to easily interchang
 
 The system behavior is mainly concentrated in \textbf{Backend} and \textbf{Automation Scripts} components.
 
+\sidenote{backend forse brutto nome? meglio Q/A service?}
 \subsection{Backend}
 
 Backend component is a web service that exposes a REST \ac{API}, enabling clients to interact with questions graph and questionnaires.
 %
-Its primary functionalities include modifying the question graph structure (adding, removing, modifying questions) and managing project-related questionnaires compilations.
+Its primary functionalities include modifying the questions graph structure (adding, removing, modifying questions) and managing project-related questionnaires compilations.
 %
 It is also possible to create new projects, and, for each of them, starting a new questionnaire session.
 %
@@ -904,13 +914,11 @@ For instance, a new script can be plugged in simply  creating a new channel and 
 \label{chap:implementation}
 %----------------------------------------------------------------------------------------
 
-This chapter delves into the technical details of the software implementation which reifies the proposed meta-methodology.
+This chapter delves into technical details of the software implementation which reifies the proposed meta-methodology.
 %
 It provides an overview of the deployed architecture, and, basing on the design choices made in the previous chapter, it explains how the various components are actually implemented.
-% 
-The chapter also covers the deployment phase of the software system, how to set up the configuration environment, and in the end how to run it.
 %
-Finally, the chapter concludes covering some use cases to demonstrate the system in action, providing also \acf{BU} perspective through the web interface.
+The whole software implementation can be found in the repository \href{https://github.com/aequitas-aod/aequitas-backend}{https://github.com/aequitas-aod/aequitas-backend}.
 
 
 \section{Components}
@@ -957,10 +965,20 @@ For the database, the choice fell on graph database, as it fits well with the gr
 %
 It allows for efficient traversal and querying of the graph, making it easier to manage operations on questions and answers.
 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.72\linewidth]{figures/graph-db.png}
+    \caption{
+        Visual representation of data in the graph database.
+    }
+    \label{fig:graph-db}
+\end{figure}
+
 % 3.1 how are mapped entities to the database?
-Entities are mapped to the database as nodes and relationships.
+Entities are mapped to the database as nodes and relationships (see \cref{fig:graph-db}).
 %
-In particular, \textbf{question graph} is mapped as the following: questions and answers are represented as nodes, while the edges between them are represented as relationships.
+In particular, \textbf{questions graph} is mapped as the following: questions and answers are represented as nodes, while the edges between them are represented as relationships.
 %
 More precisely, let's consider $Q_G$ is the node representation of question $Q$ and $A_G$ is the node representation of answer $A$ (both in general graph).
 %
@@ -987,15 +1005,45 @@ To keep track of the answers given by the \ac{BU}, each answer is linked to the 
 % 4 they just need to adhere to the async api (event-driven architecture)
 Automation scripts are processes created ad hoc to perform specific computations.
 %
-They just need to adhere to the Async API specification to be seamless integrated into the system.
+They just need to adhere to the Async API specification to be seamlessly integrated into the system.
 %
 % By following the Async API, scripts can subscribe to relevant events, perform the necessary computations, and send updates back to the backend, ensuring a smooth and efficient workflow.
 
 % 4.1 about automation script, actually they can be implemented in any language, (python is still the best choice since computations are about ML models and fairness metrics)
 These scripts can actually be implemented in any language, but the ones implemented so far are created in Python.
 %
-One motivation is that in this way scripts can share the backend code benefiting from reusability.
+One motivation is that this allows scripts to share backend code, benefiting from reusability.
+%
 Python is also recommended due to its extensive support for machine learning libraries and frameworks.
+%
+At the moment, the main events identified are:
+\begin{enumerate*}[label=(\roman*)]
+    \item \texttt{questions.answered}, triggered when a question is answered;
+    \item \texttt{datasets.created}, triggered when a new dataset is created;
+    \item \texttt{features.created}, triggered when features of a dataset are analyzed;
+    \item \texttt{processing.requested}, triggered when a processing request is made.
+\end{enumerate*}
+
+In \cref{fig:sequence-events} are shown detailed sequence diagrams of these events. 
+
+\sidenote{migliorare le caption?}
+
+\begin{figure}
+    \centering
+    \subfloat[Sequence diagram of dataset creation.]{%
+        \includegraphics[width=0.47\textwidth]{figures/diagrams/sequence-dataset.png}
+    }
+    \hfill
+    \subfloat[Sequence diagram of mitigation algorithms.]{%
+        \includegraphics[width=0.47\textwidth]{figures/diagrams/sequence-processing.png}
+    }
+    \hfill
+    \subfloat[Sequence diagram of answering a question.]{%
+        \includegraphics[width=0.47\textwidth]{figures/diagrams/sequence-qa.png}
+    }
+    \caption{Detailed sequence diagrams of main events.}
+    \label{fig:sequence-events}
+\end{figure}
 
 
 
@@ -1020,7 +1068,96 @@ A web-based technology has been chosen for several reasons:
 
 
 
-% TODO: needs to be referenced
+\section{Testing}
+
+% introduction on unit and integration testing
+Testing is a fundamental part of the software development process, in this research-oriented software project it has been conducted following the philosophy of \textbf{\ac{TDD}}~\cite{beck2022test}.
+%
+This approach ensures that each implemented feature is tested thoroughly,
+having one or more tests that verify its correctness.
+%
+Essentially, it consists of writing the tests for a feature before its actual implementation, followed by writing the implementation to make the tests pass.
+%
+The entire testing environment has been set up using the unittest\footnote{\href{https://docs.python.org/3/library/unittest.html}{https://docs.python.org/3/library/unittest.html}} framework in Python.
+
+
+\paragraph{Unit Testing.}
+
+Unit tests have been used to test backend main features such as general questions graph, project contexts modifications, and answer selection.
+%
+These tests also cover serialization methods for domain entities and the correctness of main automation scripts.
+%
+In fact, fairness computation performed by such scripts, are tested using mocked components.
+%
+This testing environment ensures that the scripts work correctly regardless they are already integrated into the whole system or not.
+
+
+\paragraph{Integration Testing.}
+
+Integration tests helped to verify correctness of the whole system, ensuring that all components work together as expected.
+%
+Primarily, the interaction between API, business logic, and database has been tested.
+%
+Each endpoint has more than one test case, covering different scenarios and edge cases.
+%
+The starting point is an HTTP request, that triggers business logic.
+%
+The major part of these tests, involve database operations, for this reason, during test executions, a container with a Neo4j instance is started, and the database is initialized with test data.
+%
+When test suite execution is completed, the container is stopped and removed.
+
+Integration tests do not involve just Rest API, but also the event-driven one.
+%
+Indeed, interactions between automation scripts and backend have been tested too.
+%
+These tests require a running Kafka instance, so, similarly to the database, a container with Kafka is started and stopped during tests execution.
+
+During tests execution, Docker is used to handle services containerization.
+
+
+\paragraph{Test Coverage.}
+
+In the following is shown a table reporting the test coverage of the project (\cref{tab:coverage}).
+%
+Test coverage is useful to understand how much code of a software artifact is actually covered by tests.
+%
+Of course, the higher the coverage percentage, the better.
+%
+Despite 100\% of coverage is almost utopian, the 91\% reached in the project is still a good result for a research-oriented software project.
+
+\begin{table}
+    \centering
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{Package} & \textbf{Statements} & \textbf{Missed} & \textbf{Coverage} \\
+        \midrule
+        application   & 984  & 71  & 93\% \\
+        domain        & 421  & 52  & 88\% \\
+        infrastructure & 801  & 69  & 91\% \\
+        presentation  & 23  & 1   & 96\% \\
+        resources    & 19  & 0   & 100\% \\
+        utils        & 127 & 10 &  92\% \\ 
+        \midrule
+        \textbf{TOTAL} & \textbf{2375} & \textbf{203} & \textbf{91\%} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Test coverage report aggregated by main packages.}
+    \label{tab:coverage}
+\end{table}
+
+\section{Deployment}
+
+All components previously described are containerized and deployed using Docker\footnote{\href{https://www.docker.com/}{https://www.docker.com/}}.
+%
+In figure \cref{fig:deployment} is shown the deployment diagram of the system.
+%
+The configuration is set up to be easily deployed using one command line instruction with Docker Compose.
+
+Persistence of data is guaranteed by volumes mounted in the containers, so data is not lost when containers are stopped.
+
+Finally, the system release deployed is the artifact produced through a \ac{CD} pipeline which is successfully completed after all tests are passed.
+
+
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{figures/diagrams/deployment.png}
@@ -1029,9 +1166,6 @@ A web-based technology has been chosen for several reasons:
     }
     \label{fig:deployment}
 \end{figure}
-
-\section{Testing}
-
 
 
 %----------------------------------------------------------------------------------------
@@ -1049,7 +1183,7 @@ A web-based technology has been chosen for several reasons:
     %
     A set of question designed for non-techcnical and non-legal people are more comprehensive than a set of legal constraints.
     %
-    Through this mechanism, it is also possible to practically constrain the development process depending on the paths designed in the question graph.
+    Through this mechanism, it is also possible to practically constrain the development process depending on the paths designed in the questions graph.
 
     \item \textbf{\ref{req:R2}---Context and Domain Awareness} $\rightarrow$ \textbf{Questions Design}:
     %
@@ -1081,6 +1215,63 @@ A web-based technology has been chosen for several reasons:
 \section{Software Implementation}
 % 2. Validation of the software implementation
 
+From a technical point of view, the validation of development process is achieved by using DevOps practices.
+%
+The constant develop of tests alongside core features (with \ac{TDD}), allows applying \ac{CI} and \acf{CD}.
+
+\begin{itemize}[label={}]
+    \item \textbf{Continuous Integration}:  
+    The system is continuously integrated and tested to ensure the codebase remains in a working state.
+    %
+    A CI pipeline runs tests on each repository push, merging the code into the main branch if successful.
+    %
+    This practice keeps the codebase stable, preventing new features from breaking existing ones.
+
+    \item \textbf{Continuous Deployment}:  
+    The system is automatically deployed once all tests pass.
+    %
+    A CD pipeline builds the application, runs tests, and deploys it to production.
+    %
+    This ensures the application remains up-to-date, making new features available as soon as they are developed.
+\end{itemize}
+
+% 2.1. explaining style and code quality (black formatter)
+To improve code quality, \ac{CI} pipeline also runs code quality checks.
+%
+These are performed using Black Formatter\footnote{\href{https://black.readthedocs.io/en/stable/index.html}{https://black.readthedocs.io/en/stable/index.html}}.
+% 
+Black is a code formatter that automatically formats Python code according to a particular strict set of rules, without subjective style options.
+
+
+
+
+\section{Usage Example}
+
+% Software validation by project review 
+A preliminary validation of the software has been achieved through its successful evaluation in the latest review of the European \aequitas{} project funding the research.
+%
+During this assessment, positive feedback was received by reviewers regarding both the user experience and the underlying methodology, confirming their alignment with the project’s objectives on \ac{AI} fairness.
+%
+This is an important outcome because provides an initial indication of the software’s effectiveness in its objectives.
+%
+Further validation steps will be pursued in future project reviews, where the software will represent a core deliverable of the project.
+
+A usage example shown during the review, is a scenario where a \ac{BU} wants to mitigate the \texttt{Adult} dataset\footnote{\href{https://www.openml.org/search?type=data\&sort=runs\&id=179\&status=active}{https://www.openml.org/search?type=data\&sort=runs\&id=179\&status=active}} (see \cref{fig:gui}).
+
+
+
+\begin{figure}
+    \centering
+    \subfloat[Data mitigation algorithms selection.]{%
+        \includegraphics[width=0.80\textwidth]{figures/gui/mitigation-algorithms.png}
+    }
+    \hfill
+    \subfloat[Data mitigation results.]{%
+        \includegraphics[width=\textwidth]{figures/gui/mitigation-results.png}
+    }    
+    \caption{Example of data mitigation process.}
+    \label{fig:gui}
+\end{figure}
 
 \section{Limitations}
 
@@ -1096,7 +1287,7 @@ In other words, it forces the subjects involved in the requirements engineering 
 
 % Requirement 3 limitation on "versioning" 
 \sidenote{qua spiego bene il versioning, forse va messo da un altra parte?}
-Flexibility of question graph, which satisfies \ref{req:R3}, enables a \textit{versioning} mechanism because changing the graph structure means creating a ``new version'' of the methodology.
+Flexibility of questions graph, which satisfies \ref{req:R3}, enables a \textit{versioning} mechanism because changing the graph structure means creating a ``new version'' of the methodology.
 %
 New version means a graph with different paths of questions and answers, which obviously, addresses diverse needs.
 %
@@ -1104,13 +1295,13 @@ Hence, the methodology can adapt to evolvable cultural contexts, creating new gr
 
 Conversely, questionnaires already started or completed, are affected by a version change.
 %
-The reason is due to the strong dependency between questionnaire (project-related graph) and general question graph.
+The reason is due to the strong dependency between questionnaire (project-related graph) and general questions graph.
 %
 In fact, each update to the questionnaire relies on the general graph, and so, general graph changes will lead to inconsistencies in the questionnaire.
 %
 So, in case of a version change, it is necessary to keep the oldest version to not break the support for the already started questionnaires.
 %
-At the moment, the only way to adapt to new versions, is to start a new project (and relative questionnaire) from scratch.
+At the moment, the only way to adapt to new versions, is starting a new project (and relative questionnaire) from scratch.
 
 
 
@@ -1130,8 +1321,6 @@ Actually, computations performed by backend service and automation scripts are d
 %
 If computations take too long, \ac{BU} could proceed with missing or outdated information, leading to possible misuses of the system.
 
-
-\section{Usage Example}
 
 
 %----------------------------------------------------------------------------------------

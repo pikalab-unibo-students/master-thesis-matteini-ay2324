@@ -1,0 +1,35 @@
+@startuml questionnaire
+
+hide footbox
+
+participant Backend
+participant "Event Broker" as Broker
+participant "Automation Script" as Script
+
+participant Script
+
+
+Backend -> Backend: Create Dataset
+
+Backend ->> Broker: "**processing.requested**" event
+Broker ->> Script: Event Reaction
+
+
+alt pre-processing phase
+    Script -> Script: Create mitigated dataset\nand results plots
+    Backend <<- Script: Update State
+    Backend ->> Broker: "**datasets.created**" event
+    note right: dataset created reaction...
+
+else in-processing phase
+    Script -> Script: Create mitigated model\nand new metrics
+    Backend <<- Script: Update State
+
+else post-processing phase
+    Script -> Script: Create mitigated predictions\nand new metrics
+    Backend <<- Script: Update State
+end
+
+
+
+@enduml

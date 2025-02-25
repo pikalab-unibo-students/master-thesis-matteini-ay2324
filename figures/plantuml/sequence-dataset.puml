@@ -1,0 +1,24 @@
+@startuml questionnaire
+
+hide footbox
+
+participant Backend
+participant "Event Broker" as Broker
+participant "Automation Script" as Script
+
+participant Script
+
+
+Backend -> Backend: Create Dataset
+
+Backend ->> Broker: "**datasets.created**" event
+Broker ->> Script: Event Reaction
+Script -> Script: Create Features
+Backend <<- Script: Update State
+
+Backend ->> Broker: "**features.created**" event
+Broker ->> Script: Event Reaction
+Script -> Script: Compute\nFairness Metrics
+Backend <<- Script: Update State
+
+@enduml
