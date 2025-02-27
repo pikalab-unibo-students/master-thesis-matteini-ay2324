@@ -57,7 +57,23 @@
 \frontmatter\frontispiece
 
 \begin{abstract}	
-Max 2000 characters, strict.
+Biases and discriminations are present in several \ac{AI} systems as much as they are eradicated in the society.
+%
+Fairness in \ac{AI} refers to the development of software systems that do not exhibit biases or systematic discriminations against specific individuals or groups.
+%
+Addressing fairness is particularly challenging because it requires balancing ethical, social, legal, and technical expertises.
+%
+This thesis proposes a meta-methodology for building fair AI systems, offering both a conceptual framework and a concrete software tool implementing the methodology.
+%
+Instead of a single solution for all kinds of \ac{AI} systems, this meta-methodology provides a flexible, adaptable approach that can be tailored to different domains and cultural contexts.
+%
+The methodology is based on a \acl{Q/A} mechanism, which guides the stakeholder through a structured flow of questions and answers, automating---behind the scenes---technical steps to build eventually a fair \ac{AI} system.
+%
+By leveraging a questionnaire, the system gathers contextual and domain-specific information, applying related socio-legal constraints to ensure fairness.
+%
+This form of interaction allows making well-informed decisions, even without deep technical knowledge, consequently increasing the fairness problem awareness.
+%
+The proposed approach is easily adaptable and evolvable, in order to keep up with the changes in the domain of the system under design, and to refine the methodology over time.
 \end{abstract}
 
 
@@ -78,11 +94,87 @@ Optional. Max a few lines.
 \label{chap:introduction}
 %----------------------------------------------------------------------------------------
 
-\note{cita Aequitas project}
+% fairness introduction
+Fairness is a fundamental ethical and social principle that ensures impartiality, equity, and justice in decision-making processes.
+%
+In the context of \acf{AI}, fairness pertains to the development of software systems that do not demonstrate biases or systematic discriminations against specific individuals or groups.
+%
+Achieving fairness in \ac{AI} is a complex challenge, as many \ac{AI} systems reflect historical societal biases and discriminations present in the data they are trained on.
+%
+Moreover, the multidisciplinary nature of fairness requires integrating insights from computer science, ethics, law, and social sciences, making this challenge further complicated.
+%
+Addressing these issues is essential to prevent damaging consequences in high-stakes domains such as hiring, criminal justice, healthcare, and finance.
 
-\paragraph{Structure of the Thesis}
 
-\note{At the end, describe the structure of the paper}
+% implications of unfair AI systems
+The implications of unfair \ac{AI} are pervasive and far-reaching.
+%
+Discriminatory algorithms can reinforce existing societal inequalities, disproportionately impacting marginalized communities.
+%
+For instance, biased AI models in dermatology have led to incorrect diagnoses for skin diseases in black individuals due to training data lacking diverse skin tones.
+%
+Similarly, AI-driven loan approval systems have been documented to deny home loans to women\sidenote{non ricordo se erano donne} based on historical biases embedded in financial datasets.
+%
+Despite these examples, many people are not even aware of the fairness problem and consequences that can arise.
+%
+For these reasons, lots of effort in research has been put in the last years to address this critical field.
+
+% objective of the thesis
+Since \ac{AI} power and usage is significantly increased in short time, there is a lack of engineering methodologies to develop such systems.
+%
+The objective of this thesis is to provide a (meta-)methodology to build fair \ac{AI} systems.
+%
+The methodology should assist both stakeholders and engineers in addressing fairness during \ac{AI} systems creation.
+%
+It has no ambition to be a one-size-fits-all solution, but rather a flexible and adaptable framework that can be tailored to different contexts and applications.
+%
+The complementary objective is to reify the methodology into a software system, creating a practical tool easy to use and accessible also to non-technical people.
+%
+The core of the methodology is a \acf{Q/A} mechanism, that guides stakeholders through a structured flow of questions and answers.
+%
+During this flow, the software system collects information about the system domain, rationalizes fairness-related issues, and automates technical steps in order to train and build---in background---a fair \ac{AI} system.
+%
+This work acts on the whole \ac{AI} lifecycle, taking into account fairness considerations since the beginning of the process, reducing the presence of biases in the system.
+%
+The methodology is designed to facilitate the translation of socio-legal requirements into technical constraints, because this represents one of the main challenges in the field.
+
+
+% aequitas project
+The contribution of this thesis is part of the work done in the European research project ``Assessment and Engineering of eQuitable, Unbiased, Impartial and Trustworthy Ai Systems'' (\aequitas{})\footnote{\href{https://www.aequitas-project.eu/}{https://www.aequitas-project.eu/}}, which aims to promote fairness, accountability, and transparency in \acs{AI}-driven systems.
+%
+\aequitas{} is a project funded by the Horizon Europe Framework Programme and involves a consortium of academic and industrial partners from different countries.
+
+% conclusions
+Finally, the validation has been performed on both conceptual and technical contributions, highlighting the strengths and limitations.
+%
+The practical software tool has been tested and validated through a series of focus groups involving experts and unprivileged groups.
+%
+In addition, the methodology and its software implementation have been validated through project reviews, receiving positive feedback from external reviewers.
+%
+Feedbacks will be used to improve and evolve the methodology in future research.
+%
+Concluding, the work done in this research line has been accepted and published in the Proceedings of the 58th \textit{Hawaii
+International Conference on System Sciences} (HICSS)~\cite{hicssfairness2025}.
+
+
+
+
+\paragraph{Structure of the Thesis.}
+
+\Cref{chap:introduction} introduces the topic of fairness in \ac{AI} and outlines the objectives of the thesis.
+%
+\Cref{chap:background} provides a comprehensive overview of fairness, its significance nowadays, and the challenges associated with achieving it in \ac{AI} systems.
+%
+\Cref{chap:meta-methodology} presents the conceptual contribution to this thesis: a meta-methodology aiming to address fairness in \ac{AI} systems.
+%
+\Cref{chap:design} illustrates the design of the produced software artifact that implements the meta-methodology.
+%
+\Cref{chap:implementation} goes deeper into the software implementation details, providing low-level and technical choices.
+%
+\Cref{chap:validation} discusses the validation of the meta-methodology, highlighting strengths and limitations.
+%
+\Cref{chap:conclusions} concludes the thesis, summarizing the core of the contribution and describing future research directions.
+
 
 
 
@@ -114,20 +206,22 @@ It involves designing systems that ensure equitable treatment across different d
 %
 % Fairness in AI can be assessed using various mathematical definitions, such as demographic parity, equalized odds, and fairness through unawareness, depending on the context and application.
 %
-The main challenges in this field are building \texttt{fair-by-design} systems, namely such systems in which the fairness problem is addressed since the very beginning of the process, and detecting biases in already existing systems, mitigating them if possible.
+The main challenges in this field are building \texttt{fair-by-design} systems---in which fairness is addressed since the very beginning of the process---and detecting biases in already existing systems, mitigating them if possible.
 %
 % The challenge in AI fairness lies in defining and balancing these technical fairness measures while maintaining model accuracy and practical utility.
 
 Before the advent of fairness, \ac{AI} systems were developed with the primary goal of optimizing performance metrics, such as accuracy.
 %
-Nowadays, that fairness is becoming a crucial aspect to consider, accuracy is no more the only metric to optimize, it is necessary to find a balance between accuracy and fairness.
+Nowadays, that fairness is becoming a crucial aspect to consider, accuracy is no more the only metric to optimize.
+%
+It is necessary to find a balance between accuracy and fairness.
 %
 Besides that, fairness can also be in contrast with the performance of the model, making difficult to find a good trade-off between these two aspects.
 
 % 3. explaining why fairness in AI is important
 Fairness is becoming crucial because \ac{AI} systems increasingly influence decision-making processes in various sectors of society, including hiring, lending and healthcare.
 %
-If \ac{AI} models are biased, they can perpetuate and even amplify existing societal inequalities, leading to unjust outcomes and tremendous effects on individuals and communities.
+If \ac{AI} models are biased, they can perpetuate and even amplify existing societal inequalities, leading to unjust outcomes and dangerous effects on individuals and communities.
 %
 Ensuring fairness in \ac{AI} enhances trust, transparency, and accountability, making \ac{AI} systems more ethical, reliable, and beneficial for society.
 
@@ -139,7 +233,7 @@ This also caused a growing of biases in \ac{AI} systems, as discriminations are 
 
 % 3.2 speaking about the fact that AI is used in many critical fields, and the fact that fairness is important in these fields
 
-\ac{AI} is now widely used in critical domains such as healthcare, finance, education, and criminal justice, where biased decisions can have life-altering consequences.
+\ac{AI} is now widely used in critical domains, as previously mentioned, where biased decisions can have life-altering consequences.
 %
 For instance, in healthcare, biased algorithms may lead to misdiagnosis or unequal treatment recommendations for different demographic groups;
 %
@@ -147,7 +241,7 @@ in finance, \ac{AI}-driven credit scoring models can reinforce discriminatory le
 %
 in the criminal justice system, biased predictive policing and risk assessment tools can disproportionately target marginalized communities.
 %
-Given these risks, ensuring fairness in \ac{AI} is essential to preventing discrimination, maintaining ethical standards, and safeguarding individuals.
+Given these risks, ensuring fairness in \ac{AI} is essential to preventing discrimination, maintaining ethical standards, and safeguarding people.
 
 
 \paragraph{On Multidisciplinarity.}
@@ -156,7 +250,7 @@ Given these risks, ensuring fairness in \ac{AI} is essential to preventing discr
 
 Achieving fairness in \ac{AI} requires a multidisciplinary approach that integrates insights from computer science, ethics, law and social sciences.
 %
-Technical methods alone cannot fully address fairness, as fairness is deeply tied to societal values, human rights, and legal frameworks.
+Technical methods alone cannot fully address fairness, as it is deeply tied to societal values, human rights, and legal frameworks.
 %
 Socio-legal experts help define fairness principles, ensure compliance with anti-discrimination laws and analyze the societal impact.
 %
@@ -184,7 +278,7 @@ While the AI Act sets an important precedent for AI governance, its effective im
 
 At one point, in order to assess the fairness of an \ac{AI} system, is important to have a way to ``measure'' how much the system is fair and in what terms.
 %
-Remarking what said before, fairness is very context-dependent, and there is not a single way to measure it. 
+Remarking what said before, fairness is very context-dependent, and there is not a single method to measure it. 
 
 % 5.1 define fairness metrics
 
@@ -195,7 +289,7 @@ These fairness metrics, are a set of indexes that can be used to detect biases i
 
 % 5.2 list the main fariness matrics providing a brief description and formal definition
 
-In the following, are listed some of the most common fairness metrics used in the literature~\cite{DBLP:conf/bias/IrfanML23}:
+In the following, are listed two of the most common fairness metrics used in the literature~\cite{DBLP:conf/bias/IrfanML23}:
 
 \begin{itemize}
     \item \textit{Statistical Parity Difference} (SPD) measures the difference between the probability of the privileged and unprivileged classes receiving a favorable outcome. This measure should be equal to 0 to be fair.
@@ -208,13 +302,8 @@ In the following, are listed some of the most common fairness metrics used in th
     
     Formally it is defined as $DI = P(\hat{Y} = 1 | A = a) / P(\hat{Y} = 1 | A = b)$
     %
-    where $A$ is the sensitive attribute, $\hat{Y}$ is the predicted outcome, and $a$ and $b$ are the privileged and unprivileged groups, respectively.
-    \sidenote{add more metrics?}
-    
+    where $A$ is the sensitive attribute, $\hat{Y}$ is the predicted outcome, and $a$ and $b$ are the privileged and unprivileged groups, respectively.    
 \end{itemize}
-
-
-\note{manca una sezione Lack of engineering methodology?}
 
 
 \section{\acs{AI} Lifecycle}
@@ -229,11 +318,10 @@ Since the very beginning of the \ac{AI} era, the standard lifecycle consists of 
 \end{enumerate*}
 %
 Obviously, this workflow in the latest years have increased in complexity and now, with the newer innovations and powerful models and architectures, it may appear even almost minimalistic, but it still represents the core of all \ac{AI} systems.
-
+%
 However, when fairness is taken into account, each step needs to be revisited in order to obtain an equitable, impartial, and fair \ac{AI} system.
 
 % 2 fairness can be achieved only if socio-legal perspective is taken into account, talk about the importance of the socio-legal perspective
-
 To achieve this goal, the technical perspective is not enough.
 %
 Fairness is a multidisciplinary concept that involves social, legal, and ethical aspects.
@@ -274,7 +362,7 @@ In particular, with respect to fundamental rights impact assessments, these will
 
 Fairness in \ac{AI} (and beyond) is inherently subjective, shaped by cultural values, ethical theories, and individual perspectives.
 %
-What one group considers fair may not align with other people’s understanding, leading to debates about determining what is fair and what is not.
+What one group considers fair may not align with other people’s understanding, leading to debates about determining what is just and what is not.
 %
 This subjectivity and variation in viewpoints complicates efforts to develop standardized fairness metrics, as no single approach can universally capture the diverse and often conflicting notions of fairness present across different social, legal, and institutional contexts.
 
@@ -303,7 +391,7 @@ A fundamental obstacle to this integration is the differing language used by soc
 %
 It is difficult to reach an agreement if even a concept or term can assume different meanings depending on the perspective.
 % Legal and ethical frameworks rely on qualitative reasoning and precedent, whereas technical disciplines typically speaks about quantitative metrics
-This linguistic division creates a difficult barrier to interdisciplinary collaboration, leading to misunderstandings even when working towards shared goals.
+This linguistic division creates a barrier to interdisciplinary collaboration, leading to misunderstandings even when working towards shared goals.
 
 
 % 5. socio-legal and technical perspectives have different backgrounds
@@ -345,38 +433,38 @@ A \textbf{methodology} is a structured framework that outlines the principles, p
 In this context, a well-defined methodology would be essential for ensuring fairness, as it would provide a rigorous approach to
 \begin{enumerate*}[label=(\roman*)]
     \item translating socio-legal requirements into technical steps,
-    \item identifying and mitigating biases, and
+    \item identifying and mitigating biases, and possibly
     \item building \texttt{fair-by-design} systems.
 \end{enumerate*}
-\sidenote{need to introduce the concept of \texttt{fair-by-design} systems in Background chapter}
 
-Having a rigorous methodology would impact the development of fair \ac{AI} systems, it means that it would represent a clear way to follow, encapsulating the already existing unclear guidelines provided by the socio-legal frameworks.
-
+Having a rigorous methodology would positively impact the development of fair \ac{AI} systems.
+%
+It would represent a clear path to follow, encapsulating the already existing unclear guidelines provided by the socio-legal frameworks.
 % x why META-methodology
 Unfortunately, factors such as multidisciplinarity, complexity, and context-dependency make it difficult to design a single methodology that fits all contexts and applications.
 %
 Therefore, this contribution proposes a \textbf{meta-methodology} that provides a flexible and adaptable framework for design and develop multiple methodologies instead of a single one.
 %
-The idea of the meta-methodology comes from the sessions of brainstorming and discussions between experts of different fields, where troubles are emerged in reaching an agreement and proceeding with clear technical steps relying on the legal requirements.
+The idea of such meta-methodology comes from the sessions of brainstorming and discussions between experts of different fields, where troubles have emerged in reaching an agreement and proceeding with clear technical steps relying on the legal requirements.
 
 % The meta-methodology consists of the following key components:
 
-\section{Desiderata}
-In the following, are listed the desiderata that the meta-methodology should satisfy.
-% 1. List the meta-methodology desiderata/requirements
+\section{Desiderata}\label{sec:desiderata}
+In the following, are listed the requirements that the meta-methodology should satisfy.
 
+% 1. List the meta-methodology desiderata/requirements
 
 \begin{enumerate}[label=\textbf{R\arabic*}, ref=R\arabic*]
     
     % 1.1 the methodology should assist experts in translating the social-legal requirements into practice
     \item\label{req:R1} \textbf{Requirements Translation}: The methodology should assist experts in translating the socio-legal requirements into practice.
 
-    A big challenge in this field, is to understand how legal constraints can be applied, and how technical steps can be identified to satisfy the requirements. That's why the methodology should provide a mechanism assisting this phase.
+    A big challenge in this field, is to understand how legal constraints can be applied, and how technical steps can adhere to the requirements. That's why the methodology should provide a mechanism assisting this phase.
     
     % 1.2 the methodology should consider the cultural context and the domain AI system under design
     \item\label{req:R2} \textbf{Context and Domain Awareness}: The methodology should consider the cultural context and the domain of \ac{AI} system under design.
     
-    AI systems have been applied in several (and critical) use cases. For each of them, the constraints and requirements change, so through the methodology, it should be possible to understand the system domain and be context-aware.
+    AI systems have been applied in several (and critical) use cases. For each of them, the constraints and requirements change, hence, through the methodology, it should be possible to understand the system domain and be context-aware.
 
     % 1.3 the methodology should adapt to any change in the cultural context as it evolves
     \item\label{req:R3} \textbf{Adaptability}: The methodology should adapt to any change in the cultural context as it evolves.
@@ -410,7 +498,7 @@ Potentially, stakeholder could even build a fair \ac{AI} system without the need
 
 On the other hand, the \acl{TU}, despite is the person with technical background, is not the responsible for the entire system development.
 %
-Firstly, \ac{TU} must be able to assist \ac{BU} during the process to clarify any technicalities that may arise, and secondly, he or she must have some knowledge about basics of fairness.
+Firstly, \ac{TU} must be able to assist \ac{BU} during the process to clarify any technicalities that may arise, and secondly, he or she must have some knowledge about basics of fairness.\sidenote{forse non è proprio vero/non vogliamo dirlo}
 
 Finally, \ac{TU} may contribute to the system development through the implementation of scripts/computational processes involved in the building of the system and integrated in the methodology.
 %
@@ -419,7 +507,7 @@ In fact, the software reification of the methodology will be a tool providing \a
 
 \paragraph{Questionnaire.}
 % 2.1. integration of multiple perspectives and representing legal contraints through a Q/A
-Discussions among experts from involved fields highlighted the need for a practical understanding of the domain and the cultural context of the system being designed, ensuring that it is accessible and comprehensible to people of any background.
+Discussions among experts from involved fields highlighted the need for a practical understanding of the domain of the system being designed, ensuring that it is accessible and comprehensible to people of any background.
 %
 The proposed approach relies on a straightforward questionnaire, which directly engages the \acl{BU} with questions regarding the system's domain.
 
@@ -434,7 +522,7 @@ The overall concept is shown in \cref{fig:concept}.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.90\linewidth]{figures/concept.pdf}
+    \includegraphics[width=0.88\linewidth]{figures/concept.pdf}
     \caption{Concept of the proposed approach to fairness engineering from~\cite{hicssfairness2025}.}
     \label{fig:concept}
 \end{figure}
@@ -442,7 +530,7 @@ The overall concept is shown in \cref{fig:concept}.
 % 2.1.2 questions designed ad-hoc from a team of multidisciplinary experts
 The pool of questions and answers should be designed ad-hoc from a team of multidisciplinary experts. 
 %
-This is a crucial, and non-trivial, step in the methodology, as the questions should be able to capture the constraints and requirements from legal frameworks, but also to provide technicalities to be addressed in the proper way and at right time in the process.
+This is a crucial, and non-trivial, step in the methodology, as the questions should be able to capture the constraints and requirements from legal frameworks, but also to provide technicalities to be addressed in the proper way and at the right time in the process.
 
 Examples of questions that could be asked are:
 \begin{itemize}
@@ -461,25 +549,25 @@ But also more technical questions like:
 
 % 2.2 Order of questions
 \paragraph{Order of Questions.}
-In the previous paragraph it was mentioned that the flow of questions contains generic and technical questions.
+As mentioned in the previous paragraph, the flow of questions comprises both generic and technical questions.
 %
-The questionnaire should follow a structured approach, beginning with general questions before gradually introducing more technical aspects.
+The questionnaire should follow a structured approach, beginning with general questions before and gradually introducing more technical aspects.
 %
-Initially, broad and non-technical questions are asked to establish a clear understanding of the system’s domain, purpose, and the cultural or business context in which it operates.
+Initially, broad and non-technical questions are asked to establish a clear understanding of system’s domain, purpose, and the cultural or business context in which it operates.
 %
-As the questionnaire progresses, the questions become more specific and technical.
+As the questionnaire progresses, questions become more specific and technical.
 %
-At one point it becomes mandatory to introduce technical aspects because in the end the questionnaire has to converge to the effective building of the fair \ac{AI} system.
+At one point it becomes mandatory to introduce technical aspects because, in the end, questionnaire has to converge to the effective building of the fair \ac{AI} system.
 
 % 2.2.1 the order of the questions is important, as the answer to a question can influence the following ones
-There is another important concept related to the order of questions: the answer to a question can influence the following ones.
+There is another important concept related to the order of questions: the answer to a question can \textbf{influence} the following ones.
 %
 This feature is to enable the methodology to adapt to the context and asking later more tailored questions based on the previous answers.
 %
 Moreover, it is also useful to enrich the part of system development, as it should be possible to follow multiple paths to make an AI system fair.
 %
-For instance, the \acl{BU} could decide to preprocess the dataset twice, or choose to perform just in-processing mitigation.
-
+For instance, the \acl{BU} could decide to preprocess the dataset, or choose to perform just in-processing mitigation.
+%
 These mechanisms lead to a more flexible and adaptable questionnaire, capable of addressing a wide range of contexts and applications, enabling also branching and joining paths in the flow.
 
 
@@ -490,17 +578,17 @@ These mechanisms lead to a more flexible and adaptable questionnaire, capable of
 The methodology includes---alongside the \ac{Q/A}---a Decision Support Mechanism, aiming to simplify the process of making decisions regarding fairness-related or complex questions.
 %
 % 2.3.2 the Q/A mechanism is a way to make the BU aware of the fairness problem
-Fairness problem should be taken into account not just by experts in the field, but also by stakeholders, as the relevance of the problem has grown significantly in the last years.
+Fairness problem should be taken into account not just by experts in the field, but also by stakeholders, as the relevance of the problem has grown significantly.
 %
 % 2.3.3 the Q/A mechanism does not force the BU to make decisions, but it assists him/her in making well-informed decisions
 Therefore, an important goal of the methodology is to make the \ac{BU} aware of the fairness problem, and to assist him/her in making well-informed decisions.
 %
-In this way, the \ac{BU} can gain a deeper understanding of the topic, and can proceed with the development of the system more responsibly.
+In this way, \ac{BU} can gain a deeper understanding of the topic, and can proceed with the development of the system more responsibly.
 %
-Importantly, the mechanism does not impose decisions but rather suggests the \ac{BU} the answer he or she probably should give.
+Importantly, the mechanism does not impose decisions but rather suggests to the \ac{BU} the answer he or she probably should give.
 
 % 2.3.4 the software also providev additional information and resources to the BU and not just questions
-In addition to posing relevant questions and steps, the software provides supplementary information and resources, like charts and tables, helping the \ac{BU} to get a deeper understanding of what he is doing and to assess the fairness of the system more effectively.
+In addition to showing questions, the software provides supplementary information and resources, like charts and tables, helping the \ac{BU} to get a deeper understanding of what he is doing and to assess the fairness of the system more effectively.
 \sidenote{in alcuni punti come qui gia parlo di software, prematuro?}
 
 
@@ -1173,7 +1261,17 @@ Finally, the system release deployed is the artifact produced through a \ac{CD} 
 \label{chap:validation}
 %----------------------------------------------------------------------------------------
 
-\section{Meta-Methodology Requirements}
+A contribution of this nature, in which are present both conceptual (the meta-methodology) and technical (the software artifact) parts requires a multi-faceted validation process.
+%
+Validation is further complicated by the critical topic treated in this work, which is fairness in \ac{AI}.
+%
+This, in fact, makes it necessary to involve different stakeholders, such as ethicists, legal experts, and representatives of vulnerable groups, to ensure that the system is aligned with the principles of fairness.
+
+
+
+\section{Requirements Satisfaction}
+
+First, it is important to remark the requirements defined in \cref{sec:desiderata} and how they have been satisfied.
 
 \begin{itemize}[label={}]
 
@@ -1212,7 +1310,7 @@ Finally, the system release deployed is the artifact produced through a \ac{CD} 
 
 
 
-\section{Software Implementation}
+\section{Quality Assurance}
 % 2. Validation of the software implementation
 
 From a technical point of view, the validation of development process is achieved by using DevOps practices.
@@ -1243,9 +1341,42 @@ These are performed using Black Formatter\footnote{\href{https://black.readthedo
 Black is a code formatter that automatically formats Python code according to a particular strict set of rules, without subjective style options.
 
 
+\section{Software Assessment}
 
 
-\section{Usage Example}
+Fairness is one of the four ``Ethical Principles in the Context of AI System'' as outlined in the Ethics Guidelines for Trustworthy Artificial Intelligence (EGTAI)~\cite{AIHLEG2019}.
+%
+This principle is deeply interwoven with the other three---respect for human autonomy, prevention of harm, and explicability.
+%
+It addresses various modes through which biases can manifest negatively, including discrimination, inequality, exclusion, segregation, marginalization, exploitation, and manipulation.
+%
+A key pillar of EGTAI is \textit{lawfulness}, and fairness is integral to numerous fundamental rights, laws, and governing principles, such as the European Pillar of Social Rights.
+%
+This pillar serves as a guiding light for a fair and inclusive Europe, advocating for gender equality, equal opportunities, and access to essential services.
+
+For these reasons, the validation of technologies and methodologies aimed at addressing fairness issues in \ac{AI} must adopt a validation approach that begins with the co-creation and co-design phases of the methodologies and technologies themselves, using participatory design approaches.
+
+This approach was employed in the \aequitas{} process.
+%
+Specifically, co-design and co-creation sessions were conducted to embody socio-legal requirements within the technology.
+%
+This led to the development of a meta-methodology presented in \cref{chap:meta-methodology}, which was then validated in iterative co-creation sessions.
+%
+The participatory approach involves setting up various focus groups, where diverse stakeholders convene to discuss, challenge, and refine the \ac{AI}'s requirements and functionalities.
+%
+These stakeholders include \ac{AI} developers, companies, representatives from vulnerable groups, legal experts, ethicists, and end-users.
+%
+The objective is to incorporate a broad spectrum of perspectives to ensure the \ac{AI} system is not only technically sound but also ethically aligned and socially beneficial.
+%
+During these focus group interactions, each participant offers their expertise and insight, which are crucial for identifying potential biases and ensuring the \ac{AI} system upholds fairness principles.
+%
+Ethicists might highlight ethical dilemmas overlooked by developers, while legal experts ensure compliance with relevant data protection and anti-discrimination laws.
+%
+The iterative nature of these co-creation sessions facilitates continuous feedback and enhancements, thereby fortifying the \ac{AI} system against biases and aligning it more closely with the principles enshrined in the European Pillar of Social Rights.
+%
+This method of validation through participatory design is essential for tackling the complex issues of fairness in \ac{AI}, ensuring that the technology positively impacts society without perpetuating existing inequalities.
+
+
 
 % Software validation by project review 
 A preliminary validation of the software has been achieved through its successful evaluation in the latest review of the European \aequitas{} project funding the research.
@@ -1331,7 +1462,7 @@ If computations take too long, \ac{BU} could proceed with missing or outdated in
 %recap of what this thesis proposes
 This contribution presented a (meta-)methodology for building fair \ac{AI} systems.
 %
-The methodology does not offer a direct solution to all kind of \ac{AI} systems, but it provides a pragmatic way to define a custom development process for each specific system.
+The methodology does not offer a direct solution to all kinds of \ac{AI} systems, but it provides a pragmatic way to define a custom development process for each specific system.
 %
 The methodology is based on a \ac{Q/A} mechanism, which helps to:
 \begin{enumerate*}[label=(\roman*)]
