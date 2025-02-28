@@ -578,22 +578,22 @@ These mechanisms lead to a more flexible and adaptable questionnaire, capable of
 The methodology includes---alongside the \ac{Q/A}---a Decision Support Mechanism, aiming to simplify the process of making decisions regarding fairness-related or complex questions.
 %
 % 2.3.2 the Q/A mechanism is a way to make the BU aware of the fairness problem
-Fairness problem should be taken into account not just by experts in the field, but also by stakeholders, as the relevance of the problem has grown significantly.
+Fairness problem should be taken into account not just by experts in the field, but also by stakeholders, as this problem is becoming more and more important.
 %
 % 2.3.3 the Q/A mechanism does not force the BU to make decisions, but it assists him/her in making well-informed decisions
 Therefore, an important goal of the methodology is to make the \ac{BU} aware of the fairness problem, and to assist him/her in making well-informed decisions.
 %
 In this way, \ac{BU} can gain a deeper understanding of the topic, and can proceed with the development of the system more responsibly.
 %
-Importantly, the mechanism does not impose decisions but rather suggests to the \ac{BU} the answer he or she probably should give.
+Importantly, the mechanism does not impose decisions but rather \textbf{suggests} to the \ac{BU} the answer he or she probably should give.
 
 % 2.3.4 the software also providev additional information and resources to the BU and not just questions
-In addition to showing questions, the software provides supplementary information and resources, like charts and tables, helping the \ac{BU} to get a deeper understanding of what he is doing and to assess the fairness of the system more effectively.
+In addition to showing questions, the software provides supplementary information and resources, like charts and tables, helping the \ac{BU} to gain a better insight of what he is doing and to assess the fairness of the system more effectively.
 \sidenote{in alcuni punti come qui gia parlo di software, prematuro?}
 
 
 % 3. The Q/A mechanism
-\section{The \acs{Q/A} Mechanism}
+\section{The \acs{Q/A} Mechanism}\label{sec:qa-mechanism}
 
 The \acf{Q/A} mechanism represents the core of this methodology.
 %
@@ -611,8 +611,8 @@ Each question node contains a natural language sentence expressing an inquiry, p
 %
 They can also contain other arbitrary information, like the type of question (single or multiple choice), a brief description, and so on.
 %
-Answer nodes, similarly, contain a natural language sentence expressing a possible answer to a question, an identifier (unique within the whole graph) such as \texttt{Q1-A1}, \texttt{Q1-A2}, etc., and other arbitrary and useful information.
-
+Answer nodes, similarly, contain a natural language sentence expressing a possible answer to a question, an identifier (unique within the whole graph) such as \texttt{Q1-A1}, \texttt{Q1-A2}, etc., and other arbitrary useful information.
+%
 \textbf{Edges} are of two sorts too: either \textit{question-to-answer} edges, denoted by $Q \to A$, or \textit{answer-to-question} edges, denoted by $A \to Q$.
 %
 Edges of the first type ($Q \to A$) indicate that question $Q$ has as a possible answer $A$, whereas edges of the second type ($A \to Q$) represent that next question to be asked is $Q$ if the selected answer to the previous question was $A$.
@@ -620,6 +620,8 @@ Edges of the first type ($Q \to A$) indicate that question $Q$ has as a possible
 These statements assume that there cannot exist links between two question nodes or two answer nodes.
 %
 It is also assumed that each question must have \textit{at least one} outgoing edge leading to an answer node, and each answer node must have \textit{exactly one} outgoing edge towards a question node.
+%
+Moreover, at the current state, if a question is of multiple choice, it is assumed that each possible answer leads to the same next question.
 
 Proceeding with the graph details, the \textbf{root} node is the first question to be asked to each \ac{BU}, while \textbf{leaves} represent the answers to the last question, which are, technically speaking, answer nodes with \textit{no outgoing} edges.
 
@@ -638,7 +640,7 @@ The graph may contain cycles, allowing the repetition of some questions (and ste
 % 3.2 the graph is a way undertand the application context and to represent the constraints, remarking order of questions 
 With the branching feature, it is possible to follow multiple paths, depending on the answers given by the \acf{BU} (and so depending on the context).
 %
-Remarking the order of questions, the graph effectively encodes a deterministic yet non-linear flow of questions and answers, where each answer directly influences the next question to be asked.
+Remarking the order of questions, the graph effectively encodes a deterministic yet non-linear\sidenote{forse non-linear non è l'espressione giusta} flow of questions and answers, where each answer directly influences the next question to be asked.
 
 % 3.3 the graph can evolve and change over time (note versioning system) (reinforce the META-)
 The graph is a data structure that can evolve and change easily over time, as the methodology actually is a \textbf{meta-}methodology, it is possible to create multiple versions of the graph.
@@ -646,6 +648,12 @@ The graph is a data structure that can evolve and change easily over time, as th
 For instance, it is possible to design different pools of questions and answers, and indeed different graphs, each one tailored to a specific context or application domain.
 %
 Furthermore, this flexibility enables also the possibility to adapt to any change in the cultural context taken into account, leading to a possible ``methodology versioning''.
+%
+In fact, changing the graph structure means creating a ``new version'' of the methodology.
+%
+New version denotes a graph with different paths of questions and answers, which obviously, addresses diverse needs.
+%
+Hence, the methodology can adapt to evolvable cultural contexts, creating new graphs for each needed change in the application domain.
 
 % 3.4 types of graphs (general and project-related)
 \paragraph{General Graph vs Project-Related Graph.}
@@ -653,7 +661,7 @@ So far, it has been described the general blueprint of the \ac{Q/A}: how to repr
 %
 However, from the \acl{BU} (and \acl{TU}) perspective, the sequence of questions seems a linear path.
 %
-It is intentioned that, the person involved in the process, has the feeling of just compiling a questionnaire, where all the complexity is hidden behind the scenes.
+It is intentioned that, the person involved in the process, has the feeling of just compiling a questionnaire, where all the complexity is kept out of sight.
 %
 In \cref{fig:qa-graph-path} is shown a graphical representation of the \ac{Q/A} mechanism, where the flow of questions from users' perspective is defined by a path in the graph.
 
@@ -675,7 +683,7 @@ Of course in this way it is possible to change the path, and so the flow of futu
 % 4. Automation
 \section{Automation}
 
-At this stage, it is yet vague how the methodology proposed can inject fairness measures and practical steps into the development process.
+At this stage, it is yet vague how the proposed methodology can inject fairness measures and technical steps into the development process.
 %
 Here is the point where \acf{TU} contributes to the process, by implementing scripts and computational operations that are eventually integrated into the final system.
 %
@@ -697,7 +705,7 @@ When certain actions--—such as evaluating responses or detecting biases--—ar
 %
 This eliminates redundancy, reducing the need for technical users to repeatedly address the same challenges independently.
 
-These scripts to be injected to the methodology, can be provided by methodology implementation itself, developed by technical users within organizations, or contributed by third-party developers.
+These scripts, designed to be injected into the methodology, can be provided by the software implementation of the methodology itself, developed by technical users within organizations, or contributed by third-party developers.
 %
 This flexible approach ensures that automation capabilities can expand over time, adapting to emerging best practices.
 %
@@ -718,7 +726,7 @@ Technically, these scripts can be attached easily to the  software implementatio
 \label{chap:design}
 %----------------------------------------------------------------------------------------
 
-In line with the previous chapter, the objective here is to design a software artifact that reifies the proposed meta-methodology, in order to make it usable by stakeholders to develop fair \ac{AI} systems.
+In line with the previous chapter, the objective of this phase is to design a software artifact that reifies the proposed meta-methodology, in order to make it usable by stakeholders to develop fair \ac{AI} systems.
 %
 Software design must be flexible and adaptable, as the methodology is intended to be subject to changes and improvements over time.
 
@@ -744,7 +752,7 @@ This design choice is motivated by the need to trigger automation scripts at spe
 The entire system is composed of the following components:
 \begin{enumerate}
     \item \textbf{Backend}: the core of the system, managing the \ac{Q/A} mechanism and the automation of technical steps.
-    \item \textbf{Database}: a database to store the questions, answers, and other relevant information.
+    \item \textbf{Database}: component handling persistency of questions, answers, and other relevant information.
     \item \textbf{Automation Scripts}: a set of pluggable scripts that automate technical steps, such as computing fairness metrics and mitigating biases.
     \item \textbf{Event Broker}: component responsible for event handling in the whole system.
     \item \textbf{Frontend}: the web application that allows \acp{BU} to interact with the system.
@@ -778,7 +786,7 @@ So, for instance, Application layer and Presentation layer can depend on Domain 
 \section{Structure}
 % introduce DDD 
 %
-The design choices considered follow the principles of \textbf{\acf{DDD}}~\cite{millett2015ddd}, a software design philosophy that emphasizes the importance of domain model in the development process.
+The considered design choices follow the principles of \textbf{\acf{DDD}}~\cite{millett2015ddd}, a software design philosophy that emphasizes the importance of domain model in the development process.
 %
 The main goal of \ac{DDD} is to align the software system with the domain model, ensuring that the software reflects the real-world domain as closely as possible.
 %
@@ -821,7 +829,7 @@ Therefore, in the domain model are present the related entities as shown in \cre
 
 \texttt{GraphQuestion} represents an extension of the general \texttt{Question} entity, containing a set of answer ids that are meant to ``enable'' such question in the graph.
 %
-In other words, a \texttt{GraphQuestion} is a question that is part of the general graph, and the set of answer ids is needed to encode the \textit{answer-to-question} edge ($A \to Q$).
+In other words, a \texttt{GraphQuestion} is a question that is part of the general graph, and the set of answer ids is needed to encode the \textit{answer-to-question} edge ($A \to Q$) (see \cref{sec:qa-mechanism}).
 %
 With regard to admissible answers, for the \texttt{GraphQuestion} is sufficient to rely on the general \texttt{Answer} entity because it doesn't need to have more information.
 
@@ -881,7 +889,7 @@ It is also possible to create new projects, and, for each of them, starting a ne
 %
 Summarizing, backend is a simple listening web server, that manages requests and trigger events when relevant actions occur.
 
-However, an important aspect to notice in this component behavior, is the \texttt{Context} update of various projects.
+An important aspect to notice in this component behavior, is the \texttt{Context} update of various projects.
 %
 \texttt{Context} updates are essential to the correct business logic functioning, because the major part of fairness-related computations strongly depends on the specific data stored in the \texttt{Context}.
 %
@@ -898,11 +906,11 @@ These scripts act as event-driven processes that listen for predefined triggers,
 Once the processing is completed, they send relevant updates back to the backend via \ac{API} requests, ensuring that the system remains up-to-date and operates seamlessly without requiring manual intervention.
 
 \section{Interaction}
-The starting point of interactions is \ac{BU} that interacts with the system through the Frontend component.
+The starting point of interactions is \ac{BU}, engaging with the system through the Frontend component.
 %
 Frontend is in charge of presenting questions to the \ac{BU}, collecting answers, and sending them to the backend service.
 %
-The backend, in turn, processes the requests and updates the questionnaire state accordingly.
+Backend, in turn, processes the requests and updates the questionnaire state accordingly.
 %
 At this point, backend service triggers an event for each relevant action undertaken, which is caught by all Automation Scripts previously subscribed to the Broker.
 %
@@ -970,11 +978,11 @@ That's fundamental because computations are intended to be non-blocking in order
 \begin{figure}
     \centering
     \subfloat[Publish operation for a channel]{%
-        \includegraphics[width=0.48\textwidth]{figures/api/async-api-send.png}
+        \includegraphics[width=0.58\textwidth]{figures/api/async-api-send.png}
     }
     \hfill
     \subfloat[Receive operation for a channel]{%
-        \includegraphics[width=0.48\textwidth]{figures/api/async-api-receive.png}
+        \includegraphics[width=0.58\textwidth]{figures/api/async-api-receive.png}
     }
     
     \caption{Async \ac{API} channels example.}%
@@ -1006,7 +1014,7 @@ This chapter delves into technical details of the software implementation which 
 %
 It provides an overview of the deployed architecture, and, basing on the design choices made in the previous chapter, it explains how the various components are actually implemented.
 %
-The whole software implementation can be found in the repository \href{https://github.com/aequitas-aod/aequitas-backend}{https://github.com/aequitas-aod/aequitas-backend}.
+The whole software implementation can be found on Github\footnote{\href{https://github.com/aequitas-aod/aequitas-backend}{https://github.com/aequitas-aod/aequitas-backend}}.\sidenote{in realtà non sarebbe solo backend}
 
 
 \section{Components}
@@ -1049,7 +1057,7 @@ This is achieved by an ad hoc service implemented in the infrastructure layer (\
 \paragraph{Database.}
 
 % 3. talking about the graph database (neo4j) and why it fits well with the graph structure of the Q/A mechanism
-For the persistency, the choice fell on a graph database, as it fits well with the graph structure of the \ac{Q/A} mechanism. The technical implementation chosen is Neo4j\footnote{\href{https://neo4j.com/}{https://neo4j.com/}}.
+For the persistency, the choice fell on a graph database, as it fits well with the graph structure of the \ac{Q/A} mechanism (described in \cref{sec:qa-mechanism}). The technical implementation chosen is Neo4j\footnote{\href{https://neo4j.com/}{https://neo4j.com/}}.
 %
 It allows for efficient traversal and querying of the graph, making it easier to manage operations on questions and answers.
 
@@ -1074,7 +1082,7 @@ Edges in Neo4j are associated with a label, so edges of type $Q \to A$ are store
 
 
 % 3.2 talking about the context (storing key-values in the project node)
-With respect to the \texttt{Project}, let's consider $P$ as the node representation of project.
+With respect to \texttt{Project}, let's consider $P$ as its node representation.
 %
 Key-value pairs of its \texttt{Context} are stored in $P$.
 %
@@ -1085,7 +1093,7 @@ In order to save space, context data that are common to all projects are stored 
 Eventually, each \textbf{questionnaire} (if exists) is linked to a specific project $P$ through a relationship $P \xrightarrow{\text{QUESTIONNAIRE}} Q_P$, where $Q_P$ is the root of the questionnaire graph (the first question asked), and it is created upon the root of the general graph.
 %
 Next questions in the questionnaire path are linked to the previous ones through relationships of kind $Q'_P \xrightarrow{\text{NEXT}} Q''_P$.
-
+%
 To keep track of the answers given by the \ac{BU}, each answer is linked to the corresponding question through a relationship $Q_P \xrightarrow{\text{HES\_SELECTED}} A_P$, where $A_P$ is the node representation of the answer given by the \ac{BU}.
 
 \paragraph{Automation Scripts.}
@@ -1098,7 +1106,7 @@ They just need to adhere to the Async API specification to be seamlessly integra
 % By following the Async API, scripts can subscribe to relevant events, perform the necessary computations, and send updates back to the backend, ensuring a smooth and efficient workflow.
 
 % 4.1 about automation script, actually they can be implemented in any language, (python is still the best choice since computations are about ML models and fairness metrics)
-These scripts can actually be implemented in any language, but the ones implemented so far are created in Python.
+These scripts can actually be implemented in any language, but the ones created so far are written in Python.
 %
 One motivation is that this allows scripts to share backend code, benefiting from reusability.
 %
@@ -1200,12 +1208,10 @@ Indeed, interactions between automation scripts and backend have been tested too
 %
 These tests require a running Kafka instance, so, similarly to the database, a container with Kafka is started and stopped during tests execution.
 
-During tests execution, Docker is used to handle services containerization.
-
 
 \paragraph{Test Coverage.}
 
-In the following is shown a table reporting the test coverage of the project (\cref{tab:coverage}).
+In \cref{tab:coverage} is shown a report of the test coverage of the project.
 %
 Test coverage is useful to understand how much code of a software artifact is actually covered by tests.
 %
@@ -1289,7 +1295,7 @@ First, it is important to remark the requirements defined in \cref{sec:desiderat
     %
     Depending on the answers given by the \ac{BU}, the system can adapt the flow of questions branching at the right points, providing tailored questions based on the context.
     
-    For instance, answers at the question ``In which area of application will the system be used?'' will influence the following questions, leading to a questionnaire customization based on the application domain.
+    For instance, the answer to the question ``In which area of application will the system be used?'' will influence the following questions, leading to a questionnaire customization based on the application domain.
 
     \item \textbf{\ref{req:R3}---Adaptability} $\rightarrow$ \textbf{Questions Graph}:
     %
@@ -1315,47 +1321,53 @@ First, it is important to remark the requirements defined in \cref{sec:desiderat
 
 From a technical point of view, the validation of development process is achieved by using DevOps practices.
 %
-The constant develop of tests alongside core features (with \ac{TDD}), allows applying \ac{CI} and \acf{CD}.
+The constant develop of tests alongside core features (with \ac{TDD}), allows applying \ac{CI} and \acf{CD}, benefiting of all the advantages that these practices bring.
 
 \begin{itemize}[label={}]
-    \item \textbf{Continuous Integration}:  
+    \item \textbf{\acl{TDD}}:
+    The system has been developed following the \ac{TDD} approach.
+    %
+    \ac{TDD} is a software development approach that emphasizes writing tests before writing the actual code.
+    %
+    In this way, the developer is forced to think about the expected outcomes of the code before writing it.
+    %
+    By defining expected outcomes in advance, TDD helps prevent defects early, promotes cleaner and more modular code, and facilitates easier refactoring.
+
+    \item \textbf{\ac{CI}/\ac{CD}}:  
     The system is continuously integrated and tested to ensure the codebase remains in a working state.
     %
     A CI pipeline runs tests on each repository push, merging the code into the main branch if successful.
     %
     This practice keeps the codebase stable, preventing new features from breaking existing ones.
-
-    \item \textbf{Continuous Deployment}:  
+    %
     The system is automatically deployed once all tests pass.
     %
     A CD pipeline builds the application, runs tests, and deploys it to production.
     %
     This ensures the application remains up-to-date, making new features available as soon as they are developed.
+
+    \item \textbf{Code Quality}:
+    To improve code quality, \ac{CI} pipeline also runs code quality checks.
+    %
+    These are performed using Black Formatter\footnote{\href{https://black.readthedocs.io/en/stable/index.html}{https://black.readthedocs.io/en/stable/index.html}}.
+    % 
+    Black is a code formatter that automatically formats Python code according to a particular strict set of rules, without subjective style options.
 \end{itemize}
 
-% 2.1. explaining style and code quality (black formatter)
-To improve code quality, \ac{CI} pipeline also runs code quality checks.
-%
-These are performed using Black Formatter\footnote{\href{https://black.readthedocs.io/en/stable/index.html}{https://black.readthedocs.io/en/stable/index.html}}.
-% 
-Black is a code formatter that automatically formats Python code according to a particular strict set of rules, without subjective style options.
 
 
-\section{Software Assessment}
-
+\section{Participatory Sessions}
 
 Fairness is one of the four ``Ethical Principles in the Context of AI System'' as outlined in the Ethics Guidelines for Trustworthy Artificial Intelligence (EGTAI)~\cite{AIHLEG2019}.
 %
 This principle is deeply interwoven with the other three---respect for human autonomy, prevention of harm, and explicability.
-%
-It addresses various modes through which biases can manifest negatively, including discrimination, inequality, exclusion, segregation, marginalization, exploitation, and manipulation.
 %
 A key pillar of EGTAI is \textit{lawfulness}, and fairness is integral to numerous fundamental rights, laws, and governing principles, such as the European Pillar of Social Rights.
 %
 This pillar serves as a guiding light for a fair and inclusive Europe, advocating for gender equality, equal opportunities, and access to essential services.
 
 For these reasons, the validation of technologies and methodologies aimed at addressing fairness issues in \ac{AI} must adopt a validation approach that begins with the co-creation and co-design phases of the methodologies and technologies themselves, using participatory design approaches.
-
+%
 This approach was employed in the \aequitas{} process.
 %
 Specifically, co-design and co-creation sessions were conducted to embody socio-legal requirements within the technology.
@@ -1377,9 +1389,124 @@ The iterative nature of these co-creation sessions facilitates continuous feedba
 This method of validation through participatory design is essential for tackling the complex issues of fairness in \ac{AI}, ensuring that the technology positively impacts society without perpetuating existing inequalities.
 
 
+The feedback collected in the different workshops and focus group can be parsed to gather insights that are relevant to the scope of the \aequitas{} platform and what are the considerations it should be built upon.
+%
+In particular, we analyzed the input provided by the underrepresented groups to extract desiderata and potential actions (technical and non-technical) that can guide the design and development of the tools and methodologies created throughout the project.
+%
+These insights are collected in \cref{sec:detailed-feedbacks}.
+
+
+\subsection{Detailed Feedbacks}\label{sec:detailed-feedbacks}
+
+\subsubsection{\ac{AI}: Collaboration vs. Conflict.}
+
+\textbf{Feedback:} The relationship between humans and AIs can be either one of collaboration or conflict.
+\\
+\textbf{Insights:} Clearly state that AI techniques are a tool in the hands of humans.
+%
+During the design process, stress that the user will be in charge of developing and deploying the AI systems, with the possibility of taking granular decisions concerning how the AI systems will be implemented and used.
+%
+Do not build exceedingly automatized tools; in any case, provide a transparent description of the steps that have been automated.
+
+\subsubsection{Societal biases.}
+
+\textbf{Feedback:} Algorithms reflect societal biases.
+\\
+\textbf{Insights:} Take bias into consideration during the design phase of new algorithms (development phases must be interspersed with bias detection actions applied to the data used as input and to the output of the developed tools).
+%
+Provide bias detection mechanisms for both datasets and algorithms.
+
+\subsubsection{Diversity in the teams of programmers.}
+
+\textbf{Feedback:} It is important to diversify the team of programmers in charge of the AI system development and educate them to an inclusive mindset.
+\\
+\textbf{Insights:} The design phase of the AI algorithm should involve people with a diversified technical/expertise background; this requirement is addressed by the meta-methodology presented in \cref{chap:meta-methodology}, that explicitly asks for the inclusion of a diverse set of experts during the design process.
+
+\subsubsection{Dataset's Cleaning.}
+
+\textbf{Feedback:} Datasets should be cleaned, and content should be constantly controlled.
+\\
+\textbf{Insights:} Great emphasis should be put on the bias analysis techniques, which should be easy to use and produce an output as easy to interpret as possible.
+
+\subsubsection{Intersectionality and Inclusivity.}
+
+\textbf{Feedback:} It is fundamental to consider intersectionality; and get out of one's own context and ``privileged'' situation.
+\\
+\textbf{Insights:} Create diverse developing teams and involve people with different backgrounds.
+%
+Explicitly include considerations of intersectionality during the development of new AI tools; this is aligned with the Q/A mechanism described in \cref{chap:meta-methodology}---the key part is to include questions about intersectionality at the beginning of the questionnaire.
+
+\subsubsection{Awareness.}
+
+\textbf{Feedback:} Awareness among citizens is pretty low.
+\\
+\textbf{Insights:} This is more a dissemination action; however, the system developed should be transparent and publicly available, thus allowing greater awareness.
+
+\subsubsection{AI Governance and Transparency.}
+
+\textbf{Feedback:} They are essential aspects of the process.
+\\
+\textbf{Insights:} Use a transparent developing and deploying methodology.
+%
+Strive to make as much code as possible public and well-documented, in order to increase transparency and auditability by government bodies.
+
+
+\subsubsection{Human oversight.}
+
+\textbf{Feedback:} Maintain human accountability for decisions made by AI systems; AI should assist, not replace, human judgment.
+\\
+\textbf{Insights:} Enhance the feeling of user empowerment by developing a clear and transparent UI.
+%
+During the design phase do not exceed with automated process but involve humans' feedback at every phase; explicitly foresee that the decision points will have to be taken care of by a human.
+
+\subsubsection{Recognition of Individual Normalcy.}
+
+\textbf{Feedback:} AI systems should not assume a statistical ``normality'' but instead recognize the normality of the individual.
+%
+This involves understanding how AI might affect different minorities.
+\\
+\textbf{Insights:} Move away from broad, one-size-fits-all statistical models and instead develop models that take into account individual variability; implement personalized models.
+%
+Incorporate sensitive attribute awareness where the AI model identifies different demographic groups (e.g., race, gender, disability status) and treats these attributes as critical factors in decision-making.
+%
+Provide clear outputs for the bias detection and mitigation mechanism, to allow users or auditors to understand how specific features (e.g., minority status) influence the outcomes.
+
+\subsubsection{Data Disaggregation.}
+
+\textbf{Feedback:} Data should be disaggregated to consider all relevant aspects, such as ethnicity, migratory background, age, etc., rather than treating groups (e.g., women) as homogeneous.
+\\
+\textbf{Insights:} The tools provided by \aequitas{} will allow measuring bias present in the data---and write clear and easy-to-understand reports.
+%
+During the design phase, careful attention will be place on the selection of the right data to be used to train AI model, via explicit questions asked to developers to force them to consider if the data should be disaggregated of could be used as is (bias detection methods can be used to perform statistical test as well).
+%
+Again, during the design phase, special care will be devoted in identifying users and other people and groups potentially affected by the AI system in development; the questionnaire pipeline serves to make sure that all relevant aspects will be considered.
+
+\subsubsection{Methodological Standards.}
+
+\textbf{Feedback:} There should be methodological standards, where AI is tested and refined based on real-world feedback.
+\\
+\textbf{Insights:} Develop \aequitas{} tools using well-proven standard and well-known technologies.
+%
+Aim at producing as much open-source code as possible.
+%
+Clearly document all the methods developed and the underlying code to facilitate audition and evaluation.
+
+\vspace{2em}
+\noindent
+All these requirements have been embodied in both the methodology and the experimental environment (for example, the experimental setting allows for data analysis and checks on distributions).
+%
+Additional validation sessions that follow participatory approaches and co-design methodologies have started, and the collection of incremental feedback is ongoing to continuously refine and enhance the methodologies and the experimental setup.
+%
+These sessions utilize participatory approaches and co-design principles as well, ensuring comprehensive involvement from all stakeholders throughout the iterative development process.
+%
+Feedback is collected from diverse sources, including real-time user interactions, expert reviews, and automated system analytics.
+%
+This feedback is essential for identifying any potential issues related to data handling, algorithmic fairness, and overall system usability.
+
+\section{Software Assessment}
 
 % Software validation by project review 
-A preliminary validation of the software has been achieved through its successful evaluation in the latest review of the European \aequitas{} project funding the research.
+A preliminary validation of the software has been achieved through its successful evaluation in the latest review of \aequitas{} project.
 %
 During this assessment, positive feedback was received by reviewers regarding both the user experience and the underlying methodology, confirming their alignment with the project’s objectives on \ac{AI} fairness.
 %
@@ -1387,22 +1514,8 @@ This is an important outcome because provides an initial indication of the softw
 %
 Further validation steps will be pursued in future project reviews, where the software will represent a core deliverable of the project.
 
-A usage example shown during the review, is a scenario where a \ac{BU} wants to mitigate the \texttt{Adult} dataset\footnote{\href{https://www.openml.org/search?type=data\&sort=runs\&id=179\&status=active}{https://www.openml.org/search?type=data\&sort=runs\&id=179\&status=active}} (see \cref{fig:gui}).
+A usage example shown during the review, is a scenario where a \ac{BU} wants to mitigate the \texttt{Adult} dataset\footnote{\href{https://www.openml.org/search?type=data\&sort=runs\&id=179\&status=active}{https://www.openml.org/search?type=data\&sort=runs\&id=179\&status=active}} (see \cref{app:gui}).
 
-
-
-\begin{figure}
-    \centering
-    \subfloat[Data mitigation algorithms selection.]{%
-        \includegraphics[width=0.80\textwidth]{figures/gui/mitigation-algorithms.png}
-    }
-    \hfill
-    \subfloat[Data mitigation results.]{%
-        \includegraphics[width=\textwidth]{figures/gui/mitigation-results.png}
-    }    
-    \caption{Example of data mitigation process.}
-    \label{fig:gui}
-\end{figure}
 
 \section{Limitations}
 
@@ -1417,20 +1530,17 @@ In other words, it forces the subjects involved in the requirements engineering 
 
 
 % Requirement 3 limitation on "versioning" 
-\sidenote{qua spiego bene il versioning, forse va messo da un altra parte?}
-Flexibility of questions graph, which satisfies \ref{req:R3}, enables a \textit{versioning} mechanism because changing the graph structure means creating a ``new version'' of the methodology.
+Flexibility of questions graph, which satisfies~\ref{req:R3}, enables a \textit{versioning} mechanism (see \cref{sec:qa-mechanism}) because changing the graph structure means creating a ``new version'' of the methodology.
 %
-New version means a graph with different paths of questions and answers, which obviously, addresses diverse needs.
-%
-Hence, the methodology can adapt to evolvable cultural contexts, creating new graphs for each needed change in the application domain.
+Thus, questions graph is open to changes and easily evolvable.
 
-Conversely, questionnaires already started or completed, are affected by a version change.
+Conversely, questionnaires already started or completed, are affected by a version change, and it makes it difficult to adapt to new versions.
 %
 The reason is due to the strong dependency between questionnaire (project-related graph) and general questions graph.
 %
 In fact, each update to the questionnaire relies on the general graph, and so, general graph changes will lead to inconsistencies in the questionnaire.
 %
-So, in case of a version change, it is necessary to keep the oldest version to not break the support for the already started questionnaires.
+Therefore, in case of a version change, it is necessary to keep the oldest version to not break the support for the already started questionnaires.
 %
 At the moment, the only way to adapt to new versions, is starting a new project (and relative questionnaire) from scratch.
 
@@ -1448,7 +1558,7 @@ Another important aspect is the time needed to perform fairness computations and
 %
 This problem not only influences the backend system, but also affects the user experience, as the \ac{BU} has to wait for the system to proceed correctly the questionnaire.
 %
-Actually, computations performed by backend service and automation scripts are designed to be asynchronous to improves the user experience, but with the assumption that eventually, in a reasonable time, computations will terminate and user will be able to proceed with updated information.
+Actually, computations performed by backend service and automation scripts are designed to be asynchronous to improves the user experience, but with the assumption that eventually---in a reasonable time---computations will terminate and user will be able to proceed with updated information.
 %
 If computations take too long, \ac{BU} could proceed with missing or outdated information, leading to possible misuses of the system.
 
@@ -1498,10 +1608,65 @@ In this way, \acl{BU} can interact with the system answering questions while, at
     %
     A more structured approach could be based on a set of rules or guidelines to follow when translating requirements into questions.
 
-    \item \textbf{Improve and add automation scripts}: at the moment, automation scripts perform consolidated computations such as fairness metrics and mitigation.
+    \item \textbf{Improve automation scripts}: at the moment, automation scripts perform consolidated computations such as fairness metrics and mitigation.
     %
     In future works, it will be necessary to add new scripts to cover more technical steps and to improve the user experience.
 \end{itemize}
+
+
+\appendix
+
+
+\chapter{Graphical User Interface}\label{app:gui}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.99\textwidth]{figures/gui/dataset-selection.png}
+    \caption{Dataset selection view.}
+    \label{fig:dataset-selection}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.99\textwidth]{figures/gui/dataset-view.png}
+    \caption{Dataset view.}
+    \label{fig:dataset}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/gui/features.png}
+    \caption{Features selection view.}
+    \label{fig:features}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/gui/proxies.png}
+    \caption{Proxies view.}
+    \label{fig:proxies}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.87\textwidth]{figures/gui/detection.png}
+    \caption{Detection view.}
+    \label{fig:detection}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.87\textwidth]{figures/gui/mitigation-algorithms.png}
+    \caption{Data mitigation algorithms selection.}
+    \label{fig:mitigation-algorithms}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/gui/mitigation-results.png}
+    \caption{Data mitigation results.}
+    \label{fig:mitigation-results}
+\end{figure}
 
 
 %----------------------------------------------------------------------------------------
