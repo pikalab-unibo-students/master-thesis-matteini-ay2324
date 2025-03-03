@@ -21,7 +21,7 @@
 \date{\today}
 \subject{Intelligent Systems Engineering}
 \supervisor{Prof.\ Giovanni Ciatto}
-\cosupervisor{Prof.\ Roberta Calegari}
+\cosupervisor{Prof.ssa\ Roberta Calegari}
 \morecosupervisor{Prof.\ Andrea Omicini}
 
 \session{IV}
@@ -57,7 +57,7 @@
 \frontmatter\frontispiece
 
 \begin{abstract}	
-Biases and discriminations are present in several \ac{AI} systems as much as they are eradicated in the society.
+Biases and discriminations are present in several \ac{AI} systems as much as they are rooted in the society.
 %
 Fairness in \ac{AI} refers to the development of software systems that do not exhibit biases or systematic discriminations against specific individuals or groups.
 %
@@ -67,7 +67,7 @@ This thesis proposes a meta-methodology for building fair AI systems, offering b
 %
 Instead of a single solution for all kinds of \ac{AI} systems, this meta-methodology provides a flexible, adaptable approach that can be tailored to different domains and cultural contexts.
 %
-The methodology is based on a \acl{Q/A} mechanism, which guides the stakeholder through a structured flow of questions and answers, automating---behind the scenes---technical steps to build eventually a fair \ac{AI} system.
+The methodology is based on a \acl{Q/A} mechanism, which guides the stakeholder through a structured flow of questions and answers, automating -- behind the scenes -- technical steps to build eventually a fair \ac{AI} system.
 %
 By leveraging a questionnaire, the system gathers contextual and domain-specific information, applying related socio-legal constraints to ensure fairness.
 %
@@ -79,6 +79,7 @@ The proposed approach is easily adaptable and evolvable, in order to keep up wit
 
 \begin{dedication} % this is optional
 Optional. Max a few lines.
+\note[GC][red]{Ricordati la dedica oppure togli questa pagina}
 \end{dedication}
 
 %----------------------------------------------------------------------------------------
@@ -107,20 +108,24 @@ Addressing these issues is essential to prevent damaging consequences in high-st
 
 
 % implications of unfair AI systems
+\sidenote[GC][red]{serve una citazione per ogni esempio}
 The implications of unfair \ac{AI} are pervasive and far-reaching.
 %
 Discriminatory algorithms can reinforce existing societal inequalities, disproportionately impacting marginalized communities.
 %
 For instance, biased AI models in dermatology have led to incorrect diagnoses for skin diseases in black individuals due to training data lacking diverse skin tones.
 %
-Similarly, AI-driven loan approval systems have been documented to deny home loans to women\sidenote{non ricordo se erano donne} based on historical biases embedded in financial datasets.
+Similarly, AI-driven loan approval systems have been documented to deny home loans to women
+\sidenote{non ricordo se erano donne} 
+\sidenote[GC][red]{mi pare fossero neri}
+based on historical biases embedded in financial datasets.
 %
 Despite these examples, many people are not even aware of the fairness problem and consequences that can arise.
 %
 For these reasons, lots of effort in research has been put in the last years to address this critical field.
 
 % objective of the thesis
-Since \ac{AI} power and usage is significantly increased in short time, there is a lack of engineering methodologies to develop such systems.
+Since \ac{AI} capabilities and use cases have significantly increased in short time, there is a lack of engineering methodologies to develop fair \ac{AI} systems.
 %
 The objective of this thesis is to provide a (meta-)methodology to build fair \ac{AI} systems.
 %
@@ -140,24 +145,35 @@ The methodology is designed to facilitate the translation of socio-legal require
 
 
 % aequitas project
-The contribution of this thesis is part of the work done in the European research project ``Assessment and Engineering of eQuitable, Unbiased, Impartial and Trustworthy Ai Systems'' (\aequitas{})\footnote{\href{https://www.aequitas-project.eu/}{https://www.aequitas-project.eu/}}, which aims to promote fairness, accountability, and transparency in \acs{AI}-driven systems.
+It is worth highlighting that
+the contribution of this thesis is a central outcome of the Horizon Europe project 
+``Assessment and Engineering of eQuitable, Unbiased, Impartial and Trustworthy Ai Systems'' (\aequitas{}, G.A. \texttt{101070363})%
+\footnote{\url{https://cordis.europa.eu/project/id/101070363}}, 
+which aims to promote fairness, accountability, and transparency in \acs{AI}-driven systems,
+by involving a consortium of academic and industrial partners from different countries.
 %
-\aequitas{} is a project funded by the Horizon Europe Framework Programme and involves a consortium of academic and industrial partners from different countries.
-
+Furthermore,
+a preliminary version of the work presented in this thesis has been accepted for publication 
+in the Proceedings of the 58th \textit{Hawaii International Conference on System Sciences} (HICSS)~\cite{hicssfairness2025}.
+%
 % conclusions
-Finally, the validation has been performed on both conceptual and technical contributions, highlighting the strengths and limitations.
+For all these reasons,
+our contributions have undergone a thorough validation process, 
+involving not only the anonymous reviewers of the conference, 
+but also the \aequitas{} consortium partners,
+which validated our work from both a conceptual and technical perspective. %, highlighting the strengths and limitations.
 %
 The practical software tool has been tested and validated through a series of focus groups involving experts and unprivileged groups.
 %
-In addition, the methodology and its software implementation have been validated through project reviews, receiving positive feedback from external reviewers.
+In addition, 
+the methodology and its software implementation have been validated through project reviews, 
+receiving positive feedback from external reviewers.
 %
-Feedbacks will be used to improve and evolve the methodology in future research.
+Feedbacks have been used to improve and evolve the methodology and the corresponding to technology to their present form,
+and will contribute to their future development.
 %
-Concluding, the work done in this research line has been accepted and published in the Proceedings of the 58th \textit{Hawaii
-International Conference on System Sciences} (HICSS)~\cite{hicssfairness2025}.
-
-
-
+% Concluding, the work done in this research line has been accepted and published in the Proceedings of the 58th \textit{Hawaii
+% International Conference on System Sciences} (HICSS)~\cite{hicssfairness2025}.
 
 \paragraph{Structure of the Thesis.}
 
@@ -203,10 +219,12 @@ The concept of fairness evolves based on cultural, historical, and contextual fa
 From a technical point of view, fairness in \ac{AI} refers to the development and deployment of \ac{AI} systems that minimize biases and prevent discriminatory outcomes.
 %
 It involves designing systems that ensure equitable treatment across different demographic groups, particularly those historically marginalized or disadvantaged.
+\missingref
 %
 % Fairness in AI can be assessed using various mathematical definitions, such as demographic parity, equalized odds, and fairness through unawareness, depending on the context and application.
 %
-The main challenges in this field are building \texttt{fair-by-design} systems---in which fairness is addressed since the very beginning of the process---and detecting biases in already existing systems, mitigating them if possible.
+The main challenges in this field are building \textit{fair-by-design} systems---in which fairness is addressed since the very beginning of the process---and detecting biases in already existing systems, mitigating them if possible.
+\missingref
 %
 % The challenge in AI fairness lies in defining and balancing these technical fairness measures while maintaining model accuracy and practical utility.
 
@@ -219,30 +237,35 @@ It is necessary to find a balance between accuracy and fairness.
 Besides that, fairness can also be in contrast with the performance of the model, making difficult to find a good trade-off between these two aspects.
 
 % 3. explaining why fairness in AI is important
-Fairness is becoming crucial because \ac{AI} systems increasingly influence decision-making processes in various sectors of society, including hiring, lending and healthcare.
+Fairness is becoming crucial because \ac{AI} systems increasingly influence decision-making processes in various sectors of society, including hiring\missingref, lending\missingref, and healthcare\missingref.
 %
 If \ac{AI} models are biased, they can perpetuate and even amplify existing societal inequalities, leading to unjust outcomes and dangerous effects on individuals and communities.
+\missingref
 %
 Ensuring fairness in \ac{AI} enhances trust, transparency, and accountability, making \ac{AI} systems more ethical, reliable, and beneficial for society.
 
 % 3.1 speaking about some history of AI and the fact is getting more and more important and utilized in many fields
 \ac{AI} has undergone significant advancements over the past few decades, causing an enormous increase in its adoption across various domains, until becoming pervasive in the daily life of people.
+\missingref
 %
 This also caused a growing of biases in \ac{AI} systems, as discriminations are intrinsically part of the human history, and consequently of the data that \ac{AI} systems are trained on.
+\missingref
 
 
 % 3.2 speaking about the fact that AI is used in many critical fields, and the fact that fairness is important in these fields
 
 \ac{AI} is now widely used in critical domains, as previously mentioned, where biased decisions can have life-altering consequences.
+\missingref
 %
 For instance, in healthcare, biased algorithms may lead to misdiagnosis or unequal treatment recommendations for different demographic groups;
 %
 in finance, \ac{AI}-driven credit scoring models can reinforce discriminatory lending practices, limiting access to financial resources;
+\missingref
 %
 in the criminal justice system, biased predictive policing and risk assessment tools can disproportionately target marginalized communities.
+\missingref
 %
 Given these risks, ensuring fairness in \ac{AI} is essential to preventing discrimination, maintaining ethical standards, and safeguarding people.
-
 
 \paragraph{On Multidisciplinarity.}
 
@@ -292,13 +315,17 @@ These fairness metrics, are a set of indexes that can be used to detect biases i
 In the following, are listed two of the most common fairness metrics used in the literature~\cite{DBLP:conf/bias/IrfanML23}:
 
 \begin{itemize}
-    \item \textit{Statistical Parity Difference} (SPD) measures the difference between the probability of the privileged and unprivileged classes receiving a favorable outcome. This measure should be equal to 0 to be fair.
+    \item \textit{Statistical Parity Difference} (SPD)
+    \missingref
+    measures the difference between the probability of the privileged and unprivileged classes receiving a favorable outcome. This measure should be equal to 0 to be fair.
     
     Formally it is defined as $SPD = P(\hat{Y} = 1 | A = a) - P(\hat{Y} = 1 | A = b)$
     %
     where $A$ is the sensitive attribute, $\hat{Y}$ is the predicted outcome, and $a$ and $b$ are the privileged and unprivileged groups, respectively.
     
-    \item \textit{Disparate Impact} (DI) compares the proportion of individuals that receive a favorable outcome for two groups, a privileged group and an unprivileged group. This measure should be equal to 1 to be fair.
+    \item \textit{Disparate Impact} (DI)
+    \missingref
+    compares the proportion of individuals that receive a favorable outcome for two groups, a privileged group and an unprivileged group. This measure should be equal to 1 to be fair.
     
     Formally it is defined as $DI = P(\hat{Y} = 1 | A = a) / P(\hat{Y} = 1 | A = b)$
     %
@@ -352,8 +379,6 @@ They focus on ``building blocks'' for fair \ac{AI} such as risk assessment, stak
 In particular, with respect to fundamental rights impact assessments, these will be legally required for some \ac{AI} systems, yet no standard for implementing them has emerged so far.
 
 
-
-
 \section{Practical Issues}
 
 \subsection{What is (un)fair?}
@@ -368,7 +393,9 @@ This subjectivity and variation in viewpoints complicates efforts to develop sta
 
 % 2. the notion of fairness is also context-dependent 
 
-Beyond its subjectivity, fairness is also highly context-dependent. The same algorithm might be considered fair in one application but biased in another, depending on the societal, legal, and institutional constraints surrounding it.
+Beyond its subjectivity, fairness is also highly context-dependent. 
+%
+The same algorithm might be considered fair in one application but biased in another, depending on the societal, legal, and institutional constraints surrounding it.
 %
 For instance, fairness considerations in hiring algorithms differ from those in criminal justice risk assessments, necessitating tailored approaches rather than generic solutions.
 %
@@ -410,7 +437,7 @@ The lack is not just related to the technical perspective, but also to the socio
 %
 This is enhanced by the fact that design and develop a single methodology fitting all kinds of \ac{AI} systems is not feasible, as the system requirements and constraints change depending on the context and the application domain.
 %
-Of course, the creation of such methodology is damaged by the multidisciplinary complexity of the problem, and should involve expertises across all the relevant fields.
+Of course, the creation of such methodology is complicated by the multidisciplinary complexity of the problem, and should involve expertises across all the relevant fields.
 
 
 % % ----------------
@@ -434,7 +461,7 @@ In this context, a well-defined methodology would be essential for ensuring fair
 \begin{enumerate*}[label=(\roman*)]
     \item translating socio-legal requirements into technical steps,
     \item identifying and mitigating biases, and possibly
-    \item building \texttt{fair-by-design} systems.
+    \item building \textit{fair-by-design} systems.
 \end{enumerate*}
 
 Having a rigorous methodology would positively impact the development of fair \ac{AI} systems.
@@ -484,7 +511,10 @@ In the following, are listed the requirements that the meta-methodology should s
 \paragraph{The Roles.}
 In the proposed methodology process, there are two main roles involved:
 \begin{enumerate}
-    \item \textbf{\ac{BU}}, also called \textbf{stakeholder}, who is the person commissioning the \ac{AI} system.
+    \item \textbf{\ac{BU}}, 
+    also called \textbf{stakeholder}, 
+    \sidenote[GC][red]{forse è meglio usare stakeholder come sinonimo di BU: nel paper intendevamo un'altra cosa, come puoi evincere anche dalla figura \ref{fig:concept}}
+    who is the person commissioning the \ac{AI} system.
     \item \textbf{\ac{TU}}, who is the person with technical background, assisting the \ac{BU} in the development of the \ac{AI} system.
 \end{enumerate}
 
@@ -498,7 +528,9 @@ Potentially, stakeholder could even build a fair \ac{AI} system without the need
 
 On the other hand, the \acl{TU}, despite is the person with technical background, is not the responsible for the entire system development.
 %
-Firstly, \ac{TU} must be able to assist \ac{BU} during the process to clarify any technicalities that may arise, and secondly, he or she must have some knowledge about basics of fairness.\sidenote{forse non è proprio vero/non vogliamo dirlo}
+Firstly, \ac{TU} must be able to assist \ac{BU} during the process to clarify any technicalities that may arise, and secondly, 
+they must have some knowledge about statistics, and \ac{AI} fairness.
+% \sidenote{forse non è proprio vero/non vogliamo dirlo}
 
 Finally, \ac{TU} may contribute to the system development through the implementation of scripts/computational processes involved in the building of the system and integrated in the methodology.
 %
@@ -588,8 +620,8 @@ In this way, \ac{BU} can gain a deeper understanding of the topic, and can proce
 Importantly, the mechanism does not impose decisions but rather \textbf{suggests} to the \ac{BU} the answer he or she probably should give.
 
 % 2.3.4 the software also providev additional information and resources to the BU and not just questions
-In addition to showing questions, the software provides supplementary information and resources, like charts and tables, helping the \ac{BU} to gain a better insight of what he is doing and to assess the fairness of the system more effectively.
-\sidenote{in alcuni punti come qui gia parlo di software, prematuro?}
+In addition to showing questions, any software reification of our methodology should provide supplementary information and resources, like charts and tables, helping the \ac{BU} to gain a better insight of what he is doing and to assess the fairness of the system more effectively.
+% \sidenote{in alcuni punti come qui gia parlo di software, prematuro?}
 
 
 % 3. The Q/A mechanism
@@ -640,7 +672,7 @@ The graph may contain cycles, allowing the repetition of some questions (and ste
 % 3.2 the graph is a way undertand the application context and to represent the constraints, remarking order of questions 
 With the branching feature, it is possible to follow multiple paths, depending on the answers given by the \acf{BU} (and so depending on the context).
 %
-Remarking the order of questions, the graph effectively encodes a deterministic yet non-linear\sidenote{forse non-linear non è l'espressione giusta} flow of questions and answers, where each answer directly influences the next question to be asked.
+Remarking the order of questions, the graph effectively encodes a deterministic, yet non-sequential, flow of questions and answers, where each answer directly influences the next question to be asked.
 
 % 3.3 the graph can evolve and change over time (note versioning system) (reinforce the META-)
 The graph is a data structure that can evolve and change easily over time, as the methodology actually is a \textbf{meta-}methodology, it is possible to create multiple versions of the graph.
@@ -685,7 +717,9 @@ Of course in this way it is possible to change the path, and so the flow of futu
 
 At this stage, it is yet vague how the proposed methodology can inject fairness measures and technical steps into the development process.
 %
-Here is the point where \acf{TU} contributes to the process, by implementing scripts and computational operations that are eventually integrated into the final system.
+Here is the point where \acf{TU}
+\sidenote[GC][red]{non capisco perchè ogni tanto riespandi questi acronimi}
+contributes to the process, by implementing scripts and computational operations that are eventually integrated into the final system.
 %
 Said that, \acp{TU} play an important role because, regardless of the complexity and variety of the needed scripts, such scripts can change case by case.
 %
@@ -718,15 +752,15 @@ Technically, these scripts can be attached easily to the  software implementatio
 % here or at the end?
 
 
-
-
-
 %----------------------------------------------------------------------------------------
 \chapter{Design}%
 \label{chap:design}
 %----------------------------------------------------------------------------------------
 
-In line with the previous chapter, the objective of this phase is to design a software artifact that reifies the proposed meta-methodology, in order to make it usable by stakeholders to develop fair \ac{AI} systems.
+\note[GC][red]{Un titolo meno anonimo per questo capitolo? Tipo "software design"?}
+
+The goal of this chapter is to design a software artifact that reifies the meta-methodology proposed in \Cref{chap:meta-methodology}, 
+in order to make it usable by stakeholders to develop fair \ac{AI} systems.
 %
 Software design must be flexible and adaptable, as the methodology is intended to be subject to changes and improvements over time.
 
@@ -989,7 +1023,7 @@ That's fundamental because computations are intended to be non-blocking in order
     \label{fig:async-api}
 \end{figure}
 
-A documentation example of such \ac{API} is shown in \cref{fig:async-api} using Async \ac{API} specification\footnote{\href{https://www.asyncapi.com}{https://www.asyncapi.com}}. The main concepts in this are:
+A documentation example of such \ac{API} is shown in \cref{fig:async-api} using Async \ac{API} specification\footnote{\url{https://www.asyncapi.com}}. The main concepts in this are:
 
 \begin{itemize}
     \item \textbf{Channels}: Specific topics where events are published. Each topic corresponds to a particular type of event.
@@ -1014,7 +1048,10 @@ This chapter delves into technical details of the software implementation which 
 %
 It provides an overview of the deployed architecture, and, basing on the design choices made in the previous chapter, it explains how the various components are actually implemented.
 %
-The whole software implementation can be found on Github\footnote{\href{https://github.com/aequitas-aod/aequitas-backend}{https://github.com/aequitas-aod/aequitas-backend}}.\sidenote{in realtà non sarebbe solo backend}
+The whole software implementation can be found on 
+Github\footnote{\url{https://github.com/aequitas-aod/aequitas-backend}}.
+\sidenote{in realtà non sarebbe solo backend}
+\sidenote[GC][red]{metti più URL allora}
 
 
 \section{Components}
@@ -1024,11 +1061,13 @@ The whole software implementation can be found on Github\footnote{\href{https://
 
 % 1. explaining why backend web service in python (reduce abstraction gap)
 
-Backend component is implemented as a web service in Python. The choice aims to reduce the abstraction gap because python comes with consolidated frameworks that facilitate development of \ac{AI} systems.
+Backend component is implemented as a web service in Python. 
+%
+The choice aims to reduce the abstraction gap because python comes with consolidated frameworks that facilitate development of \ac{AI} systems.
 %
 Python represents also a good choice thanks to its readability and simplicity, which make it easier to be maintained and extended by developers who were not originally involved in the project.
 %
-Flask-restful\footnote{\href{https://flask-restful.readthedocs.io/en/latest/}{https://flask-restful.readthedocs.io/en/latest/}} framework has been used to ease the development of the web service, as it allows the creation of a RESTful \ac{API} with few lines of code (\cref{lst:api-code}).
+Flask-restful\footnote{\url{https://flask-restful.readthedocs.io/en/latest/}} framework has been used to ease the development of the web service, as it allows the creation of a RESTful \ac{API} with few lines of code (\cref{lst:api-code}).
 
 
 \lstinputlisting[float,language=Python,label={lst:api-code},caption={Example resource creation with Flask-restful.}]{listings/api.py}
@@ -1037,7 +1076,7 @@ Flask-restful\footnote{\href{https://flask-restful.readthedocs.io/en/latest/}{ht
 \paragraph{Event Broker.}
 
 % 2. explaining why kafka (event-driven architecture)
-Apache Kafka\footnote{\href{https://kafka.apache.org/}{https://kafka.apache.org/}} is used as the event broker to implement the event-driven architecture.
+Apache Kafka\footnote{\url{https://kafka.apache.org/}} is used as the event broker to implement the event-driven architecture.
 %
 Kafka is a distributed streaming platform that provides high throughput, scalability, and fault tolerance.
 %
@@ -1057,7 +1096,7 @@ This is achieved by an ad hoc service implemented in the infrastructure layer (\
 \paragraph{Database.}
 
 % 3. talking about the graph database (neo4j) and why it fits well with the graph structure of the Q/A mechanism
-For the persistency, the choice fell on a graph database, as it fits well with the graph structure of the \ac{Q/A} mechanism (described in \cref{sec:qa-mechanism}). The technical implementation chosen is Neo4j\footnote{\href{https://neo4j.com/}{https://neo4j.com/}}.
+For the persistency, the choice fell on a graph database, as it fits well with the graph structure of the \ac{Q/A} mechanism (described in \cref{sec:qa-mechanism}). The technical implementation chosen is Neo4j\footnote{\url{https://neo4j.com/}}.
 %
 It allows for efficient traversal and querying of the graph, making it easier to manage operations on questions and answers.
 
@@ -1122,7 +1161,7 @@ At the moment, the main events identified are:
 
 In \cref{fig:sequence-events} are shown detailed sequence diagrams of these events. 
 
-\sidenote{migliorare le caption?}
+\note[GC][red]{In figura \cref{fig:sequence-events} migliora la main caption: "main events" de che? Immagina che uno sfoglia la tesi e gli casca l'occhio lì.}
 
 \begin{figure}
     \centering
@@ -1141,12 +1180,10 @@ In \cref{fig:sequence-events} are shown detailed sequence diagrams of these even
     \label{fig:sequence-events}
 \end{figure}
 
-
-
 \paragraph{Frontend.}
 
 % 5 about frontend, it is a Single Page Application interacting with the backend, implemented using React/Next.js (component base to exploit reusability)
-Frontend is implemented as a Single Page Application (SPA) using React\footnote{\href{https://react.dev/}{https://react.dev/}} and Next.js\footnote{\href{https://nextjs.org/}{https://nextjs.org/}}.
+Frontend is implemented as a Single Page Application (SPA) using React\footnote{\url{https://react.dev/}} and Next.js\footnote{\url{https://nextjs.org/}}.
 %
 This choice leverages the component-based architecture of React, which promotes reusability and maintainability of the code.
 %
@@ -1162,8 +1199,6 @@ A web-based technology has been chosen for several reasons:
     \item powerful features offered by modern frameworks.
 \end{enumerate*}
 
-
-
 \section{Testing}
 
 % introduction on unit and integration testing
@@ -1174,8 +1209,7 @@ having one or more tests that verify its correctness.
 %
 Essentially, it consists of writing the tests for a feature before its actual implementation, followed by writing the implementation to make the tests pass.
 %
-The entire testing environment has been set up using the unittest\footnote{\href{https://docs.python.org/3/library/unittest.html}{https://docs.python.org/3/library/unittest.html}} framework in Python.
-
+The entire testing environment has been set up using the unittest\footnote{\url{https://docs.python.org/3/library/unittest.html}} framework in Python.
 
 \paragraph{Unit Testing.}
 
@@ -1186,7 +1220,6 @@ These tests also cover serialization methods for domain entities and the correct
 In fact, fairness computation performed by such scripts, are tested using mocked components.
 %
 This testing environment ensures that the scripts work correctly regardless they are already integrated into the whole system or not.
-
 
 \paragraph{Integration Testing.}
 
@@ -1207,7 +1240,6 @@ Integration tests do not involve just Rest API, but also the event-driven one.
 Indeed, interactions between automation scripts and backend have been tested too.
 %
 These tests require a running Kafka instance, so, similarly to the database, a container with Kafka is started and stopped during tests execution.
-
 
 \paragraph{Test Coverage.}
 
@@ -1241,7 +1273,7 @@ Despite 100\% of coverage is almost utopian, the 91\% reached in the project is 
 
 \section{Deployment}
 
-All components previously described are containerized and deployed using Docker\footnote{\href{https://www.docker.com/}{https://www.docker.com/}}.
+All components previously described are containerized and deployed using Docker\footnote{\url{https://www.docker.com/}}.
 %
 In figure \cref{fig:deployment} is shown the deployment diagram of the system.
 %
@@ -1250,7 +1282,6 @@ The configuration is set up to be easily deployed using one command line instruc
 Persistence of data is guaranteed by volumes mounted in the containers, so data is not lost when containers are stopped.
 
 Finally, the system release deployed is the artifact produced through a \ac{CD} pipeline which is successfully completed after all tests are passed.
-
 
 \begin{figure}
     \centering
@@ -1349,7 +1380,7 @@ The constant develop of tests alongside core features (with \ac{TDD}), allows ap
     \item \textbf{Code Quality}:
     To improve code quality, \ac{CI} pipeline also runs code quality checks.
     %
-    These are performed using Black Formatter\footnote{\href{https://black.readthedocs.io/en/stable/index.html}{https://black.readthedocs.io/en/stable/index.html}}.
+    These are performed using Black Formatter\footnote{\url{https://black.readthedocs.io/en/stable/index.html}}.
     % 
     Black is a code formatter that automatically formats Python code according to a particular strict set of rules, without subjective style options.
 \end{itemize}
@@ -1514,7 +1545,7 @@ This is an important outcome because provides an initial indication of the softw
 %
 Further validation steps will be pursued in future project reviews, where the software will represent a core deliverable of the project.
 
-A usage example shown during the review, is a scenario where a \ac{BU} wants to mitigate the \texttt{Adult} dataset\footnote{\href{https://www.openml.org/search?type=data\&sort=runs\&id=179\&status=active}{https://www.openml.org/search?type=data\&sort=runs\&id=179\&status=active}} (see \cref{app:gui}).
+A usage example shown during the review, is a scenario where a \ac{BU} wants to mitigate the \texttt{Adult} dataset\footnote{\url{https://www.openml.org/search?type=data\&sort=runs\&id=179\&status=active}} (see \cref{app:gui}).
 
 
 \section{Limitations}
@@ -1570,7 +1601,7 @@ If computations take too long, \ac{BU} could proceed with missing or outdated in
 %----------------------------------------------------------------------------------------
 
 %recap of what this thesis proposes
-This contribution presented a (meta-)methodology for building fair \ac{AI} systems.
+This thesis proposes a (meta-)methodology for building fair \ac{AI} systems.
 %
 The methodology does not offer a direct solution to all kinds of \ac{AI} systems, but it provides a pragmatic way to define a custom development process for each specific system.
 %
@@ -1586,18 +1617,17 @@ The methodology is designed to be flexible and adaptable, allowing itself to evo
 %
 In addition, changes in the application domain can be easily addressed by creating new ``versions'' of the methodology, in other words, revisiting the questions graph structure modifying existing paths or creating new ones.
 
-Finally, the methodology is reified into a software system, which provides a practical way to exploit the methodology in the development process.
+The methodology is reified into a software system, which provides a practical way to exploit the methodology in the development process.
 %
 In particular, the software system is intended to be used by stakeholders, to guide them through the development process.
 %
 In this way, \acl{BU} can interact with the system answering questions while, at the same time, the system automates technical steps such as training and mitigation.
-%
 
-
-
+\note[GC][red]{Inserisci una frase dove menzioni il lavoro di validazione che è stato fatto}
 
 \section{Future Works}
 
+\note[GC][red]{Brutto cominciare la sezione con un elenco puntato. Metti un cappello a questa sezione}
 
 \begin{itemize}
     \item \textbf{Coverage of more use cases}: the methodology should account for both pre-existing and new \ac{AI} systems.
@@ -1618,6 +1648,8 @@ In this way, \acl{BU} can interact with the system answering questions while, at
 
 
 \chapter{Graphical User Interface}\label{app:gui}
+
+\note[GC][red]{Mettici qui due parole tanto per non lasciare vuota la pagina. Attingi da \url{https://github.com/aequitas-aod/design-experimenter-ui}}
 
 \begin{figure}
     \centering
