@@ -78,8 +78,7 @@ The proposed approach is easily adaptable and evolvable, in order to keep up wit
 
 
 \begin{dedication} % this is optional
-Optional. Max a few lines.
-\note[GC][red]{Ricordati la dedica oppure togli questa pagina}
+\note{todo}
 \end{dedication}
 
 %----------------------------------------------------------------------------------------
@@ -108,17 +107,14 @@ Addressing these issues is essential to prevent damaging consequences in high-st
 
 
 % implications of unfair AI systems
-\sidenote[GC][red]{serve una citazione per ogni esempio}
+\sidenote[GC][orange]{serve una citazione per ogni esempio}
 The implications of unfair \ac{AI} are pervasive and far-reaching.
 %
 Discriminatory algorithms can reinforce existing societal inequalities, disproportionately impacting marginalized communities.
 %
-For instance, biased AI models in dermatology have led to incorrect diagnoses for skin diseases in black individuals due to training data lacking diverse skin tones.
+For instance, biased AI models in dermatology have led to incorrect diagnoses for skin diseases in black individuals due to training data lacking diverse skin tones~\cite{skin-diseases}.
 %
-Similarly, AI-driven loan approval systems have been documented to deny home loans to women
-\sidenote{non ricordo se erano donne} 
-\sidenote[GC][red]{mi pare fossero neri}
-based on historical biases embedded in financial datasets.
+Similarly, AI-driven loan approval systems have been documented to deny home loans to black people based on historical biases embedded in financial datasets~\cite{weber2020black}.
 %
 Despite these examples, many people are not even aware of the fairness problem and consequences that can arise.
 %
@@ -218,13 +214,11 @@ The concept of fairness evolves based on cultural, historical, and contextual fa
 % 2. explaining what is fairness in AI, from a technical perspective
 From a technical point of view, fairness in \ac{AI} refers to the development and deployment of \ac{AI} systems that minimize biases and prevent discriminatory outcomes.
 %
-It involves designing systems that ensure equitable treatment across different demographic groups, particularly those historically marginalized or disadvantaged.
-\missingref
+It involves designing systems that ensure equitable treatment across different demographic groups, particularly those historically marginalized or disadvantaged~\cite{ai-fairness}.
 %
 % Fairness in AI can be assessed using various mathematical definitions, such as demographic parity, equalized odds, and fairness through unawareness, depending on the context and application.
 %
-The main challenges in this field are building \textit{fair-by-design} systems---in which fairness is addressed since the very beginning of the process---and detecting biases in already existing systems, mitigating them if possible.
-\missingref
+The main challenges in this field are building \textit{fair-by-design} systems---in which fairness is addressed since the very beginning of the process---and detecting biases in already existing systems, mitigating them if possible~\cite{kaas2024fairdesign}.
 %
 % The challenge in AI fairness lies in defining and balancing these technical fairness measures while maintaining model accuracy and practical utility.
 
@@ -237,33 +231,27 @@ It is necessary to find a balance between accuracy and fairness.
 Besides that, fairness can also be in contrast with the performance of the model, making difficult to find a good trade-off between these two aspects.
 
 % 3. explaining why fairness in AI is important
-Fairness is becoming crucial because \ac{AI} systems increasingly influence decision-making processes in various sectors of society, including hiring\missingref, lending\missingref, and healthcare\missingref.
+Fairness is becoming crucial because \ac{AI} systems increasingly influence decision-making processes in various sectors of society, including hiring~\cite{fairness-recruitment}, lending~\cite{fairness-lending}, and healthcare~\cite{fairness-healthcare}.
 %
-If \ac{AI} models are biased, they can perpetuate and even amplify existing societal inequalities, leading to unjust outcomes and dangerous effects on individuals and communities.
-\missingref
+If \ac{AI} models are biased, they can perpetuate and even amplify existing societal inequalities, leading to unjust outcomes and dangerous effects on individuals and communities~\cite{fairness-survey}.
 %
 Ensuring fairness in \ac{AI} enhances trust, transparency, and accountability, making \ac{AI} systems more ethical, reliable, and beneficial for society.
 
 % 3.1 speaking about some history of AI and the fact is getting more and more important and utilized in many fields
-\ac{AI} has undergone significant advancements over the past few decades, causing an enormous increase in its adoption across various domains, until becoming pervasive in the daily life of people.
-\missingref
+\ac{AI} has undergone significant advancements over the past few decades, causing an enormous increase in its adoption across various domains, until becoming pervasive in the daily life of people~\cite{fairness-survey}.
 %
-This also caused a growing of biases in \ac{AI} systems, as discriminations are intrinsically part of the human history, and consequently of the data that \ac{AI} systems are trained on.
-\missingref
+This also caused a growing of biases in \ac{AI} systems, as discriminations are intrinsically part of the human history, and consequently of the data that \ac{AI} systems are trained on~\cite{fairness-survey}.
 
 
 % 3.2 speaking about the fact that AI is used in many critical fields, and the fact that fairness is important in these fields
 
-\ac{AI} is now widely used in critical domains, as previously mentioned, where biased decisions can have life-altering consequences.
-\missingref
+\ac{AI} is now widely used in critical domains, as previously mentioned, where biased decisions can have life-altering consequences~\cite{fairness-survey}.
 %
 For instance, in healthcare, biased algorithms may lead to misdiagnosis or unequal treatment recommendations for different demographic groups;
 %
-in finance, \ac{AI}-driven credit scoring models can reinforce discriminatory lending practices, limiting access to financial resources;
-\missingref
+in finance, \ac{AI}-driven credit scoring models can reinforce discriminatory lending practices, limiting access to financial resources~\cite{fairness-lending};
 %
-in the criminal justice system, biased predictive policing and risk assessment tools can disproportionately target marginalized communities.
-\missingref
+in the criminal justice system, biased predictive policing and risk assessment tools can disproportionately target marginalized communities~\cite{fairness-crime}.
 %
 Given these risks, ensuring fairness in \ac{AI} is essential to preventing discrimination, maintaining ethical standards, and safeguarding people.
 
@@ -315,16 +303,14 @@ These fairness metrics, are a set of indexes that can be used to detect biases i
 In the following, are listed two of the most common fairness metrics used in the literature~\cite{DBLP:conf/bias/IrfanML23}:
 
 \begin{itemize}
-    \item \textit{Statistical Parity Difference} (SPD)
-    \missingref
+    \item \textit{Statistical Parity Difference} (SPD)~\cite{fairness-through-awareness}
     measures the difference between the probability of the privileged and unprivileged classes receiving a favorable outcome. This measure should be equal to 0 to be fair.
     
     Formally it is defined as $SPD = P(\hat{Y} = 1 | A = a) - P(\hat{Y} = 1 | A = b)$
     %
     where $A$ is the sensitive attribute, $\hat{Y}$ is the predicted outcome, and $a$ and $b$ are the privileged and unprivileged groups, respectively.
     
-    \item \textit{Disparate Impact} (DI)
-    \missingref
+    \item \textit{Disparate Impact} (DI)~\cite{disparate-impact}
     compares the proportion of individuals that receive a favorable outcome for two groups, a privileged group and an unprivileged group. This measure should be equal to 1 to be fair.
     
     Formally it is defined as $DI = P(\hat{Y} = 1 | A = a) / P(\hat{Y} = 1 | A = b)$
@@ -387,7 +373,7 @@ In particular, with respect to fundamental rights impact assessments, these will
 
 Fairness in \ac{AI} (and beyond) is inherently subjective, shaped by cultural values, ethical theories, and individual perspectives.
 %
-What one group considers fair may not align with other people’s understanding, leading to debates about determining what is just and what is not.
+What one group considers fair may not align with other people’s understanding, leading to debates about determining what is just and what is not~\cite{ai-fairness}.
 %
 This subjectivity and variation in viewpoints complicates efforts to develop standardized fairness metrics, as no single approach can universally capture the diverse and often conflicting notions of fairness present across different social, legal, and institutional contexts.
 
@@ -513,7 +499,7 @@ In the proposed methodology process, there are two main roles involved:
 \begin{enumerate}
     \item \textbf{\ac{BU}}, 
     also called \textbf{stakeholder}, 
-    \sidenote[GC][red]{forse è meglio usare stakeholder come sinonimo di BU: nel paper intendevamo un'altra cosa, come puoi evincere anche dalla figura \ref{fig:concept}}
+    \sidenote[GC][orange]{forse è meglio usare stakeholder come sinonimo di BU: nel paper intendevamo un'altra cosa, come puoi evincere anche dalla figura \ref{fig:concept}}
     who is the person commissioning the \ac{AI} system.
     \item \textbf{\ac{TU}}, who is the person with technical background, assisting the \ac{BU} in the development of the \ac{AI} system.
 \end{enumerate}
@@ -718,7 +704,7 @@ Of course in this way it is possible to change the path, and so the flow of futu
 At this stage, it is yet vague how the proposed methodology can inject fairness measures and technical steps into the development process.
 %
 Here is the point where \acf{TU}
-\sidenote[GC][red]{non capisco perchè ogni tanto riespandi questi acronimi}
+\sidenote[GC][orange]{non capisco perchè ogni tanto riespandi questi acronimi}
 contributes to the process, by implementing scripts and computational operations that are eventually integrated into the final system.
 %
 Said that, \acp{TU} play an important role because, regardless of the complexity and variety of the needed scripts, such scripts can change case by case.
@@ -753,11 +739,9 @@ Technically, these scripts can be attached easily to the  software implementatio
 
 
 %----------------------------------------------------------------------------------------
-\chapter{Design}%
+\chapter{Software Design}%
 \label{chap:design}
 %----------------------------------------------------------------------------------------
-
-\note[GC][red]{Un titolo meno anonimo per questo capitolo? Tipo "software design"?}
 
 The goal of this chapter is to design a software artifact that reifies the meta-methodology proposed in \Cref{chap:meta-methodology}, 
 in order to make it usable by stakeholders to develop fair \ac{AI} systems.
@@ -908,7 +892,6 @@ Furthermore, due to this layer organization, it is possible to easily interchang
 
 
 \section{Behavior}
-\sidenote{to hide backend and automation scripts in tableofcontents?}
 
 The system behavior is mainly concentrated in \textbf{Backend} and \textbf{Automation Scripts} components.
 
@@ -1048,10 +1031,7 @@ This chapter delves into technical details of the software implementation which 
 %
 It provides an overview of the deployed architecture, and, basing on the design choices made in the previous chapter, it explains how the various components are actually implemented.
 %
-The whole software implementation can be found on 
-Github\footnote{\url{https://github.com/aequitas-aod/aequitas-backend}}.
-\sidenote{in realtà non sarebbe solo backend}
-\sidenote[GC][red]{metti più URL allora}
+The software implementation can be found on Github\footnote{\url{https://github.com/aequitas-aod/aequitas-backend} and \url{https://github.com/aequitas-aod/aequitas-frontend}}.
 
 
 \section{Components}
@@ -1161,8 +1141,6 @@ At the moment, the main events identified are:
 
 In \cref{fig:sequence-events} are shown detailed sequence diagrams of these events. 
 
-\note[GC][red]{In figura \cref{fig:sequence-events} migliora la main caption: "main events" de che? Immagina che uno sfoglia la tesi e gli casca l'occhio lì.}
-
 \begin{figure}
     \centering
     \subfloat[Sequence diagram of dataset creation.]{%
@@ -1176,7 +1154,7 @@ In \cref{fig:sequence-events} are shown detailed sequence diagrams of these even
     \subfloat[Sequence diagram of answering a question.]{%
         \includegraphics[width=0.47\textwidth]{figures/diagrams/sequence-qa.png}
     }
-    \caption{Detailed sequence diagrams of main events.}
+    \caption{Detailed sequence diagrams describing interactions between system components when main domain events occur.}
     \label{fig:sequence-events}
 \end{figure}
 
@@ -1623,11 +1601,19 @@ In particular, the software system is intended to be used by stakeholders, to gu
 %
 In this way, \acl{BU} can interact with the system answering questions while, at the same time, the system automates technical steps such as training and mitigation.
 
-\note[GC][red]{Inserisci una frase dove menzioni il lavoro di validazione che è stato fatto}
+% \note[GC][orange]{Inserisci una frase dove menzioni il lavoro di validazione che è stato fatto}
+Finally, the entire work has been validated considering both conceptual and technical aspects.
+%
+For the technical aspect, the software system has been constantly validated through DevOps practices including automated testing, release management, and code quality checks.
+%
+For the conceptual side, the methodology has been validated through participatory design sessions, project reviews, and feedback from stakeholders and unprivileged groups.
+
 
 \section{Future Works}
 
-\note[GC][red]{Brutto cominciare la sezione con un elenco puntato. Metti un cappello a questa sezione}
+Future research will focus on both enhancing the software tool and refining the methodology.
+%
+In particular, the topics require further improvements are outlined below.
 
 \begin{itemize}
     \item \textbf{Coverage of more use cases}: the methodology should account for both pre-existing and new \ac{AI} systems.
@@ -1649,7 +1635,13 @@ In this way, \acl{BU} can interact with the system answering questions while, at
 
 \chapter{Graphical User Interface}\label{app:gui}
 
-\note[GC][red]{Mettici qui due parole tanto per non lasciare vuota la pagina. Attingi da \url{https://github.com/aequitas-aod/design-experimenter-ui}}
+Images reported in this appendix, refer to the graphical user interface provided by frontend component described in \cref{chap:design,chap:implementation}.
+%
+These, are the main views showed to the stakeholder when he interfaces to the software tool to create an AI system.
+%
+Note that this is just one of the possible sequences of images (paths of questions), as explained in \cref{chap:meta-methodology}.
+%
+In this case, the flow is representing the use case of a dataset mitigation.
 
 \begin{figure}
     \centering

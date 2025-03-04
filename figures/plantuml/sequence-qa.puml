@@ -15,7 +15,7 @@ Frontend <-- Backend: Show Question
 Frontend ->> Backend: Respond to Question
 Backend -> Backend: Update\nQuestionnaire
 
-Backend ->> Broker: "questions.answered" event
+Backend ->> Broker: "**questions.answered**" event
 Broker ->> Script: Event Reaction
 Script -> Script: Arbitrary\nComputation
 Backend <<- Script: Update State
